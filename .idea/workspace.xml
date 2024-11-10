@@ -5,28 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/DataEncoder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/AbstractEncoder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/AlphanumericEncoder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/ByteEncoder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/NumericEncoder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Mode.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/ModeResolver.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/PaddingAdder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder/ErrorCorrectionLevel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Exception/UnknownMode.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/AbstractMatrixRenderer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/FileType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/JpgMatrixRenderer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/PdfMatrixRenderer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/PngMatrixRenderer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +80,7 @@
       <workItem from="1682777447298" duration="1573000" />
       <workItem from="1682779263720" duration="5000" />
       <workItem from="1684577562607" duration="33000" />
-      <workItem from="1731256058646" duration="14668000" />
+      <workItem from="1731256058646" duration="14902000" />
     </task>
     <servers />
   </component>

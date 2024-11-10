@@ -4,7 +4,7 @@ namespace ThePhpGuild\Qrcode\MatrixRenderer;
 
 class MatrixRendererFactory
 {
-    public static function getRenderer(FileType $fileType): MatrixRendererInterface
+    public function getRenderer(FileType $fileType): MatrixRendererInterface
     {
         return match ($fileType) {
             FileType::JPG => new JpgMatrixRenderer(),
