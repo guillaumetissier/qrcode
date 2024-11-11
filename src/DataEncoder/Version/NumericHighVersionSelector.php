@@ -6,7 +6,7 @@ class NumericHighVersionSelector extends BaseVersionSelector
 {
     public function __construct()
     {
-        parent::_construct([
+        parent::__construct([
             Version::V01->toInt() => 17,
             Version::V02->toInt() => 34,
             Version::V03->toInt() => 58,

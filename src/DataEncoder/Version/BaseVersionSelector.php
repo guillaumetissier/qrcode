@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Version;
 
-class BaseVersionSelector
+class BaseVersionSelector implements VersionSelectorInterface
 {
     protected array $capacityTable = [];
 
