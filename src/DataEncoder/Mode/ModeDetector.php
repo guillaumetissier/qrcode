@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\Qrcode\DataEncoder\Mode;
 
-class ModeResolver
+class ModeDetector
 {
     private ?string $data = null;
 
@@ -13,7 +13,7 @@ class ModeResolver
         return $this;
     }
 
-    function resolve(): Mode
+    function detect(): Mode
     {
         if ($this->isNumeric()) {
             return Mode::NUMERIC;

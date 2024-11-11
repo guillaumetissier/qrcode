@@ -3,7 +3,7 @@
 namespace ThePhpGuild\QrCode\DataEncoder;
 
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeResolver;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
 
 class DataEncoder
 {
@@ -11,9 +11,9 @@ class DataEncoder
     private int $version;
 
     public function __construct(
-        private readonly ModeResolver   $modeResolver,
+        private readonly ModeDetector $modeDetector,
         private readonly EncoderFactory $encoderFactory,
-        private readonly PaddingAdder   $paddingAdder
+        private readonly PaddingAdder $paddingAdder
     ) {
     }
 
@@ -33,9 +33,9 @@ class DataEncoder
 
     public function encode(): string
     {
-        $mode = $this->modeResolver
+        $mode = $this->modeDetector
             ->setData($this->data)
-            ->resolve();
+            ->detect();
 
         $encodedData = $this->encoderFactory
             ->getEncoder($mode)

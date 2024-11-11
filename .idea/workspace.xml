@@ -5,32 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericHighVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericLowVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericMediumVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericQuartileVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/BaseVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericHighVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericLowVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericMediumVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericQuartileVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/Version.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/VersionSelectorFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/NumECCodewordsCalculator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericHighVersionSelectorTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericLowVersionSelectorTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericMediumVersionSelectorTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericQuartileVersionSelectorTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataEncoder/DataEncoder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/DataEncoder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Mode.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Mode/Mode.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/ModeResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Mode/ModeResolver.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/PaddingAdder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/PaddingAdder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/ReedSolomonEncoder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder/ErrorCorrectionLevel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/ErrorCorrectionLevel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder/GalloisField.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/GalloisField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Mode/ModeResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Mode/ModeDetector.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QrCodeGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +95,7 @@
       <workItem from="1682777447298" duration="1573000" />
       <workItem from="1682779263720" duration="5000" />
       <workItem from="1684577562607" duration="33000" />
-      <workItem from="1731256058646" duration="29138000" />
+      <workItem from="1731256058646" duration="29465000" />
     </task>
     <servers />
   </component>

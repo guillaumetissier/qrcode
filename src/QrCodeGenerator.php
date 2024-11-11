@@ -4,7 +4,7 @@ namespace ThePhpGuild\Qrcode;
 
 use ThePhpGuild\Qrcode\DataEncoder\DataEncoder;
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeResolver;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
 use ThePhpGuild\QrCode\DataEncoder\PaddingAdder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
@@ -30,7 +30,7 @@ class QRCodeGenerator
         if (!self::$Generator) {
             self::$Generator = new QRCodeGenerator(
                 new DataEncoder(
-                    new ModeResolver(),
+                    new ModeDetector(),
                     new EncoderFactory(),
                     new PaddingAdder()
                 ),
