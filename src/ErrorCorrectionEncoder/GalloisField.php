@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\Encoder\ReedSalomonEncoder;
+namespace ThePhpGuild\Qrcode\ErrorCorrectionEncoder;
 
 class GalloisField
 {
@@ -28,7 +28,17 @@ class GalloisField
         return $this->exp[$i];
     }
 
-    public function multiply($a, $b)
+    public function add(int $a, int $b): int
+    {
+        return $a ^ $b;
+    }
+
+    public function subtract(int $a, int $b): int
+    {
+        return $this->add($a, $b);
+    }
+
+    public function multiply(int $a, int $b): int
     {
         if ($a === 0 || $b === 0) {
             return 0;
@@ -37,7 +47,7 @@ class GalloisField
         return $this->exp[$logSum];
     }
 
-    public function divide($a, $b)
+    public function divide(int $a, int $b): int
     {
         if ($b === 0) {
             throw new \InvalidArgumentException("Division par zéro dans le corps de Galois");

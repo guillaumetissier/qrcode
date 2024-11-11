@@ -2,6 +2,8 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder;
 
+use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
+
 class PaddingAdder
 {
     private ?Mode $mode = null;

@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\Qrcode\DataEncoder\Encoder;
 
-use ThePhpGuild\Qrcode\DataEncoder\Mode;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\Mode;
 
 class EncoderFactory
 {

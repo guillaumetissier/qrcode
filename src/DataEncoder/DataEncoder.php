@@ -3,6 +3,7 @@
 namespace ThePhpGuild\QrCode\DataEncoder;
 
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeResolver;
 
 class DataEncoder
 {

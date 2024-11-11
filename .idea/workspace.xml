@@ -5,7 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericHighVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericLowVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericMediumVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/AlphanumericQuartileVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/BaseVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericHighVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericLowVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericMediumVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericQuartileVersionSelector.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/Version.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/VersionSelectorFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/NumECCodewordsCalculator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericHighVersionSelectorTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericLowVersionSelectorTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericMediumVersionSelectorTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/DataEncoder/Version/NumericQuartileVersionSelectorTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/DataEncoder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/DataEncoder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Encoder/EncoderFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Mode.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Mode/Mode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/ModeResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Mode/ModeResolver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataEncoder/PaddingAdder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/PaddingAdder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/ReedSolomonEncoder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder/ErrorCorrectionLevel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/ErrorCorrectionLevel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder/GalloisField.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ErrorCorrectionEncoder/GalloisField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/QrCodeGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,11 +58,12 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;PHPUnit.AlphanumericHighVersionSelectorTest.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/guillaume/Projects/qrcode/src/Matrix/MatrixRenderer&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/guillaume/Projects/qrcode/src/DataEncoder/Version&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -49,17 +76,29 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/DataEncoder/Version" />
       <recent name="$PROJECT_DIR$/src/Matrix/MatrixRenderer" />
       <recent name="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder" />
       <recent name="$PROJECT_DIR$/src/Encoder/DataEncoder/Encoder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/DataEncoder" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/Version" />
+      <recent name="$PROJECT_DIR$/src/ErrorCorrectionEncoder" />
       <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/Encoder" />
-      <recent name="$PROJECT_DIR$/src/Encoder/DataEncoder/Encoder" />
-      <recent name="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/Mode" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="AlphanumericHighVersionSelectorTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Test\DataEncoder\Version\AlphanumericHighVersionSelectorTest" file="$PROJECT_DIR$/tests/DataEncoder/Version/NumericHighVersionSelectorTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.AlphanumericHighVersionSelectorTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -80,7 +119,7 @@
       <workItem from="1682777447298" duration="1573000" />
       <workItem from="1682779263720" duration="5000" />
       <workItem from="1684577562607" duration="33000" />
-      <workItem from="1731256058646" duration="14902000" />
+      <workItem from="1731256058646" duration="29138000" />
     </task>
     <servers />
   </component>

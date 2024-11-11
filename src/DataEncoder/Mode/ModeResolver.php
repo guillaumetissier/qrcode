@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder;
+namespace ThePhpGuild\Qrcode\DataEncoder\Mode;
 
 class ModeResolver
 {
