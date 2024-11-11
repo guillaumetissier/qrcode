@@ -12,6 +12,10 @@ use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ReedSolomonEncoder;
 use ThePhpGuild\Qrcode\Matrix\MatrixBuilder;
+use ThePhpGuild\Qrcode\Matrix\PlaceAlignmentPatterns;
+use ThePhpGuild\Qrcode\Matrix\PlaceFinderPatterns;
+use ThePhpGuild\Qrcode\Matrix\PlaceFormatAndVersionInfo;
+use ThePhpGuild\Qrcode\Matrix\PlaceTimingPatterns;
 use ThePhpGuild\Qrcode\MatrixRenderer\FileType;
 use ThePhpGuild\Qrcode\MatrixRenderer\MatrixRendererFactory;
 
@@ -38,7 +42,12 @@ class QRCodeGenerator
                     new GalloisField(),
                     new NumECCodewordsCalculator()
                 ),
-                new MatrixBuilder(),
+                new MatrixBuilder(
+                    new PlaceFinderPatterns(),
+                    new PlaceAlignmentPatterns(),
+                    new PlaceTimingPatterns(),
+                    new PlaceFormatAndVersionInfo()
+                ),
                 new MatrixRendererFactory()
             );
         }
@@ -88,6 +97,8 @@ class QRCodeGenerator
             ->addErrorCorrection(str_split($encodedData));
 
         $matrix = $this->matrixBuilder
+            ->setVersion($this->version)
+            ->setData($dataWithErrorCorrection)
             ->build();
 
         return $this->matrixRendererFactory

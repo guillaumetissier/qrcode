@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/ByteHighVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/ByteLowVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/ByteMediumVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/ByteQuartileVersionSelector.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DataEncoder/Version/VersionSelectorInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceAlignmentPatterns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceFinderPatterns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceFormatAndVersionInfo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceTimingPatterns.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Version/BaseVersionSelector.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Version/BaseVersionSelector.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Version/NumericHighVersionSelector.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Version/NumericHighVersionSelector.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataEncoder/Version/VersionSelectorFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataEncoder/Version/VersionSelectorFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/QrCodeGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +102,7 @@
       <workItem from="1682777447298" duration="1573000" />
       <workItem from="1682779263720" duration="5000" />
       <workItem from="1684577562607" duration="33000" />
-      <workItem from="1731256058646" duration="32593000" />
+      <workItem from="1731256058646" duration="36835000" />
     </task>
     <servers />
   </component>
