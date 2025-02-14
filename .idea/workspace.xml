@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceAlignmentPatterns.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceFinderPatterns.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceFormatAndVersionInfo.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrix/PlaceTimingPatterns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Exception/NoDataException.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/File/FileTypeExtractor.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/GifMatrixRenderer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/ImageCreator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/AbstractMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/AbstractMatrixRenderer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/FileType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/File/FileType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/JpgMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/JpgMatrixRenderer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/PdfMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/PdfMatrixRenderer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/PngMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/PngMatrixRenderer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QrCodeGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +30,8 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
   <component name="Git.Settings">
@@ -30,7 +40,38 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tcpdf" />
+    </include_path>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -39,24 +80,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;PHPUnit.AlphanumericHighVersionSelectorTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/guillaume/Projects/qrcode/src/DataEncoder/Version&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "PHPUnit.AlphanumericHighVersionSelectorTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.jetbrains.php.lang.actions.generation.PhpGenerateFieldAccessorHandlerBase$MyMemberChooser.fluent.setters.last.selected": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/guillaume/Projects/qrcode/src/DataEncoder/Version",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/DataEncoder/Version" />
@@ -86,8 +129,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PS-242.21829.154" />
-        <option value="bundled-php-predefined-a98d8de5180a-4d9f4c849d09-com.jetbrains.php.sharedIndexes-PS-242.21829.154" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PS-243.23654.115" />
+        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.115" />
       </set>
     </attachedChunks>
   </component>
@@ -102,7 +145,9 @@
       <workItem from="1682777447298" duration="1573000" />
       <workItem from="1682779263720" duration="5000" />
       <workItem from="1684577562607" duration="33000" />
-      <workItem from="1731256058646" duration="36835000" />
+      <workItem from="1731256058646" duration="37181000" />
+      <workItem from="1736584671309" duration="61000" />
+      <workItem from="1739566192319" duration="8405000" />
     </task>
     <servers />
   </component>

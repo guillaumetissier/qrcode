@@ -2,17 +2,29 @@
 
 namespace ThePhpGuild\Qrcode\Matrix;
 
+use ThePhpGuild\Qrcode\Exception\NoDataException;
+
 class PlaceDataAndErrorCorrection extends AbstractPlacePatterns
 {
-    private $data = null;
+    private ?string $data = null;
 
-    public function setData($data): void
+    public function setData(string $data): self
     {
         $this->data = $data;
+
+        return $this;
     }
 
+    /**
+     * @return QrMatrix
+     * @throws NoDataException
+     */
     public function execute(): QrMatrix
     {
+        if (null === $this->data) {
+            throw new NoDataException();
+        }
+
         $size = $this->matrix->getSize();
         $x = $size - 1;
         $y = $size - 1;

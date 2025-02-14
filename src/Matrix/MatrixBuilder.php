@@ -3,17 +3,19 @@
 namespace ThePhpGuild\Qrcode\Matrix;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\Qrcode\Exception\NoDataException;
 
 class MatrixBuilder
 {
     private ?Version $version = null;
-    private $data = null;
+    private ?string $data = null;
 
     public function __construct(
         private readonly PlaceFinderPatterns $placeFinderPatterns,
         private readonly PlaceAlignmentPatterns $placeAlignmentPatterns,
         private readonly PlaceTimingPatterns $placeTimingPatterns,
-        private readonly PlaceFormatAndVersionInfo $placeFormatAndVersionInfo
+        private readonly PlaceFormatAndVersionInfo $placeFormatAndVersionInfo,
+        private readonly PlaceDataAndErrorCorrection $placeDataAndErrorCorrection
     )
     {
     }
@@ -25,13 +27,17 @@ class MatrixBuilder
         return $this;
     }
 
-    public function setData($data): self
+    public function setData(string $data): self
     {
         $this->data = $data;
 
         return $this;
     }
 
+    /**
+     * @return QrMatrix
+     * @throws NoDataException
+     */
     public function build(): QrMatrix
     {
         $matrix = new QrMatrix($this->version);
@@ -40,6 +46,6 @@ class MatrixBuilder
         $matrix = $this->placeTimingPatterns->setMatrix($matrix)->execute();
         $matrix = $this->placeFormatAndVersionInfo->setMatrix($matrix)->execute();
 
-        return $matrix;
+        return $this->placeDataAndErrorCorrection->setMatrix($matrix)->setData($this->data)->execute();
     }
 }

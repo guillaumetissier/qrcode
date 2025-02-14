@@ -15,5 +15,9 @@
             "name": "Guillaume Tissier",
             "email": "guillaume.tissier@yahoo.com"
         }
-    ]
+    ],
+  "require": {
+    "ext-gd": "*",
+        "tecnickcom/tcpdf": "^6.8"
+  }
 }

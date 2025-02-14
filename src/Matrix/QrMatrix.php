@@ -32,12 +32,16 @@ class QrMatrix
         return $this->matrix[$x][$y] !== null;
     }
 
+    public function getMatrix(): array
+    {
+        return $this->matrix;
+    }
 
-    public function display()
+    public function display(): void
     {
         foreach ($this->matrix as $row) {
             foreach ($row as $cell) {
-                echo $cell === null ? ' ' : ($cell ? '█' : ' ');
+                echo !$cell ? ' ' : '█';
             }
             echo PHP_EOL;
         }

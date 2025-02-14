@@ -2,14 +2,17 @@
 
 namespace ThePhpGuild\Qrcode\MatrixRenderer;
 
+use ThePhpGuild\Qrcode\File\FileType;
+
 class MatrixRendererFactory
 {
     public function getRenderer(FileType $fileType): MatrixRendererInterface
     {
         return match ($fileType) {
-            FileType::JPG => new JpgMatrixRenderer(),
+            FileType::GIF => new GifMatrixRenderer(new ImageCreator()),
+            FileType::JPG => new JpgMatrixRenderer(new ImageCreator()),
             FileType::PDF => new PdfMatrixRenderer(),
-            FileType::PNG => new PngMatrixRenderer()
+            FileType::PNG => new PngMatrixRenderer(new ImageCreator()),
         };
     }
 }

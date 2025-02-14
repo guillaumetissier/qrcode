@@ -6,7 +6,9 @@ use ThePhpGuild\Qrcode\Matrix\QrMatrix;
 
 interface MatrixRendererInterface
 {
-    public function setMatrix(QrMatrix $matrix);
+    public function setFilename(string $filename): self;
 
-    public function render();
+    public function setMatrix(QrMatrix $matrix): self;
+
+    public function render(): void;
 }

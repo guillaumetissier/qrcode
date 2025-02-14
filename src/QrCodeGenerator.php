@@ -11,28 +11,31 @@ use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ReedSolomonEncoder;
+use ThePhpGuild\Qrcode\File\FileType;
+use ThePhpGuild\Qrcode\File\FileTypeExtractor;
 use ThePhpGuild\Qrcode\Matrix\MatrixBuilder;
 use ThePhpGuild\Qrcode\Matrix\PlaceAlignmentPatterns;
+use ThePhpGuild\Qrcode\Matrix\PlaceDataAndErrorCorrection;
 use ThePhpGuild\Qrcode\Matrix\PlaceFinderPatterns;
 use ThePhpGuild\Qrcode\Matrix\PlaceFormatAndVersionInfo;
 use ThePhpGuild\Qrcode\Matrix\PlaceTimingPatterns;
-use ThePhpGuild\Qrcode\MatrixRenderer\FileType;
 use ThePhpGuild\Qrcode\MatrixRenderer\MatrixRendererFactory;
 
-class QRCodeGenerator
+class QrCodeGenerator
 {
-    static private ?QRCodeGenerator $Generator = null;
+    static private ?QrCodeGenerator $Generator = null;
     private string $data;
 
     /* configuration parameters */
     private ErrorCorrectionLevel $errorCorrectionLevel = ErrorCorrectionLevel::LOW;
+    private ?string $filename = null;
     private FileType $fileType = FileType::PNG;
     private ?Version $version = null;
 
     public static function getQrCodeGenerator(): self
     {
         if (!self::$Generator) {
-            self::$Generator = new QRCodeGenerator(
+            self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
                     new ModeDetector(),
                     new EncoderFactory(),
@@ -46,9 +49,11 @@ class QRCodeGenerator
                     new PlaceFinderPatterns(),
                     new PlaceAlignmentPatterns(),
                     new PlaceTimingPatterns(),
-                    new PlaceFormatAndVersionInfo()
+                    new PlaceFormatAndVersionInfo(),
+                    new PlaceDataAndErrorCorrection()
                 ),
-                new MatrixRendererFactory()
+                new MatrixRendererFactory(),
+                new FileTypeExtractor()
             );
         }
         return self::$Generator;
@@ -58,7 +63,8 @@ class QRCodeGenerator
         private readonly DataEncoder $dataEncoder,
         private readonly ReedSolomonEncoder $reedSolomonEncoder,
         private readonly MatrixBuilder $matrixBuilder,
-        private readonly MatrixRendererFactory $matrixRendererFactory
+        private readonly MatrixRendererFactory $matrixRendererFactory,
+        private readonly FileTypeExtractor $fileTypeExtractor
     )
     {
     }
@@ -70,8 +76,17 @@ class QRCodeGenerator
         return $this;
     }
 
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+        $this->fileType = $this->fileTypeExtractor->extract($filename);
+
+        return $this;
+    }
+
     public function setFileType(FileType $fileType): self
     {
+        $this->filename = null;
         $this->fileType = $fileType;
 
         return $this;
@@ -84,7 +99,7 @@ class QRCodeGenerator
         return $this;
     }
 
-    public function generate()
+    public function generate(): void
     {
         $encodedData = $this->dataEncoder
             ->setData($this->data)
@@ -98,11 +113,12 @@ class QRCodeGenerator
 
         $matrix = $this->matrixBuilder
             ->setVersion($this->version)
-            ->setData($dataWithErrorCorrection)
+            ->setData(implode($dataWithErrorCorrection))
             ->build();
 
-        return $this->matrixRendererFactory
+        $this->matrixRendererFactory
             ->getRenderer($this->fileType)
+            ->setFilename($this->filename)
             ->setMatrix($matrix)
             ->render();
     }

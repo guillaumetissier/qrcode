@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\Qrcode\MatrixRenderer;
 
-class JpgMatrixRenderer extends AbstractMatrixRenderer
+class GifMatrixRenderer extends AbstractMatrixRenderer
 {
     public function __construct(private readonly ImageCreator $imageCreator)
     {}
@@ -11,10 +11,10 @@ class JpgMatrixRenderer extends AbstractMatrixRenderer
     {
         $image = $this->imageCreator->create($this->getMatrix(), $this->getScale());
         if (!$this->getFilename()) {
-            header('Content-Type: image/jpeg');
-            imagejpeg($image);
+            header('Content-Type: image/gif');
+            imagegif($image);
         } else {
-            imagejpeg($image, $this->getFilename());
+            imagegif($image, $this->getFilename());
         }
         imagedestroy($image);
     }
