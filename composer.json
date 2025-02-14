@@ -17,7 +17,8 @@
         }
     ],
   "require": {
-    "ext-gd": "*",
-        "tecnickcom/tcpdf": "^6.8"
+      "php": "^8.0",
+      "ext-gd": "*",
+      "tecnickcom/tcpdf": "^6.8"
   }
 }
