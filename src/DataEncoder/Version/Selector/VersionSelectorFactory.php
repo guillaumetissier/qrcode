@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\DataEncoder\Version;
+namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\Qrcode\DataEncoder\Mode\Mode;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;

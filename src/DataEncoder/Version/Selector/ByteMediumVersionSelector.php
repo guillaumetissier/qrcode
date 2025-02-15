@@ -1,6 +1,8 @@
 <?php
 
-namespace ThePhpGuild\QrCode\DataEncoder\Version;
+namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
+
+use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 
 class ByteMediumVersionSelector extends BaseVersionSelector
 {

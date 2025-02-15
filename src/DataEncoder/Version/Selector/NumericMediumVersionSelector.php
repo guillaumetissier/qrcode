@@ -1,8 +1,10 @@
 <?php
 
-namespace ThePhpGuild\QrCode\DataEncoder\Version;
+namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
-class AlphanumericMediumVersionSelector extends BaseVersionSelector
+use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+
+class NumericMediumVersionSelector extends BaseVersionSelector
 {
     public function __construct()
     {

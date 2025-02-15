@@ -5,7 +5,10 @@ namespace ThePhpGuild\Qrcode;
 use ThePhpGuild\Qrcode\DataEncoder\DataEncoder;
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
-use ThePhpGuild\QrCode\DataEncoder\PaddingAdder;
+use ThePhpGuild\QrCode\DataEncoder\Padding;
+use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
+use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
+use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\GalloisField;
@@ -24,9 +27,8 @@ use ThePhpGuild\Qrcode\MatrixRenderer\MatrixRendererFactory;
 class QrCodeGenerator
 {
     static private ?QrCodeGenerator $Generator = null;
-    private string $data;
 
-    /* configuration parameters */
+    private string $data;
     private ErrorCorrectionLevel $errorCorrectionLevel = ErrorCorrectionLevel::LOW;
     private ?string $filename = null;
     private FileType $fileType = FileType::PNG;
@@ -38,8 +40,12 @@ class QrCodeGenerator
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
                     new ModeDetector(),
+                    new VersionSelectorFactory(),
                     new EncoderFactory(),
-                    new PaddingAdder()
+                    new Padding\PaddingAppender(
+                        new TotalBitsCounterBuilder(),
+                        new LengthBitsFactory()
+                    )
                 ),
                 new ReedSolomonEncoder(
                     new GalloisField(),
@@ -103,7 +109,7 @@ class QrCodeGenerator
     {
         $encodedData = $this->dataEncoder
             ->setData($this->data)
-            ->setVersion(1)
+            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
         $dataWithErrorCorrection = $this->reedSolomonEncoder

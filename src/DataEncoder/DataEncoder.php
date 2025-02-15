@@ -4,16 +4,20 @@ namespace ThePhpGuild\QrCode\DataEncoder;
 
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
+use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
+use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
+use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 
 class DataEncoder
 {
-    private string $data;
-    private int $version;
+    private ?string $data = null;
+    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
     public function __construct(
         private readonly ModeDetector $modeDetector,
+        private readonly VersionSelectorFactory $versionSelectorFactory,
         private readonly EncoderFactory $encoderFactory,
-        private readonly PaddingAdder $paddingAdder
+        private readonly PaddingAppender $paddingAdder
     ) {
     }
 
@@ -24,9 +28,9 @@ class DataEncoder
         return $this;
     }
 
-    public function setVersion(int $version): self
+    public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
     {
-        $this->version = $version;
+        $this->errorCorrectionLevel = $errorCorrectionLevel;
 
         return $this;
     }
@@ -37,15 +41,21 @@ class DataEncoder
             ->setData($this->data)
             ->detect();
 
+        $version = $this->versionSelectorFactory
+            ->getVersionSelector($mode, $this->errorCorrectionLevel)
+            ->selectVersion(strlen($this->data));
+
         $encodedData = $this->encoderFactory
             ->getEncoder($mode)
             ->setData($this->data)
             ->encode();
 
-        return $this->paddingAdder
+        $paddedData = $this->paddingAdder
             ->setMode($mode)
-            ->setVersion($this->version)
+            ->setVersion($version)
             ->setData($encodedData)
             ->addPadding();
+
+        return $paddedData;
     }
 }
