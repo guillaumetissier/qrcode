@@ -5,7 +5,8 @@ namespace ThePhpGuild\Qrcode;
 use ThePhpGuild\Qrcode\DataEncoder\DataEncoder;
 use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
-use ThePhpGuild\QrCode\DataEncoder\Padding;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
+use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
@@ -42,8 +43,9 @@ class QrCodeGenerator
                     new ModeDetector(),
                     new VersionSelectorFactory(),
                     new EncoderFactory(),
-                    new Padding\PaddingAppender(
+                    new PaddingAppender(
                         new TotalBitsCounterBuilder(),
+                        new ModeIndicator(),
                         new LengthBitsFactory()
                     )
                 ),

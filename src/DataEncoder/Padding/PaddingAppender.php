@@ -3,6 +3,7 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Padding;
 
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
@@ -15,6 +16,7 @@ class PaddingAppender
 
     public function __construct(
         readonly private TotalBitsCounterBuilder $totalBitsCounterBuilder,
+        readonly private ModeIndicator $modeIndicator,
         readonly private LengthBitsFactory $lengthBitsFactory
     )
     {
@@ -56,7 +58,7 @@ class PaddingAppender
                 ->setVersion($this->version)
                 ->getLengthBits();
 
-        $binaryData = $this->mode->getIndicator() . $lengthBits . $this->data;
+        $binaryData = $this->modeIndicator->setMode($this->mode)->getModeIndicator() . $lengthBits . $this->data;
         $binaryData = str_pad($binaryData, $totalBits, '0');
 
         while (strlen($binaryData) % 8 !== 0) {

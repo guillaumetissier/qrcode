@@ -2,25 +2,21 @@
 
 namespace ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter;
 
+use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\CciBitsCounterInterface;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\EncodedDataBitsCounterInterface;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 
 class TotalBitsCounter implements CounterInterface
 {
-    protected ?Version $version    = null;
-    protected ?int     $dataLength = null;
+    private ?Version $version    = null;
+    private ?int     $dataLength = null;
 
     public function __construct(
         readonly private CciBitsCounterInterface $cciBitsCounter,
         readonly private EncodedDataBitsCounterInterface $encodedDataBitsCounter,
     )
     {
-    }
-
-    public function getVersion(): ?Version
-    {
-        return $this->version;
     }
 
     public function setVersion(Version $version): self
@@ -39,7 +35,7 @@ class TotalBitsCounter implements CounterInterface
 
     public function count(): int
     {
-        $totalBits = 4; // Mode Indicator
+        $totalBits = ModeIndicator::GetTotalBits();
         $totalBits += $this->cciBitsCounter->setVersion($this->version)->count();
         $totalBits += $this->encodedDataBitsCounter->setDataLength($this->dataLength)->count();
 

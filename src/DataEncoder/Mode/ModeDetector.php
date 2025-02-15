@@ -13,7 +13,7 @@ class ModeDetector
         return $this;
     }
 
-    function detect(): Mode
+    public function detect(): Mode
     {
         if ($this->isNumeric()) {
             return Mode::NUMERIC;
