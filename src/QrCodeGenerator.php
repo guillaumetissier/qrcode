@@ -11,6 +11,7 @@ use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
 use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
@@ -41,7 +42,9 @@ class QrCodeGenerator
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
                     new ModeDetector(),
-                    new VersionSelectorFactory(),
+                    new VersionSelectorFactory(
+                        new VersionFromIntConverter()
+                    ),
                     new EncoderFactory(),
                     new PaddingAppender(
                         new TotalBitsCounterBuilder(),

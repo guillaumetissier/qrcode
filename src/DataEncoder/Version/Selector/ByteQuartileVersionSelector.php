@@ -3,12 +3,13 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class ByteQuartileVersionSelector extends BaseVersionSelector
 {
-    public function __construct()
+    public function __construct(VersionFromIntConverter $converter)
     {
-        parent::__construct([
+        parent::__construct($converter, [
             Version::V01->toInt() => 11,
             Version::V02->toInt() => 20,
             Version::V03->toInt() => 32,

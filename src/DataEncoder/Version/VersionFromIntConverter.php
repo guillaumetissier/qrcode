@@ -4,13 +4,9 @@ namespace ThePhpGuild\QrCode\DataEncoder\Version;
 
 class VersionFromIntConverter
 {
-    public function __construct(readonly private int $version)
+    public function fromInt(int $version): Version
     {
-    }
-
-    public function fromInt(): Version
-    {
-        return match ($this->version) {
+        return match ($version) {
              1 => Version::V01,
              2 => Version::V02,
              3 => Version::V03,
