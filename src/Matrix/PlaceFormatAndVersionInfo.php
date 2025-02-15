@@ -1,9 +1,9 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\Matrix;
+namespace ThePhpGuild\QrCode\Matrix;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 
 class PlaceFormatAndVersionInfo extends AbstractPlacePatterns
 {

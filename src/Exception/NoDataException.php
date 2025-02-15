@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\Exception;
+namespace ThePhpGuild\QrCode\Exception;
 
 class NoDataException extends \Exception
 {

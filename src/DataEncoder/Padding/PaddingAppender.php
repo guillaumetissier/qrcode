@@ -3,9 +3,9 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Padding;
 
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
+use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
+use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
+use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 
 class PaddingAppender

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits;
 
 class NumericLengthBits extends AbstractLengthBits
 {

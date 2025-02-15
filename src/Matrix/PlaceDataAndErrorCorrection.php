@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\Matrix;
+namespace ThePhpGuild\QrCode\Matrix;
 
-use ThePhpGuild\Qrcode\Exception\NoDataException;
+use ThePhpGuild\QrCode\Exception\NoDataException;
 
 class PlaceDataAndErrorCorrection extends AbstractPlacePatterns
 {

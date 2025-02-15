@@ -2,11 +2,11 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder;
 
-use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
+use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
 use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 
 class DataEncoder
 {

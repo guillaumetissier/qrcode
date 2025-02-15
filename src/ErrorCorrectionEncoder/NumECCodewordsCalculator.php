@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\ErrorCorrectionEncoder;
+namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 

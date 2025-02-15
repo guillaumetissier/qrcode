@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\MatrixRenderer;
+namespace ThePhpGuild\QrCode\MatrixRenderer;
 
-use ThePhpGuild\Qrcode\Matrix\QrMatrix;
+use ThePhpGuild\QrCode\Matrix\QrMatrix;
 
 interface MatrixRendererInterface
 {

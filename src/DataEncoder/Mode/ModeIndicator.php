@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Mode;
+namespace ThePhpGuild\QrCode\DataEncoder\Mode;
 
 class ModeIndicator
 {

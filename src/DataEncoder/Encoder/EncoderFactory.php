@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Encoder;
+namespace ThePhpGuild\QrCode\DataEncoder\Encoder;
 
-use ThePhpGuild\Qrcode\DataEncoder\Mode\Mode;
+use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 
 class EncoderFactory
 {

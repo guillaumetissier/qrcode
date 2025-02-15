@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter;
 
 interface CounterInterface
 {

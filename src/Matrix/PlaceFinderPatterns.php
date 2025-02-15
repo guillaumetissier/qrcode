@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\Matrix;
+namespace ThePhpGuild\QrCode\Matrix;
 
 class PlaceFinderPatterns extends AbstractPlacePatterns
 {

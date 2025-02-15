@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Encoder;
+namespace ThePhpGuild\QrCode\DataEncoder\Encoder;
 
 abstract class AbstractEncoder implements EncoderInterface
 {

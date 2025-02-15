@@ -2,9 +2,9 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
-use ThePhpGuild\Qrcode\DataEncoder\Mode\Mode;
+use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 
 class VersionSelectorFactory
 {

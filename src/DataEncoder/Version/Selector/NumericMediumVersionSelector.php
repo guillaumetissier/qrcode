@@ -7,6 +7,9 @@ use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class NumericMediumVersionSelector extends BaseVersionSelector
 {
+    /*
+     * see https://www.qrcode.com/en/about/version.html
+     */
     public function __construct(VersionFromIntConverter $converter)
     {
         parent::__construct($converter, [

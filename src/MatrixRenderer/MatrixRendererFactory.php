@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\MatrixRenderer;
+namespace ThePhpGuild\QrCode\MatrixRenderer;
 
-use ThePhpGuild\Qrcode\File\FileType;
+use ThePhpGuild\QrCode\File\FileType;
 
 class MatrixRendererFactory
 {

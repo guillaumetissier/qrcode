@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter;
 
-use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\CounterInterface;
+use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CounterInterface;
 
 interface EncodedDataBitsCounterInterface extends CounterInterface
 {

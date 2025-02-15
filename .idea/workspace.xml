@@ -5,25 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e16ab85f-5f3d-48e2-9285-3072f2d7b7be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Exception/NoDataException.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/File/FileTypeExtractor.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/GifMatrixRenderer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MatrixRenderer/ImageCreator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/AbstractPlacePatterns.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/MatrixBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/PlaceDataAndErrorCorrection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix/QrMatrix.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/AbstractMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/AbstractMatrixRenderer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/FileType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/File/FileType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/JpgMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/JpgMatrixRenderer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/MatrixRendererInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/PdfMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/PdfMatrixRenderer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixRenderer/PngMatrixRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixRenderer/PngMatrixRenderer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QrCodeGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/QrCodeGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/encoder_dummy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/encoder_dummy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +72,7 @@
     "WebServerToolWindowFactoryState": "false",
     "com.jetbrains.php.lang.actions.generation.PhpGenerateFieldAccessorHandlerBase$MyMemberChooser.fluent.setters.last.selected": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/guillaume/Projects/qrcode/src/DataEncoder/Version",
+    "last_opened_file_path": "/home/guillaume/Projects/qrcode/src/DataEncoder/TotalBits/EncodedDataBitsCounter",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -102,22 +85,27 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/DataEncoder/TotalBits/EncodedDataBitsCounter" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/CharCountIndicator" />
       <recent name="$PROJECT_DIR$/src/DataEncoder/Version" />
       <recent name="$PROJECT_DIR$/src/Matrix/MatrixRenderer" />
       <recent name="$PROJECT_DIR$/src/Encoder/ReedSalomonEncoder" />
-      <recent name="$PROJECT_DIR$/src/Encoder/DataEncoder/Encoder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/DataEncoder/Version/Selector" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/PaddingAppender" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/TotalBits" />
+      <recent name="$PROJECT_DIR$/src/DataEncoder/Version/Selector" />
       <recent name="$PROJECT_DIR$/src/DataEncoder/Version" />
-      <recent name="$PROJECT_DIR$/src/ErrorCorrectionEncoder" />
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/DataEncoder/Mode" />
-      <recent name="$PROJECT_DIR$/src/DataEncoder" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.AlphanumericHighVersionSelectorTest">
     <configuration name="AlphanumericHighVersionSelectorTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Test\DataEncoder\Version\AlphanumericHighVersionSelectorTest" file="$PROJECT_DIR$/tests/DataEncoder/Version/NumericHighVersionSelectorTest.php" scope="Class" />
+      <TestRunner class="Test\DataEncoder\Version\AlphanumericHighVersionSelectorTest" file="$PROJECT_DIR$/tests/DataEncoder/Version/Selector/NumericHighVersionSelectorTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
     <recent_temporary>

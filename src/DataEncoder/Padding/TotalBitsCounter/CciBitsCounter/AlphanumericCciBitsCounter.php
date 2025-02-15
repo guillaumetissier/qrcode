@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
 
 use InvalidArgumentException;
 

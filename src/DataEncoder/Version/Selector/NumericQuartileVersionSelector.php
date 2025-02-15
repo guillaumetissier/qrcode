@@ -49,7 +49,7 @@ class NumericQuartileVersionSelector extends BaseVersionSelector
             Version::V37->toInt() => 3417,
             Version::V38->toInt() => 3599,
             Version::V39->toInt() => 3791,
-            Version::V40->toInt() => 3993
+            Version::V40->toInt() => 3993,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\MatrixRenderer;
+namespace ThePhpGuild\QrCode\MatrixRenderer;
 
 use TCPDF;
 

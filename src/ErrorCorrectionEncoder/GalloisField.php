@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\ErrorCorrectionEncoder;
+namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 class GalloisField
 {

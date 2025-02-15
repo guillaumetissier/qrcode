@@ -20,6 +20,7 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V08->toInt() => 202,
             Version::V09->toInt() => 235,
             Version::V10->toInt() => 288,
+
             Version::V11->toInt() => 331,
             Version::V12->toInt() => 374,
             Version::V13->toInt() => 427,
@@ -30,6 +31,7 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V18->toInt() => 746,
             Version::V19->toInt() => 813,
             Version::V20->toInt() => 919,
+
             Version::V21->toInt() => 969,
             Version::V22->toInt() => 1056,
             Version::V23->toInt() => 1108,
@@ -40,6 +42,7 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V28->toInt() => 1581,
             Version::V29->toInt() => 1677,
             Version::V30->toInt() => 1782,
+
             Version::V31->toInt() => 1897,
             Version::V32->toInt() => 2022,
             Version::V33->toInt() => 2157,

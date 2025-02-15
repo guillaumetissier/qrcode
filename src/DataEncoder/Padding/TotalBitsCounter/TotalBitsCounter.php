@@ -1,10 +1,10 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter;
 
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\CciBitsCounterInterface;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\EncodedDataBitsCounterInterface;
+use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
+use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\CciBitsCounterInterface;
+use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\EncodedDataBitsCounterInterface;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 
 class TotalBitsCounter implements CounterInterface

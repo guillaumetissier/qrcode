@@ -1,30 +1,30 @@
 <?php
 
-namespace ThePhpGuild\Qrcode;
+namespace ThePhpGuild\QrCode;
 
-use ThePhpGuild\Qrcode\DataEncoder\DataEncoder;
-use ThePhpGuild\Qrcode\DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeDetector;
-use ThePhpGuild\Qrcode\DataEncoder\Mode\ModeIndicator;
+use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
+use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
+use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
 use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
-use ThePhpGuild\Qrcode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
+use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
+use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\GalloisField;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
-use ThePhpGuild\Qrcode\ErrorCorrectionEncoder\ReedSolomonEncoder;
-use ThePhpGuild\Qrcode\File\FileType;
-use ThePhpGuild\Qrcode\File\FileTypeExtractor;
-use ThePhpGuild\Qrcode\Matrix\MatrixBuilder;
-use ThePhpGuild\Qrcode\Matrix\PlaceAlignmentPatterns;
-use ThePhpGuild\Qrcode\Matrix\PlaceDataAndErrorCorrection;
-use ThePhpGuild\Qrcode\Matrix\PlaceFinderPatterns;
-use ThePhpGuild\Qrcode\Matrix\PlaceFormatAndVersionInfo;
-use ThePhpGuild\Qrcode\Matrix\PlaceTimingPatterns;
-use ThePhpGuild\Qrcode\MatrixRenderer\MatrixRendererFactory;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
+use ThePhpGuild\QrCode\File\FileType;
+use ThePhpGuild\QrCode\File\FileTypeExtractor;
+use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
+use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
+use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
+use ThePhpGuild\QrCode\Matrix\PlaceFinderPatterns;
+use ThePhpGuild\QrCode\Matrix\PlaceFormatAndVersionInfo;
+use ThePhpGuild\QrCode\Matrix\PlaceTimingPatterns;
+use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererFactory;
 
 class QrCodeGenerator
 {

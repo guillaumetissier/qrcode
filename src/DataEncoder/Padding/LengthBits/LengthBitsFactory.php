@@ -1,8 +1,8 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\DataEncoder\Padding\LengthBits;
+namespace ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits;
 
-use ThePhpGuild\Qrcode\DataEncoder\Mode\Mode;
+use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 
 class LengthBitsFactory
 {

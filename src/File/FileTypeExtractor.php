@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\Qrcode\File;
+namespace ThePhpGuild\QrCode\File;
 
 class FileTypeExtractor
 {
