@@ -22,5 +22,9 @@
         "ext-gd": "*",
         "ext-ctype": "*",
         "tecnickcom/tcpdf": "^6.8"
-    }
+    },
+    "post-install-cmd": [
+        "cp -n scripts/pre-commit .git/hooks/pre-commit || true",
+        "chmod +x .git/hooks/pre-commit"
+    ]
 }

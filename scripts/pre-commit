@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Running PHPUnit tests before commit..."
+
+vendor/bin/phpunit
+
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo "PHPUnit tests failed. Commit aborted."
+  exit 1
+fi
+
+echo "PHPUnit tests passed. Proceeding with commit."
