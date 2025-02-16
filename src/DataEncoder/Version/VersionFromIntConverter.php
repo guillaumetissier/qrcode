@@ -2,8 +2,13 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Version;
 
+use ThePhpGuild\QrCode\Exception\UnknownVersion;
+
 class VersionFromIntConverter
 {
+    /**
+     * @throws UnknownVersion
+     */
     public function fromInt(int $version): Version
     {
         return match ($version) {
@@ -46,7 +51,8 @@ class VersionFromIntConverter
             37 => Version::V37,
             38 => Version::V38,
             39 => Version::V39,
-            40 => Version::V40
+            40 => Version::V40,
+            default => throw new UnknownVersion($version),
         };
     }
 }
