@@ -12,9 +12,9 @@ class PngMatrixRenderer extends AbstractMatrixRenderer
         $image = $this->imageCreator->create($this->getMatrix(), $this->getScale());
         if (!$this->getFilename()) {
             header('Content-Type: image/png');
-            imagepng($image);
+            $image->toPng();
         } else {
-            imagepng($image, $this->getFilename());
+            $image->toPng($this->getFilename());
         }
     }
 }

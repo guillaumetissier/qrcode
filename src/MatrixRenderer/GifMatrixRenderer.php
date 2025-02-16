@@ -12,10 +12,9 @@ class GifMatrixRenderer extends AbstractMatrixRenderer
         $image = $this->imageCreator->create($this->getMatrix(), $this->getScale());
         if (!$this->getFilename()) {
             header('Content-Type: image/gif');
-            imagegif($image);
+            $image->toGif();
         } else {
-            imagegif($image, $this->getFilename());
+            $image->toGif($this->getFilename());
         }
-        imagedestroy($image);
     }
 }

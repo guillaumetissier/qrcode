@@ -12,10 +12,9 @@ class JpgMatrixRenderer extends AbstractMatrixRenderer
         $image = $this->imageCreator->create($this->getMatrix(), $this->getScale());
         if (!$this->getFilename()) {
             header('Content-Type: image/jpeg');
-            imagejpeg($image);
+            $image->toJpeg();
         } else {
-            imagejpeg($image, $this->getFilename());
+            $image->toJpeg($this->getFilename());
         }
-        imagedestroy($image);
     }
 }
