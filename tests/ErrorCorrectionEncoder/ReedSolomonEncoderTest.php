@@ -23,7 +23,7 @@ class ReedSolomonEncoderTest extends TestCase
     /**
      * @throws OutOfRangeException
      * @throws VariableNotSetException
-     * @dataProvider dataProviderAddErrorCorrection
+     * @dataProvider provideDataToAddErrorCorrection
      */
     public function testAddErrorCorrection(
         ErrorCorrectionLevel $errorCorrectionLevel,
@@ -41,7 +41,7 @@ class ReedSolomonEncoderTest extends TestCase
         );
     }
 
-    public static function dataProviderAddErrorCorrection(): array
+    public static function provideDataToAddErrorCorrection(): array
     {
         return [
             [

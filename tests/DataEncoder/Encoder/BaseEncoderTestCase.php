@@ -10,7 +10,7 @@ class BaseEncoderTestCase extends TestCase
     protected EncoderInterface $encoder;
 
     /**
-     * @dataProvider dataProviderEncode
+     * @dataProvider provideDataToEncode
      */
     public function testEncode(string $data, string $expectedEncodedData): void
     {
@@ -20,7 +20,7 @@ class BaseEncoderTestCase extends TestCase
         );
     }
 
-    public static function dataProviderEncode(): array
+    public static function provideDataToEncode(): array
     {
         throw new \Exception('Should not be used');
     }

@@ -30,7 +30,7 @@ class VersionSelectorFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderGetVersionSelector
+     * @dataProvider provideDataToGetVersionSelector
      */
     public function testGetVersionSelector(
         Mode $mode,
@@ -41,7 +41,7 @@ class VersionSelectorFactoryTest extends TestCase
         $this->assertInstanceOf($expectedClass, $this->factory->getVersionSelector($mode, $errorCorrectionLevel));
     }
 
-    public static function dataProviderGetVersionSelector(): array
+    public static function provideDataToGetVersionSelector(): array
     {
         return [
             [Mode::ALPHANUMERIC, ErrorCorrectionLevel::LOW, AlphanumericLowVersionSelector::class],

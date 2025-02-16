@@ -16,14 +16,14 @@ class ModeIndicatorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderGetModeIndicator
+     * @dataProvider provideDataToGetModeIndicator
      */
     public function testGetModeIndicator(Mode $mode, string $expectedModeIndicator): void
     {
         $this->assertSame($expectedModeIndicator, $this->indicator->setMode($mode)->getModeIndicator());
     }
 
-    public static function dataProviderGetModeIndicator(): array
+    public static function provideDataToGetModeIndicator(): array
     {
         return [
             [Mode::ALPHANUMERIC, '0010'],

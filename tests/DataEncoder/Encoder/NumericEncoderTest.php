@@ -11,7 +11,7 @@ class NumericEncoderTest extends BaseEncoderTestCase
         $this->encoder = new NumericEncoder();
     }
 
-    public static function dataProviderEncode(): array
+    public static function provideDataToEncode(): array
     {
         return [
             [

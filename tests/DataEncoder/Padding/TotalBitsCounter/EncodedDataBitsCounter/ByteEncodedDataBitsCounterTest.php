@@ -15,14 +15,14 @@ class ByteEncodedDataBitsCounterTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderCount
+     * @dataProvider provideDataToCount
      */
     public function testCount(int $dataLength, int $expectedTotalBits): void
     {
         $this->assertEquals($expectedTotalBits, $this->counter->setDataLength($dataLength)->count());
     }
 
-    public static function dataProviderCount(): array
+    public static function provideDataToCount(): array
     {
         return [
             [27, 216],

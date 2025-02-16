@@ -17,7 +17,7 @@ class NumECCodewordsCalculatorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderCalculate
+     * @dataProvider provideDataToCalculate
      */
     public function testCalculate(
         Version $version,
@@ -31,7 +31,7 @@ class NumECCodewordsCalculatorTest extends TestCase
         );
     }
 
-    public static function dataProviderCalculate(): array
+    public static function provideDataToCalculate(): array
     {
         return [
             [Version::V01, ErrorCorrectionLevel::LOW , 7],

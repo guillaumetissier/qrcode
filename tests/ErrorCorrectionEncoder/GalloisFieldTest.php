@@ -16,14 +16,14 @@ class GalloisFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderGetExp
+     * @dataProvider provideDataToGetExp
      */
     public function testGetExp(int $index, int $expectedExp): void
     {
         $this->assertEquals($expectedExp, $this->galloisField->getExp($index));
     }
 
-    public static function dataProviderGetExp(): array
+    public static function provideDataToGetExp(): array
     {
         return [
             [0, 1], [1, 2], [2, 4], [3, 8], [4, 16],
@@ -82,14 +82,14 @@ class GalloisFieldTest extends TestCase
 
     /**
      * @throws OutOfRangeException
-     * @dataProvider dataProviderAdd
+     * @dataProvider provideDataToAdd
      */
     public function testAdd(int $a, int $b, int $expectedSum): void
     {
         $this->assertEquals($expectedSum, $this->galloisField->add($a, $b));
     }
 
-    public static function dataProviderAdd(): array
+    public static function provideDataToAdd(): array
     {
         return [
             [123, 45, 86],
@@ -104,7 +104,7 @@ class GalloisFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderAddWithExceptions
+     * @dataProvider provideDataToAddWithExceptions
      */
     public function testAddWithExceptions(int $a, int $b): void
     {
@@ -112,7 +112,7 @@ class GalloisFieldTest extends TestCase
         $this->galloisField->add($a, $b);
     }
 
-    public static function dataProviderAddWithExceptions(): array
+    public static function provideDataToAddWithExceptions(): array
     {
         return [
             [-1, 45],
@@ -124,14 +124,14 @@ class GalloisFieldTest extends TestCase
 
     /**
      * @throws OutOfRangeException
-     * @dataProvider dataProviderMultiply
+     * @dataProvider provideDataToMultiply
      */
     public function testMultiply(int $a, int $b, int $expectedResult): void
     {
         $this->assertEquals($expectedResult, $this->galloisField->multiply($a, $b));
     }
 
-    public static function dataProviderMultiply(): array
+    public static function provideDataToMultiply(): array
     {
         return [
             [123, 45, 174],
@@ -146,7 +146,7 @@ class GalloisFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderMultiplyWithExceptions
+     * @dataProvider provideDataToMultiplyWithExceptions
      */
     public function testMultiplyWithExceptions(int $a, int $b): void
     {
@@ -154,7 +154,7 @@ class GalloisFieldTest extends TestCase
         $this->galloisField->add($a, $b);
     }
 
-    public static function dataProviderMultiplyWithExceptions(): array
+    public static function provideDataToMultiplyWithExceptions(): array
     {
         return [
             [-1, 45],

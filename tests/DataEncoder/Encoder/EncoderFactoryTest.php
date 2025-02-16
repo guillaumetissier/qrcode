@@ -17,14 +17,14 @@ class EncoderFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderGetEncoder
+     * @dataProvider provideDataToGetEncoder
      */
     public function testGetEncoder(Mode $mode, string $expectedEncoderClass): void
     {
         $this->assertInstanceOf($expectedEncoderClass, $this->factory->getEncoder($mode));
     }
 
-    public static function dataProviderGetEncoder(): array
+    public static function provideDataToGetEncoder(): array
     {
         return [
             [Mode::ALPHANUMERIC, AlphanumericEncoder::class],

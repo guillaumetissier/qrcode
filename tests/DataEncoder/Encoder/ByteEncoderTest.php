@@ -11,7 +11,7 @@ class ByteEncoderTest extends BaseEncoderTestCase
         $this->encoder = new ByteEncoder();
     }
 
-    public static function dataProviderEncode(): array
+    public static function provideDataToEncode(): array
     {
         return [
             [

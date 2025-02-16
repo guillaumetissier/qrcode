@@ -11,7 +11,7 @@ class AlphanumericEncoderTest extends BaseEncoderTestCase
         $this->encoder = new AlphanumericEncoder();
     }
 
-    public static function dataProviderEncode(): array
+    public static function provideDataToEncode(): array
     {
         return [
             [

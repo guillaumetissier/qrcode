@@ -16,14 +16,14 @@ class AlphanumericCciBitsCounterTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderCount
+     * @dataProvider provideDataToCount
      */
     public function testCount(Version $version, int $expectedTotal): void
     {
         $this->assertEquals($expectedTotal, $this->cciBitsCounter->setVersion($version)->count());
     }
 
-    public static function dataProviderCount(): array
+    public static function provideDataToCount(): array
     {
         return [
             [Version::V01, 9],

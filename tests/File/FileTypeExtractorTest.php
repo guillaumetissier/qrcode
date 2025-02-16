@@ -18,14 +18,14 @@ class FileTypeExtractorTest extends TestCase
 
     /**
      * @throws UnhandledFileTypeException
-     * @dataProvider dataProviderExtract
+     * @dataProvider provideDataToExtract
      */
     public function testExtract(string $filename, FileType $expectedFileType): void
     {
         $this->assertEquals($expectedFileType, $this->extractor->extract($filename));
     }
 
-    public static function dataProviderExtract(): array
+    public static function provideDataToExtract(): array
     {
         return [
             ['filename.gif', FileType::GIF],
