@@ -16,14 +16,14 @@ class ModeDetectorTest extends TestCase
     }
 
     /**
-     * @dataProvider providerDetect
+     * @dataProvider dataProviderDetect
      */
     public function testDetect(string $data, Mode $expectedMode): void
     {
         $this->assertEquals($expectedMode, $this->detector->setData($data)->detect());
     }
 
-    public static function providerDetect(): array
+    public static function dataProviderDetect(): array
     {
         return [
             ['0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:', Mode::ALPHANUMERIC],

@@ -16,7 +16,7 @@ class NumericLengthBitsTest extends TestCase
     }
 
     /**
-     * @dataProvider providerGetLengthBits
+     * @dataProvider dataProviderGetLengthBits
      */
     public function testGetLengthBits(int $dataLength, Version $version, string $expectedLengthBits): void
     {
@@ -26,7 +26,7 @@ class NumericLengthBitsTest extends TestCase
         );
     }
 
-    public static function providerGetLengthBits(): array
+    public static function dataProviderGetLengthBits(): array
     {
         return [
             [1, Version::V01, '0000000001'],

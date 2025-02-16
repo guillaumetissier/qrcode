@@ -23,7 +23,7 @@ class TotalBitsCounterBuilderTest extends TestCase
     }
 
     /**
-     * @dataProvider providerBuild
+     * @dataProvider dataProviderBuild
      */
     public function testBuild(Mode $mode, string $cciBitsCounterClass, string $encodedDataBitsCounterClass): void
     {
@@ -36,7 +36,7 @@ class TotalBitsCounterBuilderTest extends TestCase
         $this->assertInstanceOf($encodedDataBitsCounterClass, $properties[3]->getValue($totalBitsCounter));
     }
 
-    public static function providerBuild(): array
+    public static function dataProviderBuild(): array
     {
         return [
             [Mode::ALPHANUMERIC, AlphanumericCciBitsCounter::class, AlphanumericEncodedDataBitsCounter::class],

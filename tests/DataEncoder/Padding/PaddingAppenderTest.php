@@ -17,7 +17,7 @@ class PaddingAppenderTest extends TestCase
 {
     /**
      * @throws Exception
-     * @dataProvider providerAppendPadding
+     * @dataProvider dataProviderAppendPadding
      */
     public function testAppendPadding(
         string $data,
@@ -41,7 +41,7 @@ class PaddingAppenderTest extends TestCase
         );
     }
 
-    public static function providerAppendPadding(): array
+    public static function dataProviderAppendPadding(): array
     {
         return [
             [
