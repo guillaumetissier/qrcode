@@ -2,13 +2,10 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
 
-use InvalidArgumentException;
-
 class AlphanumericCciBitsCounter extends AbstractCciBitsCounter
 {
     public function count(): int
     {
-
         if ($this->version->toInt() <= 9) {
             return 9;
         }
