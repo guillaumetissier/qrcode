@@ -1,6 +1,6 @@
 <?php
 
-namespace ErrorCorrectionEncoder;
+namespace Tests\ErrorCorrectionEncoder;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
@@ -17,10 +17,6 @@ class NumECCodewordsCalculatorTest extends TestCase
     }
 
     /**
-     * @param Version $version
-     * @param ErrorCorrectionLevel $errorCorrectionLevel
-     * @param int $expectedNumEcCodewords
-     * @return void
      * @dataProvider dataProviderCalculate
      */
     public function testCalculate(

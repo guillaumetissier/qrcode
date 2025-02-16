@@ -3,6 +3,8 @@
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Exception\OutOfRangeException;
+use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 
 class ReedSolomonEncoder
 {
@@ -30,8 +32,19 @@ class ReedSolomonEncoder
         return $this;
     }
 
+    /**
+     * @throws OutOfRangeException
+     * @throws VariableNotSetException
+     */
     public function addErrorCorrection(array $data): array
     {
+        if (!$this->errorCorrectionLevel) {
+            throw new VariableNotSetException('errorCorrectionLevel');
+        }
+        if (!$this->version) {
+            throw new VariableNotSetException('version');
+        }
+
         $numECCodewords = $this->numECCodewordsCalculator
             ->setVersion($this->version)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
@@ -44,6 +57,9 @@ class ReedSolomonEncoder
         return array_merge($data, $remainder);
     }
 
+    /**
+     * @throws OutOfRangeException
+     */
     private function createGeneratorPolynomial(int $numECCodewords): array
     {
         $generatorPolynomial = [1];
@@ -56,6 +72,9 @@ class ReedSolomonEncoder
         return $generatorPolynomial;
     }
 
+    /**
+     * @throws OutOfRangeException
+     */
     private function multiplyPolynomials(array $p1, array $p2): array
     {
         $result = array_fill(0, count($p1) + count($p2) - 1, 0);
@@ -72,6 +91,9 @@ class ReedSolomonEncoder
         return $result;
     }
 
+    /**
+     * @throws OutOfRangeException
+     */
     private function calculateRemainder($data, $generator): array
     {
         $dataLength = count($data);

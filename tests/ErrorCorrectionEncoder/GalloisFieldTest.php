@@ -1,6 +1,6 @@
 <?php
 
-namespace ErrorCorrectionEncoder;
+namespace Tests\ErrorCorrectionEncoder;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
