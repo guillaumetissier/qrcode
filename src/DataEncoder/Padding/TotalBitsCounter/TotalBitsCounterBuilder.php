@@ -10,23 +10,23 @@ use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCount
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\ByteEncodedDataBitsCounter;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\NumericEncodedDataBitsCounter;
 
-class TotalBitsCounterBuilder
-{
-    public function getTotalBitsCounter(Mode $mode): TotalBitsCounter
+    class TotalBitsCounterBuilder
     {
-        return match ($mode) {
-            Mode::ALPHANUMERIC => new TotalBitsCounter(
-                new AlphanumericCciBitsCounter(),
-                new AlphanumericEncodedDataBitsCounter()
-            ),
-            Mode::BYTE => new TotalBitsCounter(
-                new ByteCciBitsCounter(),
-                new ByteEncodedDataBitsCounter()
-            ),
-            Mode::NUMERIC => new TotalBitsCounter(
-                new NumericCciBitsCounter(),
-                new NumericEncodedDataBitsCounter()
-            ),
-        };
+        public function getTotalBitsCounter(Mode $mode): TotalBitsCounter
+        {
+            return match ($mode) {
+                Mode::ALPHANUMERIC => new TotalBitsCounter(
+                    new AlphanumericCciBitsCounter(),
+                    new AlphanumericEncodedDataBitsCounter()
+                ),
+                Mode::BYTE => new TotalBitsCounter(
+                    new ByteCciBitsCounter(),
+                    new ByteEncodedDataBitsCounter()
+                ),
+                Mode::NUMERIC => new TotalBitsCounter(
+                    new NumericCciBitsCounter(),
+                    new NumericEncodedDataBitsCounter()
+                ),
+            };
+        }
     }
-}
