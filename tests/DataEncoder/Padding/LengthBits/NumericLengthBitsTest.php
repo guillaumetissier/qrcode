@@ -1,6 +1,6 @@
 <?php
 
-namespace DataEncoder\Padding\LengthBits;
+namespace Tests\DataEncoder\Padding\LengthBits;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\NumericLengthBits;

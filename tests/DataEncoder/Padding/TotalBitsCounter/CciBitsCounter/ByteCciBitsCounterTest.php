@@ -1,6 +1,6 @@
 <?php
 
-namespace DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
+namespace Tests\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\ByteCciBitsCounter;
