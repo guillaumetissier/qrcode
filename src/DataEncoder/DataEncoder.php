@@ -54,7 +54,7 @@ class DataEncoder
             ->setMode($mode)
             ->setVersion($version)
             ->setData($encodedData)
-            ->addPadding();
+            ->appendPadding();
 
         return $paddedData;
     }

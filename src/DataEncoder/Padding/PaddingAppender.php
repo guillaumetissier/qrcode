@@ -43,13 +43,13 @@ class PaddingAppender
         return $this;
     }
 
-    public function addPadding(): string
+    public function appendPadding(): string
     {
         $dataLength = strlen($this->data);
         $totalBits = $this->totalBitsCounterBuilder
             ->getTotalBitsCounter($this->mode)
-                ->setVersion($this->version)
                 ->setDataLength($dataLength)
+                ->setVersion($this->version)
                 ->count();
 
         $lengthBits = $this->lengthBitsFactory
