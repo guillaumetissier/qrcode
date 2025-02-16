@@ -2,6 +2,8 @@
 
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
+use ThePhpGuild\QrCode\Exception\OutOfRangeException;
+
 class GalloisField
 {
     private array $exp = [];
@@ -18,7 +20,11 @@ class GalloisField
                 $x ^= $this->primitivePolynomial;
             }
         }
-        for ($i = 255; $i < 512; $i++) {
+
+        $this->exp[255] = 1;
+        $this->log[0] = -1;
+
+        for ($i = 256; $i < 512; $i++) {
             $this->exp[$i] = $this->exp[$i - 255];
         }
     }
@@ -28,34 +34,30 @@ class GalloisField
         return $this->exp[$i];
     }
 
+    /**
+     * @throws OutOfRangeException
+     */
     public function add(int $a, int $b): int
     {
+        OutOfRangeException::ensureWithinRange($a, [0, 255]);
+        OutOfRangeException::ensureWithinRange($b, [0, 255]);
+
         return $a ^ $b;
     }
 
-    public function subtract(int $a, int $b): int
-    {
-        return $this->add($a, $b);
-    }
-
+    /**
+     * @throws OutOfRangeException
+     */
     public function multiply(int $a, int $b): int
     {
+        OutOfRangeException::ensureWithinRange($a, [0, 255]);
+        OutOfRangeException::ensureWithinRange($b, [0, 255]);
+
         if ($a === 0 || $b === 0) {
             return 0;
         }
         $logSum = ($this->log[$a] + $this->log[$b]) % 255;
-        return $this->exp[$logSum];
-    }
 
-    public function divide(int $a, int $b): int
-    {
-        if ($b === 0) {
-            throw new \InvalidArgumentException("Division par zéro dans le corps de Galois");
-        }
-        if ($a === 0) {
-            return 0;
-        }
-        $logDiff = ($this->log[$a] - $this->log[$b] + 255) % 255;
-        return $this->exp[$logDiff];
+        return $this->exp[$logSum];
     }
 }

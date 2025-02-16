@@ -2,15 +2,23 @@
 
 namespace ThePhpGuild\QrCode\File;
 
+use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
+
 class FileTypeExtractor
 {
+    /**
+     * @throws UnhandledFileTypeException
+     */
     public function extract($filename): FileType
     {
-        return match (pathinfo($filename, PATHINFO_EXTENSION)) {
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+        return match ($extension) {
             'gif' => FileType::GIF,
             'pdf' => FileType::PDF,
             'png' => FileType::PNG,
             'jpeg', 'jpg' => FileType::JPG,
+            default => throw new UnhandledFileTypeException($extension),
         };
     }
 }
