@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\File;
+namespace ThePhpGuild\QrCode\MatrixRenderer\File;
 
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
 
@@ -9,7 +9,7 @@ class FileTypeExtractor
     /**
      * @throws UnhandledFileTypeException
      */
-    public function extract($filename): FileType
+    public static function extract($filename): FileType
     {
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 

@@ -6,8 +6,8 @@ use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
-use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
+use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
@@ -16,15 +16,15 @@ use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
-use ThePhpGuild\QrCode\File\FileType;
-use ThePhpGuild\QrCode\File\FileTypeExtractor;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
 use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
 use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
 use ThePhpGuild\QrCode\Matrix\PlaceFinderPatterns;
 use ThePhpGuild\QrCode\Matrix\PlaceFormatAndVersionInfo;
 use ThePhpGuild\QrCode\Matrix\PlaceTimingPatterns;
-use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererFactory;
+use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
+use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
+use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
 
 class QrCodeGenerator
 {
@@ -63,7 +63,7 @@ class QrCodeGenerator
                     new PlaceFormatAndVersionInfo(),
                     new PlaceDataAndErrorCorrection()
                 ),
-                new MatrixRendererFactory(),
+                new MatrixRendererBuilder(),
                 new FileTypeExtractor()
             );
         }
@@ -71,11 +71,11 @@ class QrCodeGenerator
     }
 
     public function __construct(
-        private readonly DataEncoder $dataEncoder,
-        private readonly ReedSolomonEncoder $reedSolomonEncoder,
-        private readonly MatrixBuilder $matrixBuilder,
-        private readonly MatrixRendererFactory $matrixRendererFactory,
-        private readonly FileTypeExtractor $fileTypeExtractor
+        private readonly DataEncoder           $dataEncoder,
+        private readonly ReedSolomonEncoder    $reedSolomonEncoder,
+        private readonly MatrixBuilder         $matrixBuilder,
+        private readonly MatrixRendererBuilder $matrixRendererFactory,
+        private readonly FileTypeExtractor     $fileTypeExtractor
     )
     {
     }

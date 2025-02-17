@@ -1,28 +1,21 @@
 <?php
 
-namespace File;
+namespace Tests\MatrixRenderer\File;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\File\FileType;
-use ThePhpGuild\QrCode\File\FileTypeExtractor;
+use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
+use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
 
 class FileTypeExtractorTest extends TestCase
 {
-    private FileTypeExtractor $extractor;
-
-    public function setUp(): void
-    {
-        $this->extractor = new FileTypeExtractor();
-    }
-
     /**
      * @throws UnhandledFileTypeException
      * @dataProvider provideDataToExtract
      */
     public function testExtract(string $filename, FileType $expectedFileType): void
     {
-        $this->assertEquals($expectedFileType, $this->extractor->extract($filename));
+        $this->assertEquals($expectedFileType, FileTypeExtractor::extract($filename));
     }
 
     public static function provideDataToExtract(): array
@@ -39,6 +32,6 @@ class FileTypeExtractorTest extends TestCase
     public function testExtractWithInvalidExtension(): void
     {
         $this->expectException(UnhandledFileTypeException::class);
-        $this->extractor->extract('/directory/filename.dummy');
+        FileTypeExtractor::extract('/directory/filename.dummy');
     }
 }
