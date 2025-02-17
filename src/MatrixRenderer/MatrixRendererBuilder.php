@@ -2,19 +2,26 @@
 
 namespace ThePhpGuild\QrCode\MatrixRenderer;
 
+use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
 use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
+use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 use ThePhpGuild\QrCode\MatrixRenderer\Painter\ImagePainter;
 use ThePhpGuild\QrCode\MatrixRenderer\Painter\PdfDocumentPainter;
 
 class MatrixRendererBuilder
 {
-    public function getRenderer(FileType $fileType): MatrixRendererInterface
+    /**
+     * @throws UnhandledFileTypeException
+     */
+    public function buildRenderer(OutputOptions $outputOptions): MatrixRendererInterface
     {
-        return match ($fileType) {
+        $renderer = match ($outputOptions->getFileType()) {
             FileType::GIF,
             FileType::JPG,
             FileType::PNG => new MatrixRenderer(new ImagePainter()),
             FileType::PDF => new MatrixRenderer(new PdfDocumentPainter()),
         };
+
+        return $renderer->setOutputOptions($outputOptions);
     }
 }

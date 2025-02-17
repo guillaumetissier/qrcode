@@ -22,9 +22,8 @@ use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
 use ThePhpGuild\QrCode\Matrix\PlaceFinderPatterns;
 use ThePhpGuild\QrCode\Matrix\PlaceFormatAndVersionInfo;
 use ThePhpGuild\QrCode\Matrix\PlaceTimingPatterns;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
 use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
+use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 
 class QrCodeGenerator
 {
@@ -32,8 +31,7 @@ class QrCodeGenerator
 
     private string $data;
     private ErrorCorrectionLevel $errorCorrectionLevel = ErrorCorrectionLevel::LOW;
-    private ?string $filename = null;
-    private FileType $fileType = FileType::PNG;
+    private ?OutputOptions $outputOptions = null;
     private ?Version $version = null;
 
     public static function getQrCodeGenerator(): self
@@ -63,8 +61,7 @@ class QrCodeGenerator
                     new PlaceFormatAndVersionInfo(),
                     new PlaceDataAndErrorCorrection()
                 ),
-                new MatrixRendererBuilder(),
-                new FileTypeExtractor()
+                new MatrixRendererBuilder()
             );
         }
         return self::$Generator;
@@ -74,33 +71,9 @@ class QrCodeGenerator
         private readonly DataEncoder           $dataEncoder,
         private readonly ReedSolomonEncoder    $reedSolomonEncoder,
         private readonly MatrixBuilder         $matrixBuilder,
-        private readonly MatrixRendererBuilder $matrixRendererFactory,
-        private readonly FileTypeExtractor     $fileTypeExtractor
+        private readonly MatrixRendererBuilder $matrixRendererBuilder
     )
     {
-    }
-
-    public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
-    public function setFilename(string $filename): self
-    {
-        $this->filename = $filename;
-        $this->fileType = $this->fileTypeExtractor->extract($filename);
-
-        return $this;
-    }
-
-    public function setFileType(FileType $fileType): self
-    {
-        $this->filename = null;
-        $this->fileType = $fileType;
-
-        return $this;
     }
 
     public function setData(string $data): self
@@ -110,6 +83,26 @@ class QrCodeGenerator
         return $this;
     }
 
+    public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
+    {
+        $this->errorCorrectionLevel = $errorCorrectionLevel;
+
+        return $this;
+    }
+
+    public function setOutputOptions(OutputOptions $outputOptions): self
+    {
+        $this->outputOptions = $outputOptions;
+
+        return $this;
+    }
+
+    /**
+     * @throws Exception\NoDataException
+     * @throws Exception\OutOfRangeException
+     * @throws Exception\UnhandledFileTypeException
+     * @throws Exception\VariableNotSetException
+     */
     public function generate(): void
     {
         $encodedData = $this->dataEncoder
@@ -127,11 +120,9 @@ class QrCodeGenerator
             ->setData(implode($dataWithErrorCorrection))
             ->build();
 
-        $this->matrixRendererFactory
-            ->getRenderer($this->fileType)
-            ->setFilename($this->filename)
+        $this->matrixRendererBuilder
+            ->buildRenderer($this->outputOptions)
             ->setMatrix($matrix)
             ->render();
     }
 }
-
