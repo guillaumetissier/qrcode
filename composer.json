@@ -1,5 +1,6 @@
 {
     "name": "guillaumetissier/qrcode",
+    "version": "0.1.0",
     "description": "Qr Code Generator for numeric, alphanumeric and byte data",
     "license": "MIT",
     "require-dev": {
