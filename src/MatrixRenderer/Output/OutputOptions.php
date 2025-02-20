@@ -26,18 +26,20 @@ class OutputOptions
             $this->quality = $options['quality'];
         }
         if (isset($options['scale']) && is_int($options['scale'])) {
-            $this->quality = $options['scale'];
+            $this->scale = $options['scale'];
         }
     }
 
     /**
      * @throws InvalidOutputOptions
      */
-    public function ensureIsValid(): void
+    public function ensureIsValid(): bool
     {
-        if (!$this->filename && !!$this->fileType) {
+        if (!$this->filename && !$this->fileType) {
             throw new InvalidOutputOptions();
         }
+
+        return true;
     }
 
     public function getContentType(): ?string
