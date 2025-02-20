@@ -4,29 +4,27 @@ namespace Tests\MatrixRenderer\Painter;
 
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Exception\NoDataException;
-use ThePhpGuild\QrCode\MatrixRenderer\Painter\ImagePainter;
-use ThePhpGuild\QrCode\MatrixRenderer\Canvas\Image;
+use ThePhpGuild\QrCode\MatrixRenderer\Canvas\PdfDocument;
+use ThePhpGuild\QrCode\MatrixRenderer\Painter\PdfDocumentPainter;
 
-class ImagePainterTest extends TestCase
+class PdfDocumentPainterTest extends TestCase
 {
-    private ImagePainter $imagePainter;
+    private PdfDocumentPainter $pdfDocumentPainter;
 
     public function setUp(): void
     {
-        $this->imagePainter = new ImagePainter();
+        $this->pdfDocumentPainter = new PdfDocumentPainter();
     }
 
     /**
      * @throws Exception
-     * @throws NoDataException
      * @dataProvider provideDataForPaint
      */
     public function testPaint(array $data, int $expectedCallCounts): void
     {
-        $image = $this->createMock(Image::class);
+        $image = $this->createMock(PdfDocument::class);
         $image->expects($this->exactly($expectedCallCounts))->method('paintRectangle');
-        $this->imagePainter->paint($image, $data, 10);
+        $this->pdfDocumentPainter->paint($image, $data, 10);
     }
 
     public static function provideDataForPaint(): array
@@ -34,15 +32,15 @@ class ImagePainterTest extends TestCase
         return [
             [
                 array_fill(0, 10, array_fill(0, 10, 0)),
-                1
+                0
             ],
             [
-                array_fill(0, 10, [0, 0, 0, 0, 0, 1, 1, 1, 1, 1]),
-                51
+                array_fill(0, 10, [0, 0, 1, 0, 0, 1, 1, 0, 0, 1]),
+                40
             ],
             [
                 array_fill(0, 10, array_fill(0, 10, 1)),
-                101
+                100
             ],
         ];
     }
