@@ -22,7 +22,9 @@
         "php": "^8.1",
         "ext-gd": "*",
         "ext-ctype": "*",
-        "tecnickcom/tcpdf": "^6.8"
+        "tecnickcom/tcpdf": "^6.8",
+        "symfony/console": "^6.4",
+        "monolog/monolog": "^3.8"
     },
     "post-install-cmd": [
         "cp -n scripts/pre-commit .git/hooks/pre-commit || true",

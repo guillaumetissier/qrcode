@@ -9,6 +9,11 @@ use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
 
 class OutputOptions
 {
+    public const FILENAME = 'filename';
+    public const FILETYPE = 'fileType';
+    public const QUALITY = 'quality';
+    public const SCALE = 'scale';
+
     private ?string $filename = null;
     private ?FileType $fileType = null;
     private int $quality = 80;
@@ -16,17 +21,17 @@ class OutputOptions
 
     public function __construct(array $options)
     {
-        if (isset($options['filename']) && is_string($options['filename'])) {
-            $this->filename = $options['filename'];
+        if (isset($options[self::FILENAME]) && is_string($options[self::FILENAME])) {
+            $this->filename = $options[self::FILENAME];
         }
-        if (isset($options['fileType']) && $options['fileType'] instanceof FileType) {
-            $this->fileType = $options['fileType'];
+        if (isset($options[self::FILETYPE]) && $options[self::FILETYPE] instanceof FileType) {
+            $this->fileType = $options[self::FILETYPE];
         }
-        if (isset($options['quality']) && is_int($options['quality'])) {
-            $this->quality = $options['quality'];
+        if (isset($options[self::QUALITY]) && is_int($options[self::QUALITY])) {
+            $this->quality = $options[self::QUALITY];
         }
-        if (isset($options['scale']) && is_int($options['scale'])) {
-            $this->scale = $options['scale'];
+        if (isset($options[self::SCALE]) && is_int($options[self::SCALE])) {
+            $this->scale = $options[self::SCALE];
         }
     }
 

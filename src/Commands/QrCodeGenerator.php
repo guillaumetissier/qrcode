@@ -1,7 +1,9 @@
 <?php
 
-namespace ThePhpGuild\QrCode;
+namespace ThePhpGuild\QrCode\Commands;
 
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
@@ -16,6 +18,7 @@ use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
+use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
 use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
 use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
@@ -61,17 +64,19 @@ class QrCodeGenerator
                     new PlaceFormatAndVersionInfo(),
                     new PlaceDataAndErrorCorrection()
                 ),
-                new MatrixRendererBuilder()
+                new MatrixRendererBuilder(),
+                new Logger('console')
             );
         }
         return self::$Generator;
     }
 
     public function __construct(
-        private readonly DataEncoder           $dataEncoder,
-        private readonly ReedSolomonEncoder    $reedSolomonEncoder,
-        private readonly MatrixBuilder         $matrixBuilder,
-        private readonly MatrixRendererBuilder $matrixRendererBuilder
+        private readonly DataEncoder $dataEncoder,
+        private readonly ReedSolomonEncoder $reedSolomonEncoder,
+        private readonly MatrixBuilder $matrixBuilder,
+        private readonly MatrixRendererBuilder $matrixRendererBuilder,
+        private readonly LoggerInterface $logger
     )
     {
     }
@@ -103,17 +108,23 @@ class QrCodeGenerator
      * @throws Exception\UnhandledFileTypeException
      * @throws Exception\VariableNotSetException
      */
-    public function generate(): void
+    public function generate(): string
     {
         $encodedData = $this->dataEncoder
             ->setData($this->data)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
+        $this->logger->info('Encoded data: ' . $encodedData);
+
         $dataWithErrorCorrection = $this->reedSolomonEncoder
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->setVersion($this->version)
             ->addErrorCorrection(str_split($encodedData));
+
+        $this->logger->info('Data with error correction: ' . implode('--', $dataWithErrorCorrection));
+
+        return implode('--', $dataWithErrorCorrection);
 
         $matrix = $this->matrixBuilder
             ->setVersion($this->version)

@@ -22,9 +22,9 @@ class OutputOptionsTest extends TestCase
     public static function provideDataForEnsureIsValid(): array
     {
         return [
-            [['fileType' => FileType::PDF, 'foo' => 'bar']],
-            [['filename' => 'some/filename.pdf', 'foo' => 'bar']],
-            [['fileType' => FileType::PDF, 'filename' => 'some/filename.pdf']],
+            [[OutputOptions::FILETYPE => FileType::PDF, 'foo' => 'bar']],
+            [[OutputOptions::FILENAME => 'some/filename.pdf', 'foo' => 'bar']],
+            [[OutputOptions::FILETYPE => FileType::PDF, OutputOptions::FILENAME => 'some/filename.pdf']],
         ];
     }
 
@@ -34,7 +34,7 @@ class OutputOptionsTest extends TestCase
     public function testThrowInvalidOutputOptions(): void
     {
         $this->expectException(InvalidOutputOptions::class);
-        $outputOptions = new OutputOptions(['foo' => 'bar', 'quality' => 75, 'scale' => 7]);
+        $outputOptions = new OutputOptions(['foo' => 'bar', OutputOptions::QUALITY => 75, OutputOptions::SCALE => 7]);
         $outputOptions->ensureIsValid();
     }
 
@@ -51,12 +51,12 @@ class OutputOptionsTest extends TestCase
     public static function provideDataForGetContentType(): array
     {
         return [
-            [['filename' => 'some/filename.pdf', 'foo' => 'bar'], null],
-            [['fileType' => FileType::GIF, 'foo' => 'bar'], 'image/gif'],
-            [['fileType' => FileType::JPG, 'foo' => 'bar'], 'image/jpeg'],
-            [['fileType' => FileType::PNG, 'foo' => 'bar'], 'image/png'],
-            [['fileType' => FileType::PDF, 'foo' => 'bar'], 'application/pdf'],
-            [['fileType' => FileType::PDF, 'filename' => 'some/filename.jpeg'], null],
+            [[OutputOptions::FILENAME => 'some/filename.pdf', 'foo' => 'bar'], null],
+            [[OutputOptions::FILETYPE => FileType::GIF, 'foo' => 'bar'], 'image/gif'],
+            [[OutputOptions::FILETYPE => FileType::JPG, 'foo' => 'bar'], 'image/jpeg'],
+            [[OutputOptions::FILETYPE => FileType::PNG, 'foo' => 'bar'], 'image/png'],
+            [[OutputOptions::FILETYPE => FileType::PDF, 'foo' => 'bar'], 'application/pdf'],
+            [[OutputOptions::FILETYPE => FileType::PDF, OutputOptions::FILENAME => 'some/filename.jpeg'], null],
         ];
     }
 
@@ -82,28 +82,32 @@ class OutputOptionsTest extends TestCase
     {
         return [
             [
-                ['filename' => 'some/filename.pdf', 'foo' => 'bar'],
+                [OutputOptions::FILENAME => 'some/filename.pdf', 'foo' => 'bar'],
                 'some/filename.pdf',
                 FileType::PDF,
                 80,
                 10
             ],
             [
-                ['fileType' => FileType::GIF, 'scale' => 2, 'foo' => 'bar'],
+                [OutputOptions::FILETYPE => FileType::GIF, OutputOptions::SCALE => 2, 'foo' => 'bar'],
                 null,
                 FileType::GIF,
                 80,
                 2
             ],
             [
-                ['fileType' => FileType::JPG, 'quality' => 70, 'foo' => 'bar'],
+                [OutputOptions::FILETYPE => FileType::JPG, OutputOptions::QUALITY => 70, 'foo' => 'bar'],
                 null,
                 FileType::JPG,
                 70,
                 10
             ],
             [
-                ['fileType' => FileType::PNG, 'filename' => 'some/filename.pdf', 'foo' => 'bar'],
+                [
+                    OutputOptions::FILETYPE => FileType::PNG,
+                    OutputOptions::FILENAME => 'some/filename.pdf',
+                    'foo' => 'bar'
+                ],
                 'some/filename.pdf',
                 FileType::PDF,
                 80,
