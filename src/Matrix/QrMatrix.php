@@ -11,7 +11,7 @@ class QrMatrix
 
     public function __construct(Version $version)
     {
-        $this->size = 21 + 4 * ($version->toInt() - 1);
+        $this->size = 21 + 4 * ($version->value - 1);
         $this->matrix = array_fill(0, $this->size, array_fill(0, $this->size, null));
     }
 

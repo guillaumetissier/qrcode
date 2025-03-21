@@ -17,7 +17,7 @@ class PlaceAlignmentPatterns extends AbstractPlacePatterns
 
     public function execute(): QrMatrix
     {
-        if ($this->version->toInt() < 2) {
+        if ($this->version->value < 2) {
             return $this->matrix;
         }
 
@@ -50,7 +50,7 @@ class PlaceAlignmentPatterns extends AbstractPlacePatterns
     private function getAlignmentPatternPositions(): array
     {
         $positions = [6];
-        $step = ($this->matrix->getSize() - 13) / (floor($this->version->toInt() / 7) + 1);
+        $step = ($this->matrix->getSize() - 13) / (floor($this->version->value / 7) + 1);
 
         for ($pos = $this->matrix->getSize() - 7; $pos > 6; $pos -= $step) {
             array_unshift($positions, (int)$pos);

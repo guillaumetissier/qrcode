@@ -7,9 +7,11 @@ use Psr\Log\LogLevel;
 
 class LevelFilteredLogger implements LoggerInterface
 {
-    private ?LoggerInterface $logger = null;
-
     private ?string $logLevel = null;
+
+    public function __construct(private ?LoggerInterface $logger = null)
+    {
+    }
 
     public function setLogger(LoggerInterface $logger): void
     {

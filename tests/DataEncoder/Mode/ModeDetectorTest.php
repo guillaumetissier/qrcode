@@ -5,6 +5,7 @@ namespace Tests\DataEncoder\Mode;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class ModeDetectorTest extends TestCase
 {
@@ -12,7 +13,7 @@ class ModeDetectorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->detector = new ModeDetector();
+        $this->detector = new ModeDetector($this->createMock(LevelFilteredLogger::class));
     }
 
     /**

@@ -3,16 +3,12 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class BaseVersionSelector implements VersionSelectorInterface
 {
     protected array $capacityTable = [];
 
-    protected function __construct(
-        readonly private VersionFromIntConverter $converter,
-        array $capacityTable
-    ) {
+    protected function __construct(array $capacityTable) {
         $this->capacityTable = $capacityTable;
     }
 
@@ -20,7 +16,7 @@ class BaseVersionSelector implements VersionSelectorInterface
     {
         foreach ($this->capacityTable as $version => $capacity) {
             if ($dataLength <= $capacity) {
-                return $this->converter->fromInt($version);
+                return Version::from($version);
             }
         }
 

@@ -6,6 +6,6 @@ class ByteCciBitsCounter extends AbstractCciBitsCounter
 {
     public function count(): int
     {
-        return $this->version->toInt() <= 9 ? 8 : 16;
+        return $this->version->value <= 9 ? 8 : 16;
     }
 }

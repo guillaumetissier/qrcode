@@ -5,7 +5,6 @@ namespace Tests\DataEncoder\Version\Selector;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericQuartileVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class NumericQuartileVersionSelectorTest extends TestCase
 {
@@ -13,7 +12,7 @@ class NumericQuartileVersionSelectorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->selector = new NumericQuartileVersionSelector(new VersionFromIntConverter());
+        $this->selector = new NumericQuartileVersionSelector();
     }
 
     /**

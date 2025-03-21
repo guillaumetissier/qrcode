@@ -3,35 +3,37 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class VersionSelectorFactory
 {
-    public function __construct(readonly private VersionFromIntConverter $converter)
+    public function __construct(private readonly LevelFilteredLogger $logger)
     {
     }
 
     public function getVersionSelector(Mode $mode, ErrorCorrectionLevel $errorCorrectionLevel): VersionSelectorInterface
     {
+        $this->logger->debug("Get version selector for mode {$mode->value} and ECL {$errorCorrectionLevel->value}");
+
         return match ($mode) {
             Mode::ALPHANUMERIC => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new AlphanumericLowVersionSelector($this->converter),
-                ErrorCorrectionLevel::MEDIUM => new AlphanumericMediumVersionSelector($this->converter),
-                ErrorCorrectionLevel::QUARTILE => new AlphanumericQuartileVersionSelector($this->converter),
-                ErrorCorrectionLevel::HIGH => new AlphanumericHighVersionSelector($this->converter),
+                ErrorCorrectionLevel::LOW => new AlphanumericLowVersionSelector(),
+                ErrorCorrectionLevel::MEDIUM => new AlphanumericMediumVersionSelector(),
+                ErrorCorrectionLevel::QUARTILE => new AlphanumericQuartileVersionSelector(),
+                ErrorCorrectionLevel::HIGH => new AlphanumericHighVersionSelector(),
             },
             Mode::NUMERIC => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new NumericLowVersionSelector($this->converter),
-                ErrorCorrectionLevel::MEDIUM => new NumericMediumVersionSelector($this->converter),
-                ErrorCorrectionLevel::QUARTILE => new NumericQuartileVersionSelector($this->converter),
-                ErrorCorrectionLevel::HIGH => new NumericHighVersionSelector($this->converter),
+                ErrorCorrectionLevel::LOW => new NumericLowVersionSelector(),
+                ErrorCorrectionLevel::MEDIUM => new NumericMediumVersionSelector(),
+                ErrorCorrectionLevel::QUARTILE => new NumericQuartileVersionSelector(),
+                ErrorCorrectionLevel::HIGH => new NumericHighVersionSelector(),
             },
             Mode::BYTE => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new ByteLowVersionSelector($this->converter),
-                ErrorCorrectionLevel::MEDIUM => new ByteMediumVersionSelector($this->converter),
-                ErrorCorrectionLevel::QUARTILE => new ByteQuartileVersionSelector($this->converter),
-                ErrorCorrectionLevel::HIGH => new ByteHighVersionSelector($this->converter),
+                ErrorCorrectionLevel::LOW => new ByteLowVersionSelector(),
+                ErrorCorrectionLevel::MEDIUM => new ByteMediumVersionSelector(),
+                ErrorCorrectionLevel::QUARTILE => new ByteQuartileVersionSelector(),
+                ErrorCorrectionLevel::HIGH => new ByteHighVersionSelector(),
             }
         };
     }

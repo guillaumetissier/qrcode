@@ -2,20 +2,10 @@
 
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
-enum ErrorCorrectionLevel
+enum ErrorCorrectionLevel: string
 {
-    case LOW;
-    case MEDIUM;
-    case QUARTILE;
-    case HIGH;
-
-    public function toString(): string
-    {
-        return match ($this) {
-            ErrorCorrectionLevel::LOW => 'L',
-            ErrorCorrectionLevel::MEDIUM => 'M',
-            ErrorCorrectionLevel::QUARTILE => 'Q',
-            ErrorCorrectionLevel::HIGH => 'H'
-        };
-    }
+    case LOW = 'L';
+    case MEDIUM = 'M';
+    case QUARTILE = 'Q';
+    case HIGH = 'H';
 }

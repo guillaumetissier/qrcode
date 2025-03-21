@@ -2,9 +2,9 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Mode;
 
-enum Mode
+enum Mode: string
 {
-    case NUMERIC;
-    case ALPHANUMERIC;
-    case BYTE;
+    case NUMERIC = "NUMERIC";
+    case ALPHANUMERIC = "ALPHANUMERIC";
+    case BYTE = "BYTE";
 }

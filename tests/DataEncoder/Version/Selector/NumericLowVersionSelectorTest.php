@@ -5,7 +5,6 @@ namespace Tests\DataEncoder\Version\Selector;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericLowVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class NumericLowVersionSelectorTest extends TestCase
 {
@@ -13,7 +12,7 @@ class NumericLowVersionSelectorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->selector = new NumericLowVersionSelector(new VersionFromIntConverter());
+        $this->selector = new NumericLowVersionSelector();
     }
 
     /**

@@ -13,12 +13,12 @@ use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
 use ThePhpGuild\QrCode\Exception;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
 use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
 use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
@@ -37,15 +37,14 @@ class QrCodeGenerator
     private ?OutputOptions $outputOptions = null;
     private ?Version $version = null;
 
-    public static function getQrCodeGenerator(): self
+    public static function getQrCodeGenerator(?LoggerInterface $logger = null): self
     {
         if (!self::$Generator) {
+            $levelFilteredLogger = new LevelFilteredLogger($logger);
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
-                    new ModeDetector(),
-                    new VersionSelectorFactory(
-                        new VersionFromIntConverter()
-                    ),
+                    new ModeDetector($levelFilteredLogger),
+                    new VersionSelectorFactory($levelFilteredLogger),
                     new EncoderFactory(),
                     new PaddingAppender(
                         new TotalBitsCounterBuilder(),
@@ -65,7 +64,7 @@ class QrCodeGenerator
                     new PlaceDataAndErrorCorrection()
                 ),
                 new MatrixRendererBuilder(),
-                new Logger('console')
+                $logger
             );
         }
         return self::$Generator;
@@ -123,8 +122,6 @@ class QrCodeGenerator
             ->addErrorCorrection(str_split($encodedData));
 
         $this->logger->info('Data with error correction: ' . implode('--', $dataWithErrorCorrection));
-
-        return implode('--', $dataWithErrorCorrection);
 
         $matrix = $this->matrixBuilder
             ->setVersion($this->version)

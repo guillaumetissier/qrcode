@@ -66,6 +66,6 @@ class NumECCodewordsCalculator
             38 => ['L' => 660, 'M' => 1260, 'Q' => 1860, 'H' => 2220],
             39 => ['L' => 720, 'M' => 1316, 'Q' => 1950, 'H' => 2310],
             40 => ['L' => 750, 'M' => 1372, 'Q' => 2040, 'H' => 2430],
-        ][$this->version->toInt()][$this->errorCorrectionLevel->toString()];
+        ][$this->version->value][$this->errorCorrectionLevel->value];
     }
 }

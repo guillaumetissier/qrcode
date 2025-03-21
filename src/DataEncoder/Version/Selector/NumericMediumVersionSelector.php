@@ -3,56 +3,55 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\DataEncoder\Version\VersionFromIntConverter;
 
 class NumericMediumVersionSelector extends BaseVersionSelector
 {
     /*
      * see https://www.qrcode.com/en/about/version.html
      */
-    public function __construct(VersionFromIntConverter $converter)
+    public function __construct()
     {
-        parent::__construct($converter, [
-            Version::V01->toInt() => 34,
-            Version::V02->toInt() => 63,
-            Version::V03->toInt() => 101,
-            Version::V04->toInt() => 149,
-            Version::V05->toInt() => 202,
-            Version::V06->toInt() => 255,
-            Version::V07->toInt() => 293,
-            Version::V08->toInt() => 365,
-            Version::V09->toInt() => 432,
-            Version::V10->toInt() => 513,
-            Version::V11->toInt() => 604,
-            Version::V12->toInt() => 691,
-            Version::V13->toInt() => 796,
-            Version::V14->toInt() => 871,
-            Version::V15->toInt() => 991,
-            Version::V16->toInt() => 1082,
-            Version::V17->toInt() => 1212,
-            Version::V18->toInt() => 1346,
-            Version::V19->toInt() => 1500,
-            Version::V20->toInt() => 1600,
-            Version::V21->toInt() => 1708,
-            Version::V22->toInt() => 1872,
-            Version::V23->toInt() => 2059,
-            Version::V24->toInt() => 2188,
-            Version::V25->toInt() => 2395,
-            Version::V26->toInt() => 2544,
-            Version::V27->toInt() => 2701,
-            Version::V28->toInt() => 2857,
-            Version::V29->toInt() => 3035,
-            Version::V30->toInt() => 3289,
-            Version::V31->toInt() => 3486,
-            Version::V32->toInt() => 3693,
-            Version::V33->toInt() => 3909,
-            Version::V34->toInt() => 4134,
-            Version::V35->toInt() => 4343,
-            Version::V36->toInt() => 4588,
-            Version::V37->toInt() => 4775,
-            Version::V38->toInt() => 5039,
-            Version::V39->toInt() => 5313,
-            Version::V40->toInt() => 5596,
+        parent::__construct([
+            Version::V01->value => 34,
+            Version::V02->value => 63,
+            Version::V03->value => 101,
+            Version::V04->value => 149,
+            Version::V05->value => 202,
+            Version::V06->value => 255,
+            Version::V07->value => 293,
+            Version::V08->value => 365,
+            Version::V09->value => 432,
+            Version::V10->value => 513,
+            Version::V11->value => 604,
+            Version::V12->value => 691,
+            Version::V13->value => 796,
+            Version::V14->value => 871,
+            Version::V15->value => 991,
+            Version::V16->value => 1082,
+            Version::V17->value => 1212,
+            Version::V18->value => 1346,
+            Version::V19->value => 1500,
+            Version::V20->value => 1600,
+            Version::V21->value => 1708,
+            Version::V22->value => 1872,
+            Version::V23->value => 2059,
+            Version::V24->value => 2188,
+            Version::V25->value => 2395,
+            Version::V26->value => 2544,
+            Version::V27->value => 2701,
+            Version::V28->value => 2857,
+            Version::V29->value => 3035,
+            Version::V30->value => 3289,
+            Version::V31->value => 3486,
+            Version::V32->value => 3693,
+            Version::V33->value => 3909,
+            Version::V34->value => 4134,
+            Version::V35->value => 4343,
+            Version::V36->value => 4588,
+            Version::V37->value => 4775,
+            Version::V38->value => 5039,
+            Version::V39->value => 5313,
+            Version::V40->value => 5596,
         ]);
     }
 }
