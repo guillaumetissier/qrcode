@@ -31,13 +31,13 @@ class LevelFilteredLoggerTest extends TestCase
     {
         return [
             [LogLevel::DEBUG, true],
-            [LogLevel::INFO, true],
-            [LogLevel::NOTICE, true],
-            [LogLevel::WARNING, true],
-            [LogLevel::ERROR, true],
-            [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::INFO, false],
+            [LogLevel::NOTICE, false],
+            [LogLevel::WARNING, false],
+            [LogLevel::ERROR, false],
+            [LogLevel::CRITICAL, false],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -54,14 +54,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToInfo(): array
     {
         return [
-            [LogLevel::DEBUG, false],
+            [LogLevel::DEBUG, true],
             [LogLevel::INFO, true],
-            [LogLevel::NOTICE, true],
-            [LogLevel::WARNING, true],
-            [LogLevel::ERROR, true],
-            [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::NOTICE, false],
+            [LogLevel::WARNING, false],
+            [LogLevel::ERROR, false],
+            [LogLevel::CRITICAL, false],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -78,14 +78,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToNotice(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
             [LogLevel::NOTICE, true],
-            [LogLevel::WARNING, true],
-            [LogLevel::ERROR, true],
-            [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::WARNING, false],
+            [LogLevel::ERROR, false],
+            [LogLevel::CRITICAL, false],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -102,14 +102,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToWarning(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
-            [LogLevel::NOTICE, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
+            [LogLevel::NOTICE, true],
             [LogLevel::WARNING, true],
-            [LogLevel::ERROR, true],
-            [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::ERROR, false],
+            [LogLevel::CRITICAL, false],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -126,14 +126,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToError(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
-            [LogLevel::NOTICE, false],
-            [LogLevel::WARNING, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
+            [LogLevel::NOTICE, true],
+            [LogLevel::WARNING, true],
             [LogLevel::ERROR, true],
-            [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::CRITICAL, false],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -150,14 +150,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToCritical(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
-            [LogLevel::NOTICE, false],
-            [LogLevel::WARNING, false],
-            [LogLevel::ERROR, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
+            [LogLevel::NOTICE, true],
+            [LogLevel::WARNING, true],
+            [LogLevel::ERROR, true],
             [LogLevel::CRITICAL, true],
-            [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::ALERT, false],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -174,14 +174,14 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToAlert(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
-            [LogLevel::NOTICE, false],
-            [LogLevel::WARNING, false],
-            [LogLevel::ERROR, false],
-            [LogLevel::CRITICAL, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
+            [LogLevel::NOTICE, true],
+            [LogLevel::WARNING, true],
+            [LogLevel::ERROR, true],
+            [LogLevel::CRITICAL, true],
             [LogLevel::ALERT, true],
-            [LogLevel::EMERGENCY, true],
+            [LogLevel::EMERGENCY, false],
         ];
     }
 
@@ -198,13 +198,13 @@ class LevelFilteredLoggerTest extends TestCase
     public static function provideDataToEmergency(): array
     {
         return [
-            [LogLevel::DEBUG, false],
-            [LogLevel::INFO, false],
-            [LogLevel::NOTICE, false],
-            [LogLevel::WARNING, false],
-            [LogLevel::ERROR, false],
-            [LogLevel::CRITICAL, false],
-            [LogLevel::ALERT, false],
+            [LogLevel::DEBUG, true],
+            [LogLevel::INFO, true],
+            [LogLevel::NOTICE, true],
+            [LogLevel::WARNING, true],
+            [LogLevel::ERROR, true],
+            [LogLevel::CRITICAL, true],
+            [LogLevel::ALERT, true],
             [LogLevel::EMERGENCY, true],
         ];
     }

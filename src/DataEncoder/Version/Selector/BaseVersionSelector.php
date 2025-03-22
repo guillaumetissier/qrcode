@@ -9,10 +9,9 @@ class BaseVersionSelector implements VersionSelectorInterface
 {
     protected array $capacityTable = [];
 
-    protected function __construct(
-        private readonly LevelFilteredLogger $logger,
-        array $capacityTable
-    ) {
+    protected function __construct(private readonly LevelFilteredLogger $logger, array $capacityTable)
+    {
+        $this->logger->setPrefix(static::class);
         $this->capacityTable = $capacityTable;
     }
 
@@ -22,7 +21,7 @@ class BaseVersionSelector implements VersionSelectorInterface
 
         foreach ($this->capacityTable as $version => $capacity) {
             if ($dataLength <= $capacity) {
-                $this->logger->debug("Output >> {$version}");
+                $this->logger->debug("Output >> version {$version}");
 
                 return Version::from($version);
             }

@@ -2,12 +2,12 @@
 
 namespace ThePhpGuild\QrCode\Commands;
 
-use Monolog\Logger;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Logger\ConsoleLogger;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 
 class GenerateQrCodeCommand extends Command
@@ -16,7 +16,7 @@ class GenerateQrCodeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $generator = QrCodeGenerator::getQrCodeGenerator(new Logger('console'));
+        $generator = QrCodeGenerator::getQrCodeGenerator(new ConsoleLogger(), LogLevel::NOTICE);
 
         $generator
             ->setData('HELLO WORLD')
@@ -24,7 +24,6 @@ class GenerateQrCodeCommand extends Command
             ->setOutputOptions(new OutputOptions([
                 OutputOptions::FILENAME => './qrcode.png',
             ]))
-            ->setLogLevel(LogLevel::DEBUG)
             ->generate()
         ;
 

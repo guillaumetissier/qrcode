@@ -113,11 +113,13 @@ class LevelFilteredLogger implements LoggerInterface
 
         if (!$this->logLevel || !isset($levels[$this->logLevel]) || !isset($levels[$level])) return false;
 
-        return $levels[$level] >= $levels[$this->logLevel];
+        return $levels[$level] <= $levels[$this->logLevel];
     }
 
     private function addPrefix(string $message): string
     {
-        return !!$this->prefix ? "[{$this->prefix}] {$message}" : $message;
+        return !!$this->prefix
+            ? '[' . str_pad($this->prefix, 34, '.', STR_PAD_RIGHT) ."] {$message}"
+            : $message;
     }
 }

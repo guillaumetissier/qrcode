@@ -8,7 +8,7 @@ class ByteCciBitsCounter extends AbstractCciBitsCounter
     {
         $count = $this->version->value <= 9 ? 8 : 16;
 
-        $this->logger->debug("Number of CCI bits is $count");
+        $this->logger->debug("Output >> $count CCI bits");
 
         return $count;
     }

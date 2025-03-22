@@ -10,7 +10,7 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
 
     public function __construct(protected readonly LevelFilteredLogger $logger)
     {
-        $this->logger->setPrefix(self::class);
+        $this->logger->setPrefix(static::class);
     }
 
     public function setDataLength(int $dataLength): self

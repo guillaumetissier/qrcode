@@ -22,6 +22,7 @@ class DataEncoder
         private readonly LevelFilteredLogger $logger
     )
     {
+        $this->logger->setPrefix(self::class);
     }
 
     public function setData(string $data): self
@@ -40,18 +41,26 @@ class DataEncoder
 
     public function encode(): string
     {
+        $this->logger->info('Detecting mode');
+
         $mode = $this->modeDetector
             ->setData($this->data)
             ->detect();
+
+        $this->logger->info('Detecting version');
 
         $version = $this->versionSelectorFactory
             ->getVersionSelector($mode, $this->errorCorrectionLevel)
             ->selectVersion(strlen($this->data));
 
+        $this->logger->info('Encoding data');
+
         $encodedData = $this->encoderFactory
             ->getEncoder($mode)
             ->setData($this->data)
             ->encode();
+
+        $this->logger->info('Padding data');
 
         $paddedData = $this->paddingAdder
             ->setMode($mode)

@@ -10,7 +10,7 @@ abstract class AbstractEncoder implements EncoderInterface
 
     public function __construct(protected readonly LevelFilteredLogger $logger)
     {
-        $this->logger->setPrefix(self::class);
+        $this->logger->setPrefix(static::class);
     }
 
     public function setData(string $data): self

@@ -11,7 +11,7 @@ abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
 
     public function __construct(protected readonly LevelFilteredLogger $logger)
     {
-        $this->logger->setPrefix(self::class);
+        $this->logger->setPrefix(static::class);
     }
 
     public function getVersion(): ?Version
