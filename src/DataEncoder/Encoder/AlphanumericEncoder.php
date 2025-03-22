@@ -10,6 +10,8 @@ class AlphanumericEncoder extends AbstractEncoder
         $charMap = array_flip(str_split("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"));
         $length = strlen($this->data);
 
+        $this->logger->debug("Input << {$this->data} (length: {$length})");
+
         for ($i = 0; $i < $length; $i += 2) {
             $chunk = substr($this->data, $i, 2);
             if (strlen($chunk) == 2) {
@@ -19,6 +21,8 @@ class AlphanumericEncoder extends AbstractEncoder
                 $binaryData .= str_pad(decbin($charMap[$chunk[0]]), 6, '0', STR_PAD_LEFT);
             }
         }
+
+        $this->logger->debug("Output >> {$binaryData}");
 
         return $binaryData;
     }

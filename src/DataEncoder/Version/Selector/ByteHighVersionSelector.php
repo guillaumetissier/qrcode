@@ -3,12 +3,13 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class ByteHighVersionSelector extends BaseVersionSelector
 {
-    public function __construct()
+    public function __construct(LevelFilteredLogger $logger)
     {
-        parent::__construct([
+        parent::__construct($logger, [
             Version::V01->value => 7,
             Version::V02->value => 14,
             Version::V03->value => 24,

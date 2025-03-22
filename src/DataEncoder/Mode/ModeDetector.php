@@ -10,6 +10,7 @@ class ModeDetector
 
     public function __construct(private readonly LevelFilteredLogger $logger)
     {
+        $this->logger->setPrefix(self::class);
     }
 
     public function setData(?string $data): self

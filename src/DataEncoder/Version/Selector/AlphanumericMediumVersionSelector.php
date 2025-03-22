@@ -3,12 +3,13 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class AlphanumericMediumVersionSelector extends BaseVersionSelector
 {
-    public function __construct()
+    public function __construct(LevelFilteredLogger $logger)
     {
-        parent::__construct([
+        parent::__construct($logger, [
             Version::V01->value => 34,
             Version::V02->value => 63,
             Version::V03->value => 101,

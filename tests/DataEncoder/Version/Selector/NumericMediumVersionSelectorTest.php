@@ -5,6 +5,7 @@ namespace Tests\DataEncoder\Version\Selector;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericMediumVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class NumericMediumVersionSelectorTest extends TestCase
 {
@@ -12,7 +13,7 @@ class NumericMediumVersionSelectorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->selector = new NumericMediumVersionSelector();
+        $this->selector = new NumericMediumVersionSelector($this->createMock(LevelFilteredLogger::class));
     }
 
     /**

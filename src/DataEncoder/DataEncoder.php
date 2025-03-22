@@ -7,6 +7,7 @@ use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
 use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class DataEncoder
 {
@@ -17,8 +18,10 @@ class DataEncoder
         private readonly ModeDetector $modeDetector,
         private readonly VersionSelectorFactory $versionSelectorFactory,
         private readonly EncoderFactory $encoderFactory,
-        private readonly PaddingAppender $paddingAdder
-    ) {
+        private readonly PaddingAppender $paddingAdder,
+        private readonly LevelFilteredLogger $logger
+    )
+    {
     }
 
     public function setData(string $data): self

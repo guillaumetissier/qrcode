@@ -2,10 +2,15 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Encoder;
 
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+
 abstract class AbstractEncoder implements EncoderInterface
 {
-    public function __construct(protected ?string $data = null)
+    protected ?string $data = null;
+
+    public function __construct(protected readonly LevelFilteredLogger $logger)
     {
+        $this->logger->setPrefix(self::class);
     }
 
     public function setData(string $data): self

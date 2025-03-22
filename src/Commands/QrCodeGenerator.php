@@ -2,7 +2,6 @@
 
 namespace ThePhpGuild\QrCode\Commands;
 
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
@@ -45,12 +44,13 @@ class QrCodeGenerator
                 new DataEncoder(
                     new ModeDetector($levelFilteredLogger),
                     new VersionSelectorFactory($levelFilteredLogger),
-                    new EncoderFactory(),
+                    new EncoderFactory($levelFilteredLogger),
                     new PaddingAppender(
                         new TotalBitsCounterBuilder(),
-                        new ModeIndicator(),
+                        new ModeIndicator($levelFilteredLogger),
                         new LengthBitsFactory()
-                    )
+                    ),
+                    $levelFilteredLogger
                 ),
                 new ReedSolomonEncoder(
                     new GalloisField(),
@@ -64,7 +64,7 @@ class QrCodeGenerator
                     new PlaceDataAndErrorCorrection()
                 ),
                 new MatrixRendererBuilder(),
-                $logger
+                $levelFilteredLogger
             );
         }
         return self::$Generator;
@@ -75,9 +75,10 @@ class QrCodeGenerator
         private readonly ReedSolomonEncoder $reedSolomonEncoder,
         private readonly MatrixBuilder $matrixBuilder,
         private readonly MatrixRendererBuilder $matrixRendererBuilder,
-        private readonly LoggerInterface $logger
+        private readonly LevelFilteredLogger $logger
     )
     {
+        $this->logger->setPrefix(self::class);
     }
 
     public function setData(string $data): self
@@ -107,30 +108,38 @@ class QrCodeGenerator
      * @throws Exception\UnhandledFileTypeException
      * @throws Exception\VariableNotSetException
      */
-    public function generate(): string
+    public function generate(): void
     {
+        $this->logger->info("Generating qrcode");
+
+        $this->logger->notice('1. Encoding data');
+
         $encodedData = $this->dataEncoder
             ->setData($this->data)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
-        $this->logger->info('Encoded data: ' . $encodedData);
+        $this->logger->notice('2. Adding error correction');
 
         $dataWithErrorCorrection = $this->reedSolomonEncoder
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->setVersion($this->version)
             ->addErrorCorrection(str_split($encodedData));
 
-        $this->logger->info('Data with error correction: ' . implode('--', $dataWithErrorCorrection));
+        $this->logger->notice('3. Building QR code matrix');
 
         $matrix = $this->matrixBuilder
             ->setVersion($this->version)
             ->setData(implode($dataWithErrorCorrection))
             ->build();
 
+        $this->logger->notice('4. Rendering QR code matrix');
+
         $this->matrixRendererBuilder
             ->buildRenderer($this->outputOptions)
             ->setMatrix($matrix)
             ->render();
+
+        $this->logger->info('QR code was generated !');
     }
 }

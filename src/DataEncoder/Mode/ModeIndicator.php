@@ -2,9 +2,17 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Mode;
 
+use ThePhpGuild\QrCode\Exception\UnknownMode;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+
 class ModeIndicator
 {
     private ?Mode $mode = null;
+
+    public function __construct(private readonly LevelFilteredLogger $logger)
+    {
+        $this->logger->setPrefix(self::class);
+    }
 
     public static function GetTotalBits(): int
     {
@@ -18,12 +26,23 @@ class ModeIndicator
         return $this;
     }
 
+    /**
+     * @throws UnknownMode
+     */
     public function getModeIndicator(): string
     {
-        return match ($this->mode) {
+        if ($this->mode === null) {
+            throw new UnknownMode();
+        }
+
+        $modeIndicator = match ($this->mode) {
             Mode::NUMERIC => '0001',
             Mode::ALPHANUMERIC => '0010',
             Mode::BYTE => '0100'
         };
+
+        $this->logger->debug('Get mode indicator: ' . $modeIndicator);
+
+        return $modeIndicator;
     }
 }
