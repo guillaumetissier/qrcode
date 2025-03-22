@@ -124,24 +124,24 @@ class QrCodeGenerator
 
         $this->logger->notice('2. Adding error correction');
 
-//        $dataWithErrorCorrection = $this->reedSolomonEncoder
-//            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
-//            ->setVersion($this->version)
-//            ->addErrorCorrection(str_split($encodedData));
-//
-//        $this->logger->notice('3. Building QR code matrix');
-//
-//        $matrix = $this->matrixBuilder
-//            ->setVersion($this->version)
-//            ->setData(implode($dataWithErrorCorrection))
-//            ->build();
-//
-//        $this->logger->notice('4. Rendering QR code matrix');
-//
-//        $this->matrixRendererBuilder
-//            ->buildRenderer($this->outputOptions)
-//            ->setMatrix($matrix)
-//            ->render();
+        $dataWithErrorCorrection = $this->reedSolomonEncoder
+            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
+            ->setVersion($this->dataEncoder->getVersion())
+            ->addErrorCorrection(str_split($encodedData));
+
+        $this->logger->notice('3. Building QR code matrix');
+
+        $matrix = $this->matrixBuilder
+            ->setVersion($this->version)
+            ->setData(implode($dataWithErrorCorrection))
+            ->build();
+
+        $this->logger->notice('4. Rendering QR code matrix');
+
+        $this->matrixRendererBuilder
+            ->buildRenderer($this->outputOptions)
+            ->setMatrix($matrix)
+            ->render();
 
         $this->logger->notice('QR code was generated !');
     }

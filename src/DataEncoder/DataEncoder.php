@@ -3,15 +3,21 @@
 namespace ThePhpGuild\QrCode\DataEncoder;
 
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
 use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
+use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class DataEncoder
 {
     private ?string $data = null;
+    private ?Mode $mode = null;
+    private ?Version $version = null;
+    private ?string $encodedData = null;
+    private ?string $paddedData = null;
     private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
     public function __construct(
@@ -28,6 +34,10 @@ class DataEncoder
     public function setData(string $data): self
     {
         $this->data = $data;
+        $this->mode = null;
+        $this->version = null;
+        $this->encodedData = null;
+        $this->paddedData = null;
 
         return $this;
     }
@@ -35,39 +45,69 @@ class DataEncoder
     public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
     {
         $this->errorCorrectionLevel = $errorCorrectionLevel;
+        $this->version = null;
+        $this->encodedData = null;
+        $this->paddedData = null;
 
         return $this;
     }
 
     public function encode(): string
     {
-        $this->logger->info('Detecting mode');
+        $this->getMode();
+        $this->getVersion();
+        $this->getEncodedData();
+        return $this->getPaddedData();
+    }
 
-        $mode = $this->modeDetector
-            ->setData($this->data)
-            ->detect();
+    public function getMode(): Mode
+    {
+        if ($this->mode === null) {
+            $this->logger->info('Detecting mode');
+            $this->mode = $this->modeDetector
+                ->setData($this->data)
+                ->detect();
+        }
 
-        $this->logger->info('Detecting version');
+        return $this->mode;
+    }
 
-        $version = $this->versionSelectorFactory
-            ->getVersionSelector($mode, $this->errorCorrectionLevel)
-            ->selectVersion(strlen($this->data));
+    public function getVersion(): Version
+    {
+        if ($this->version === null) {
+            $this->logger->info('Detecting version');
+            $this->version = $this->versionSelectorFactory
+                ->getVersionSelector($this->mode, $this->errorCorrectionLevel)
+                ->selectVersion(strlen($this->data));
+        }
 
-        $this->logger->info('Encoding data');
+        return $this->version;
+    }
 
-        $encodedData = $this->encoderFactory
-            ->getEncoder($mode)
-            ->setData($this->data)
-            ->encode();
+    public function getEncodedData(): string
+    {
+        if ($this->encodedData === null) {
+            $this->logger->info('Encoding data');
+            $this->encodedData = $this->encoderFactory
+                ->getEncoder($this->mode)
+                ->setData($this->data)
+                ->encode();
+        }
 
-        $this->logger->info('Padding data');
+        return $this->encodedData;
+    }
 
-        $paddedData = $this->paddingAdder
-            ->setMode($mode)
-            ->setVersion($version)
-            ->setData($encodedData)
-            ->appendPadding();
+    public function getPaddedData(): string
+    {
+        if ($this->paddedData === null) {
+            $this->logger->info('Padding data');
+            $this->paddedData = $this->paddingAdder
+                ->setMode($this->mode)
+                ->setVersion($this->version)
+                ->setData($this->encodedData)
+                ->appendPadding();
+        }
 
-        return $paddedData;
+        return $this->paddedData;
     }
 }
