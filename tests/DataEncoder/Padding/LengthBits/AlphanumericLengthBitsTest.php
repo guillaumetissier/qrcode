@@ -3,16 +3,20 @@
 namespace Tests\DataEncoder\Padding\LengthBits;
 
 use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\AlphanumericLengthBits;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
-class AlphanumericLengthBitsTest extends TestCase
+class AlphanumericLengthBitsTest extends LoggerTestCase
 {
     private AlphanumericLengthBits $lengthBits;
 
     public function setUp(): void
     {
-        $this->lengthBits = new AlphanumericLengthBits();
+        parent::setUp();
+
+        $this->lengthBits = new AlphanumericLengthBits($this->logger);
     }
 
     /**

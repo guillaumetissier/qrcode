@@ -42,13 +42,13 @@ class QrCodeGenerator
             $levelFilteredLogger = new LevelFilteredLogger($logger);
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
-                    new ModeDetector($levelFilteredLogger),
-                    new VersionSelectorFactory($levelFilteredLogger),
-                    new EncoderFactory($levelFilteredLogger),
+                    new ModeDetector(clone $levelFilteredLogger),
+                    new VersionSelectorFactory(clone $levelFilteredLogger),
+                    new EncoderFactory(clone $levelFilteredLogger),
                     new PaddingAppender(
                         new TotalBitsCounterBuilder(),
-                        new ModeIndicator($levelFilteredLogger),
-                        new LengthBitsFactory()
+                        new ModeIndicator(clone $levelFilteredLogger),
+                        new LengthBitsFactory(clone $levelFilteredLogger),
                     ),
                     $levelFilteredLogger
                 ),
