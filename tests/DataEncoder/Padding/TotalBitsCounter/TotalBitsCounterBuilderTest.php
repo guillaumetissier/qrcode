@@ -3,6 +3,7 @@
 namespace Tests\DataEncoder\Padding\TotalBitsCounter;
 
 use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\AlphanumericCciBitsCounter;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\ByteCciBitsCounter;
@@ -13,13 +14,15 @@ use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCount
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounter;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 
-class TotalBitsCounterBuilderTest extends TestCase
+class TotalBitsCounterBuilderTest extends LoggerTestCase
 {
     private TotalBitsCounterBuilder $totalBitsCounterBuilder;
 
     public function setUp(): void
     {
-        $this->totalBitsCounterBuilder = new TotalBitsCounterBuilder();
+        parent::setUp();
+
+        $this->totalBitsCounterBuilder = new TotalBitsCounterBuilder($this->logger);
     }
 
     /**

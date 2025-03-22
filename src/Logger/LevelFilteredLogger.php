@@ -111,7 +111,7 @@ class LevelFilteredLogger implements LoggerInterface
             LogLevel::DEBUG     => 8,
         ];
 
-        if (!isset($levels[$level])) return false;
+        if (!$this->logLevel || !isset($levels[$this->logLevel]) || !isset($levels[$level])) return false;
 
         return $levels[$level] >= $levels[$this->logLevel];
     }

@@ -2,16 +2,18 @@
 
 namespace Tests\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter\AlphanumericEncodedDataBitsCounter;
 
-class AlphanumericEncodedDataBitsCounterTest extends TestCase
+class AlphanumericEncodedDataBitsCounterTest extends LoggerTestCase
 {
     private AlphanumericEncodedDataBitsCounter $counter;
 
     public function setUp(): void
     {
-        $this->counter = new AlphanumericEncodedDataBitsCounter();
+        parent::setUp();
+
+        $this->counter = new AlphanumericEncodedDataBitsCounter($this->logger);
     }
 
     /**

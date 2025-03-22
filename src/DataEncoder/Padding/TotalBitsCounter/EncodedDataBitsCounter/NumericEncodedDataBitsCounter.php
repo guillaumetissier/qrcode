@@ -6,14 +6,16 @@ class NumericEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
 {
     public function count(): int
     {
-        $totalBits = intdiv($this->dataLength, 3) * 10;
+        $encodedDataBitsCount = intdiv($this->dataLength, 3) * 10;
         $rest = $this->dataLength % 3;
         if ($rest === 2) {
-            $totalBits += 7;
+            $encodedDataBitsCount += 7;
         } elseif ($rest === 1) {
-            $totalBits += 4;
+            $encodedDataBitsCount += 4;
         }
 
-        return $totalBits;
+        $this->logger->debug("Number of encoded data bits is $encodedDataBitsCount");
+
+        return $encodedDataBitsCount;
     }
 }

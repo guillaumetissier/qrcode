@@ -6,11 +6,13 @@ class AlphanumericEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
 {
     public function count(): int
     {
-        $totalBits = intdiv($this->dataLength, 2) * 11;
+        $encodedDataBitsCount = intdiv($this->dataLength, 2) * 11;
         if ($this->dataLength % 2 === 1) {
-            $totalBits += 6;
+            $encodedDataBitsCount += 6;
         }
 
-        return $totalBits;
+        $this->logger->debug("Number of encoded data bits is $encodedDataBitsCount");
+
+        return $encodedDataBitsCount;
     }
 }

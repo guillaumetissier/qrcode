@@ -3,10 +3,16 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
 {
     protected ?Version $version = null;
+
+    public function __construct(protected readonly LevelFilteredLogger $logger)
+    {
+        $this->logger->setPrefix(self::class);
+    }
 
     public function getVersion(): ?Version
     {

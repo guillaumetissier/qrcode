@@ -81,6 +81,13 @@ class QrCodeGenerator
         $this->logger->setPrefix(self::class);
     }
 
+    public function setLogLevel(string $logLevel): self
+    {
+        $this->logger->setLogLevel($logLevel);
+
+        return $this;
+    }
+
     public function setData(string $data): self
     {
         $this->data = $data;

@@ -6,6 +6,10 @@ class ByteEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
 {
     public function count(): int
     {
-         return $this->dataLength * 8;
+        $encodedDataBitsCount = $this->dataLength * 8;
+
+        $this->logger->debug("Number of encoded data bits is $encodedDataBitsCount");
+
+        return $encodedDataBitsCount;
     }
 }

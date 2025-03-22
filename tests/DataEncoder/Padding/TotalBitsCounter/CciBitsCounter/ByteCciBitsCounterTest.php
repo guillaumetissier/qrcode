@@ -2,17 +2,19 @@
 
 namespace Tests\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter\ByteCciBitsCounter;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 
-class ByteCciBitsCounterTest extends TestCase
+class ByteCciBitsCounterTest extends LoggerTestCase
 {
     private ByteCciBitsCounter $cciBitsCounter;
 
     protected function setUp(): void
     {
-        $this->cciBitsCounter = new ByteCciBitsCounter();
+        parent::setUp();
+
+        $this->cciBitsCounter = new ByteCciBitsCounter($this->logger);
     }
 
     /**
