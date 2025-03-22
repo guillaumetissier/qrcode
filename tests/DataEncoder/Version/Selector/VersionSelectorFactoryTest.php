@@ -2,7 +2,7 @@
 
 namespace Tests\DataEncoder\Version\Selector;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\AlphanumericHighVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\AlphanumericLowVersionSelector;
@@ -18,15 +18,16 @@ use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericMediumVersionSelector
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericQuartileVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
-class VersionSelectorFactoryTest extends TestCase
+class VersionSelectorFactoryTest extends LoggerTestCase
 {
     private VersionSelectorFactory $factory;
 
     public function setUp(): void
     {
-        $this->factory = new VersionSelectorFactory($this->createMock(LevelFilteredLogger::class));
+        parent::setUp();
+
+        $this->factory = new VersionSelectorFactory($this->logger);
     }
 
     /**

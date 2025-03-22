@@ -2,18 +2,19 @@
 
 namespace Tests\DataEncoder\Version\Selector;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericLowVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
-class NumericLowVersionSelectorTest extends TestCase
+class NumericLowVersionSelectorTest extends LoggerTestCase
 {
     private NumericLowVersionSelector $selector;
 
     public function setUp(): void
     {
-        $this->selector = new NumericLowVersionSelector($this->createMock(LevelFilteredLogger::class));
+        parent::setUp();
+
+        $this->selector = new NumericLowVersionSelector($this->logger);
     }
 
     /**
