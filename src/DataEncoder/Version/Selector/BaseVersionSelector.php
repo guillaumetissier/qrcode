@@ -3,6 +3,7 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Exception\DataTooVoluminous;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class BaseVersionSelector implements VersionSelectorInterface
@@ -27,8 +28,6 @@ class BaseVersionSelector implements VersionSelectorInterface
             }
         }
 
-        $this->logger->error("Data too voluminous. It cannot be encoded.");
-
-        throw new \Exception("Data too voluminous. It cannot be encoded.");
+        throw new DataTooVoluminous();
     }
 }

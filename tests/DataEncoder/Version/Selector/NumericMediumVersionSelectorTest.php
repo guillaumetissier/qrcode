@@ -5,6 +5,7 @@ namespace Tests\DataEncoder\Version\Selector;
 use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericMediumVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Exception\DataTooVoluminous;
 
 class NumericMediumVersionSelectorTest extends LoggerTestCase
 {
@@ -19,14 +20,14 @@ class NumericMediumVersionSelectorTest extends LoggerTestCase
 
     /**
      * @throws \Exception
-     * @dataProvider provideDataToTestVersionSelector
+     * @dataProvider provideDataForSelectVersion
      */
-    public function testVersionSelector(int $dataLength, Version $expectedVersion): void
+    public function testSelectVersion(int $dataLength, Version $expectedVersion): void
     {
         $this->assertEquals($expectedVersion, $this->selector->selectVersion($dataLength));
     }
 
-    public static function provideDataToTestVersionSelector(): array
+    public static function provideDataForSelectVersion(): array
     {
         return [
             [1, Version::V01],
@@ -110,5 +111,12 @@ class NumericMediumVersionSelectorTest extends LoggerTestCase
             [5314, Version::V40],
             [5596, Version::V40],
         ];
+    }
+
+    public function testVersionSelectorLimitMax(): void
+    {
+        $this->expectException(DataTooVoluminous::class);
+
+        $this->selector->selectVersion(5597);
     }
 }

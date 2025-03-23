@@ -8,7 +8,8 @@ use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 class NumericMediumVersionSelector extends BaseVersionSelector
 {
     /*
-     * see https://www.qrcode.com/en/about/version.html
+     * see https://www.qrcode.com/en/about/version.html checked
+     * ISO/IEC 18004:2000(E) 8.4.9 (p28-32)
      */
     public function __construct(LevelFilteredLogger $logger)
     {

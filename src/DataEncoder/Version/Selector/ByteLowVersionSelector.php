@@ -9,6 +9,10 @@ class ByteLowVersionSelector extends BaseVersionSelector
 {
     public function __construct(LevelFilteredLogger $logger)
     {
+        /*
+         * see https://www.qrcode.com/en/about/version.html
+         * ISO/IEC 18004:2000(E) 8.4.9 (p28-32)
+         */
         parent::__construct($logger, [
             Version::V01->value => 17,
             Version::V02->value => 32,

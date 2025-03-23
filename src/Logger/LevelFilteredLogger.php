@@ -37,12 +37,12 @@ class LevelFilteredLogger implements LoggerInterface
 
     public function input(string|\Stringable $input, array $context = []): void
     {
-        $this->debug("Input << $input", $context);
+        $this->debug("I << $input", $context);
     }
 
     public function output(string|\Stringable $output, array $context = []): void
     {
-        $this->debug("Output >> $output", $context);
+        $this->debug("O >> $output", $context);
     }
 
     public function debug(string|\Stringable $message, array $context = []): void

@@ -5,6 +5,7 @@ namespace Tests\DataEncoder\Version\Selector;
 use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\NumericQuartileVersionSelector;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\Exception\DataTooVoluminous;
 
 class NumericQuartileVersionSelectorTest extends LoggerTestCase
 {
@@ -19,14 +20,14 @@ class NumericQuartileVersionSelectorTest extends LoggerTestCase
 
     /**
      * @throws \Exception
-     * @dataProvider provideDataToTestVersionSelector
+     * @dataProvider provideDataForSelectVersion
      */
-    public function testVersionSelector(int $dataLength, Version $expectedVersion): void
+    public function testSelectVersion(int $dataLength, Version $expectedVersion): void
     {
         $this->assertEquals($expectedVersion, $this->selector->selectVersion($dataLength));
     }
 
-    static public function provideDataToTestVersionSelector(): array
+    static public function provideDataForSelectVersion(): array
     {
         return [
             [1, Version::V01],
@@ -110,5 +111,12 @@ class NumericQuartileVersionSelectorTest extends LoggerTestCase
             [3792, Version::V40],
             [3993, Version::V40],
         ];
+    }
+
+    public function testVersionSelectorLimitMax(): void
+    {
+        $this->expectException(DataTooVoluminous::class);
+
+        $this->selector->selectVersion(3994);
     }
 }

@@ -9,6 +9,10 @@ class NumericHighVersionSelector extends BaseVersionSelector
 {
     public function __construct(LevelFilteredLogger $logger)
     {
+        /*
+         * see https://www.qrcode.com/en/about/version.html
+         * ISO/IEC 18004:2000(E) 8.4.9 (p28-32)
+         */
         parent::__construct($logger, [
             Version::V01->value => 17,
             Version::V02->value => 34,
@@ -20,7 +24,6 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V08->value => 202,
             Version::V09->value => 235,
             Version::V10->value => 288,
-
             Version::V11->value => 331,
             Version::V12->value => 374,
             Version::V13->value => 427,
@@ -31,7 +34,6 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V18->value => 746,
             Version::V19->value => 813,
             Version::V20->value => 919,
-
             Version::V21->value => 969,
             Version::V22->value => 1056,
             Version::V23->value => 1108,
@@ -42,7 +44,6 @@ class NumericHighVersionSelector extends BaseVersionSelector
             Version::V28->value => 1581,
             Version::V29->value => 1677,
             Version::V30->value => 1782,
-
             Version::V31->value => 1897,
             Version::V32->value => 2022,
             Version::V33->value => 2157,
