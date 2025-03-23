@@ -2,18 +2,20 @@
 
 namespace Tests\ErrorCorrectionEncoder;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 
-class NumECCodewordsCalculatorTest extends TestCase
+class NumECCodewordsCalculatorTest extends LoggerTestCase
 {
     private NumECCodewordsCalculator $calculator;
 
     public function setUp(): void
     {
-        $this->calculator = new NumECCodewordsCalculator();
+        parent::setUp();
+
+        $this->calculator = new NumECCodewordsCalculator($this->logger);
     }
 
     /**

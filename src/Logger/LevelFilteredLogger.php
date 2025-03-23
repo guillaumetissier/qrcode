@@ -35,6 +35,16 @@ class LevelFilteredLogger implements LoggerInterface
         return $this;
     }
 
+    public function input(string|\Stringable $input, array $context = []): void
+    {
+        $this->debug("Input << $input", $context);
+    }
+
+    public function output(string|\Stringable $output, array $context = []): void
+    {
+        $this->debug("Output >> $output", $context);
+    }
+
     public function debug(string|\Stringable $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::DEBUG)) return;

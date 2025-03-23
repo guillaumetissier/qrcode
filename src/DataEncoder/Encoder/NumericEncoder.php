@@ -9,7 +9,7 @@ class NumericEncoder extends AbstractEncoder
         $binaryData = '';
         $length = strlen($this->data);
 
-        $this->logger->debug("Input << {$this->data} (length: {$length})");
+        $this->logger->input("{$this->data} (length: {$length})");
 
         for ($i = 0; $i < $length; $i += 3) {
             $chunk = substr($this->data, $i, 3);
@@ -17,7 +17,7 @@ class NumericEncoder extends AbstractEncoder
             $binaryData .= $chunkBits;
         }
 
-        $this->logger->debug("Output >> {$binaryData}");
+        $this->logger->output($binaryData);
 
         return $binaryData;
     }

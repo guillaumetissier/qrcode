@@ -22,11 +22,11 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
 
     public function count(): int
     {
-        $this->logger->debug("Input << Data length = {$this->dataLength}");
+        $this->logger->input("Data length = {$this->dataLength}");
 
         $encodedDataBitsCount = $this->modeDependentCount();
 
-        $this->logger->debug("Output >> Encoded data bits count = $encodedDataBitsCount");
+        $this->logger->output("Encoded data bits count = $encodedDataBitsCount");
 
         return $encodedDataBitsCount;
     }

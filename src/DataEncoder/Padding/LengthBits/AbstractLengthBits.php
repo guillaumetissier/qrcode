@@ -31,11 +31,11 @@ abstract class AbstractLengthBits implements LengthBitsInterface
 
     public function getLengthBits(): string
     {
-        $this->logger->debug("Input << Version {$this->version->value}");
+        $this->logger->input("Version = {$this->version->value}");
 
         $lengthBits = $this->getModeDependentLengthBits();
 
-        $this->logger->debug("Output >> Length bits = $lengthBits");
+        $this->logger->output("Length bits = $lengthBits");
 
         return $lengthBits;
     }

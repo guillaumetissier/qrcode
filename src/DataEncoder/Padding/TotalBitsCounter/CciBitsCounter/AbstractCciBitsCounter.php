@@ -33,11 +33,11 @@ abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
             throw new VariableNotSetException('version');
         }
 
-        $this->logger->debug("Input << Version = {$this->version->value}");
+        $this->logger->input("Version = {$this->version->value}");
 
         $cciBitsCount = $this->modeDependentCount();
 
-        $this->logger->debug("Output >> CCI bits count = $cciBitsCount");
+        $this->logger->output("CCI bits count = $cciBitsCount");
 
         return $cciBitsCount;
     }

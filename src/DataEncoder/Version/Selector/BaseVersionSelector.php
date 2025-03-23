@@ -17,11 +17,11 @@ class BaseVersionSelector implements VersionSelectorInterface
 
     public function selectVersion($dataLength): Version
     {
-        $this->logger->debug("Select version number. Data length = {$dataLength}.");
+        $this->logger->input("Data length = {$dataLength}.");
 
         foreach ($this->capacityTable as $version => $capacity) {
             if ($dataLength <= $capacity) {
-                $this->logger->debug("Output >> Version = {$version}");
+                $this->logger->output("Version = {$version}");
 
                 return Version::from($version);
             }

@@ -20,7 +20,11 @@ class ReedSolomonEncoderTest extends LoggerTestCase
     {
         parent::setUp();
 
-        $this->encoder = new ReedSolomonEncoder(new GalloisField(), new NumECCodewordsCalculator(), $this->logger);
+        $this->encoder = new ReedSolomonEncoder(
+            new GalloisField(),
+            new NumECCodewordsCalculator($this->logger),
+            $this->logger
+        );
     }
 
     /**

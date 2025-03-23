@@ -59,18 +59,12 @@ class ReedSolomonEncoder
 
     private function calculateNumECCodewords(): int
     {
-        $this->logger->notice('Calculate Num EC Codewords');
+        $this->logger->info('Calculate Num EC Codewords');
 
-        $this->logger->info("Input << Version = {$this->version->value}, ECL = {$this->errorCorrectionLevel->value}");
-
-        $numECCodewords = $this->numECCodewordsCalculator
+        return $this->numECCodewordsCalculator
             ->setVersion($this->version)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->calculate();
-
-        $this->logger->info("Output >> Num EC Codewords = $numECCodewords");
-
-        return $numECCodewords;
     }
 
     /**
@@ -78,9 +72,7 @@ class ReedSolomonEncoder
      */
     private function createGeneratorPolynomial(int $numECCodewords): array
     {
-        $this->logger->notice('Create Generator Polynomial');
-
-        $this->logger->info("Input << Num EC Codewords = $numECCodewords");
+        $this->logger->info('Create Generator Polynomial');
 
         $generatorPolynomial = [1];
         for ($i = 0; $i < $numECCodewords; $i++) {
@@ -89,8 +81,6 @@ class ReedSolomonEncoder
                 [1, $this->galloisField->getExp($i)]
             );
         }
-
-        $this->logger->info('Output >> Generator Polynomial = ' . implode('|', $generatorPolynomial));
 
         return $generatorPolynomial;
     }
@@ -119,7 +109,7 @@ class ReedSolomonEncoder
      */
     private function calculateRemainder($data, $generator): array
     {
-        $this->logger->notice('Calculate Remainder');
+        $this->logger->info('Calculate Remainder');
 
         $dataLength = count($data);
         $genLength = count($generator);

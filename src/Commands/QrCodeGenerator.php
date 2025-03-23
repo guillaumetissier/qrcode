@@ -41,7 +41,6 @@ class QrCodeGenerator
         if (!self::$Generator) {
             $levelFilteredLogger = new LevelFilteredLogger($logger);
             if ($logLevel) {
-                echo "LOG LEVEL: $logLevel\n";
                 $levelFilteredLogger->setLogLevel($logLevel);
             }
 

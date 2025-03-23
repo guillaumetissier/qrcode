@@ -35,7 +35,7 @@ class ModeIndicator
             throw new UnknownMode();
         }
 
-        $this->logger->debug("Input << Mode = {$this->mode->value}");
+        $this->logger->input("Mode = {$this->mode->value}");
 
         $modeIndicator = match ($this->mode) {
             Mode::NUMERIC => '0001',
@@ -43,7 +43,7 @@ class ModeIndicator
             Mode::BYTE => '0100'
         };
 
-        $this->logger->debug("Output >> Mode indicator = $modeIndicator");
+        $this->logger->output("Mode indicator = $modeIndicator");
 
         return $modeIndicator;
     }
