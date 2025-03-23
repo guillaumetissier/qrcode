@@ -4,7 +4,7 @@ namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter
 
 class AlphanumericCciBitsCounter extends AbstractCciBitsCounter
 {
-    public function specificCount(): int
+    public function modeDependentCount(): int
     {
         if ($this->version->value <= 9) {
             return 9;

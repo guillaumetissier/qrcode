@@ -4,7 +4,7 @@ namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBit
 
 class ByteEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
 {
-    public function specificCount(): int
+    public function modeDependentCount(): int
     {
         return $this->dataLength * 8;
     }

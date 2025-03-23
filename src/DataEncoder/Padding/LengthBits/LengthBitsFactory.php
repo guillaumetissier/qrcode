@@ -20,7 +20,7 @@ class LengthBitsFactory
             Mode::NUMERIC => new NumericLengthBits(clone $this->logger),
         };
 
-        $this->logger->debug('Output >> Length bits: ' . $lengthBits::class);
+        $this->logger->debug("(Mode:{$mode->value}) => " . $lengthBits::class);
 
         return $lengthBits;
     }

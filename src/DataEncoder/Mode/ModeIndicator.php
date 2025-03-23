@@ -35,13 +35,15 @@ class ModeIndicator
             throw new UnknownMode();
         }
 
+        $this->logger->debug("Input << Mode = {$this->mode->value}");
+
         $modeIndicator = match ($this->mode) {
             Mode::NUMERIC => '0001',
             Mode::ALPHANUMERIC => '0010',
             Mode::BYTE => '0100'
         };
 
-        $this->logger->debug('Get mode indicator: ' . $modeIndicator);
+        $this->logger->debug("Output >> Mode indicator = $modeIndicator");
 
         return $modeIndicator;
     }

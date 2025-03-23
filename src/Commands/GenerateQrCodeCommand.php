@@ -21,10 +21,10 @@ class GenerateQrCodeCommand extends Command
         $this
             ->addOption('text', 'T', InputOption::VALUE_REQUIRED, 'desc')
             ->addOption('filename', 'F', InputOption::VALUE_OPTIONAL, 'desc', null)
-            ->addOption('logLevel', 'L', InputOption::VALUE_OPTIONAL, 'desc', null, [LogLevel::ALERT, LogLevel::CRITICAL])
+            ->addOption('logLevel', 'L', InputOption::VALUE_OPTIONAL, 'desc', LogLevel::WARNING)
             ->addOption('scale', 'S', InputOption::VALUE_OPTIONAL, 'desc', 1)
-            ->addOption('quality', 'Q', InputOption::VALUE_OPTIONAL, 'desc', 80)
-            ->addOption('fileType', 't', InputArgument::OPTIONAL, 'fileType', 'png')
+            ->addOption('quality', 'Q', InputOption::VALUE_OPTIONAL, 'Quality of the image [0-100]', 80)
+            ->addOption('fileType', 't', InputArgument::OPTIONAL, 'File Type', 'png')
         ;
     }
 
@@ -34,8 +34,7 @@ class GenerateQrCodeCommand extends Command
             exit('Enter a text to encode' . PHP_EOL);
         }
         $logLevel = str_replace('=', '', $input->getOption('logLevel'));
-        $options = $input->getOptions();
-        echo "LOG LEVEL: $logLevel" . PHP_EOL . implode(PHP_EOL, $options);
+
         $generator = QrCodeGenerator::getQrCodeGenerator(new ConsoleLogger(), $logLevel);
 
         $generator

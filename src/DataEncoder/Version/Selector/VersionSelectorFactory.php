@@ -15,8 +15,6 @@ class VersionSelectorFactory
 
     public function getVersionSelector(Mode $mode, ErrorCorrectionLevel $errorCorrectionLevel): VersionSelectorInterface
     {
-        $this->logger->debug("Getting version selector for mode {$mode->value} and ECL {$errorCorrectionLevel->value}");
-
         $versionSelector = match ($mode) {
             Mode::ALPHANUMERIC => match ($errorCorrectionLevel) {
                 ErrorCorrectionLevel::LOW => new AlphanumericLowVersionSelector(clone $this->logger),
@@ -38,7 +36,7 @@ class VersionSelectorFactory
             }
         };
 
-        $this->logger->debug("Output >> " . $versionSelector::class);
+        $this->logger->debug("(Mode:{$mode->value}, ECL:{$errorCorrectionLevel->value}) => " . $versionSelector::class);
 
         return $versionSelector;
     }

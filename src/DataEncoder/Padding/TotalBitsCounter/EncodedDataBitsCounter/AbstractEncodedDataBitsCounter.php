@@ -24,12 +24,12 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
     {
         $this->logger->debug("Input << Data length = {$this->dataLength}");
 
-        $encodedDataBitsCount = $this->specificCount();
+        $encodedDataBitsCount = $this->modeDependentCount();
 
         $this->logger->debug("Output >> Encoded data bits count = $encodedDataBitsCount");
 
         return $encodedDataBitsCount;
     }
 
-    abstract public function specificCount(): int;
+    abstract public function modeDependentCount(): int;
 }
