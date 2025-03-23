@@ -4,7 +4,7 @@ namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBit
 
 class NumericEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
 {
-    public function count(): int
+    public function specificCount(): int
     {
         $encodedDataBitsCount = intdiv($this->dataLength, 3) * 10;
         $rest = $this->dataLength % 3;
@@ -13,8 +13,6 @@ class NumericEncodedDataBitsCounter extends AbstractEncodedDataBitsCounter
         } elseif ($rest === 1) {
             $encodedDataBitsCount += 4;
         }
-
-        $this->logger->debug("Output >> $encodedDataBitsCount encoded data bits");
 
         return $encodedDataBitsCount;
     }

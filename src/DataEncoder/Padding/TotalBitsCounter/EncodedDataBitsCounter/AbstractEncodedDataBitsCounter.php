@@ -8,7 +8,7 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
 {
     protected ?int $dataLength = null;
 
-    public function __construct(protected readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly LevelFilteredLogger $logger)
     {
         $this->logger->setPrefix(static::class);
     }
@@ -20,5 +20,16 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
         return $this;
     }
 
-    abstract public function count(): int;
+    public function count(): int
+    {
+        $this->logger->debug("Input << Data length = {$this->dataLength}");
+
+        $encodedDataBitsCount = $this->specificCount();
+
+        $this->logger->debug("Output >> Encoded data bits count = $encodedDataBitsCount");
+
+        return $encodedDataBitsCount;
+    }
+
+    abstract public function specificCount(): int;
 }
