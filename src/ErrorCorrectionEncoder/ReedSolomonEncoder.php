@@ -2,6 +2,7 @@
 
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
+use Monolog\Logger;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
@@ -13,8 +14,9 @@ class ReedSolomonEncoder
     private ?Version $version = null;
 
     public function __construct(
-        private readonly GalloisField $galloisField,
         private readonly NumECCodewordsCalculator $numECCodewordsCalculator,
+        private readonly GeneratorPolynomialCreator $generatorPolynomialCreator,
+        private readonly RemainderCalculator $remainderCalculator,
         private readonly LevelFilteredLogger $logger
     )
     {
@@ -74,62 +76,16 @@ class ReedSolomonEncoder
     {
         $this->logger->info('Create Generator Polynomial');
 
-        $generatorPolynomial = [1];
-        for ($i = 0; $i < $numECCodewords; $i++) {
-            $generatorPolynomial = $this->multiplyPolynomials(
-                $generatorPolynomial,
-                [1, $this->galloisField->getExp($i)]
-            );
-        }
-
-        return $generatorPolynomial;
+        return $this->generatorPolynomialCreator->create($numECCodewords);
     }
 
     /**
      * @throws OutOfRangeException
      */
-    private function multiplyPolynomials(array $p1, array $p2): array
-    {
-        $result = array_fill(0, count($p1) + count($p2) - 1, 0);
-
-        for ($i = 0; $i < count($p1); $i++) {
-            for ($j = 0; $j < count($p2); $j++) {
-                $result[$i + $j] = $this->galloisField->add(
-                    $result[$i + $j],
-                    $this->galloisField->multiply($p1[$i], $p2[$j])
-                );
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @throws OutOfRangeException
-     */
-    private function calculateRemainder($data, $generator): array
+    private function calculateRemainder(array $data, array $generator): array
     {
         $this->logger->info('Calculate Remainder');
 
-        $dataLength = count($data);
-        $genLength = count($generator);
-
-        for ($i = 0; $i < $dataLength - ($genLength - 1); $i++) {
-            $coefficient = $data[$i];
-            if ($coefficient != 0) {
-                for ($j = 0; $j < $genLength; $j++) {
-                    $data[$i + $j] = $this->galloisField->add(
-                        $data[$i + $j],
-                        $this->galloisField->multiply($generator[$j], $coefficient)
-                    );
-                }
-            }
-        }
-
-        $remainder = array_slice($data, -($genLength - 1));
-
-        $this->logger->info('Output >> Remainder = ' . implode('|', $remainder));
-
-        return $remainder;
+        return $this->remainderCalculator->calculate($data, $generator);
     }
 }

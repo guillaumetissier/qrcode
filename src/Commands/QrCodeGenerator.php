@@ -15,8 +15,10 @@ use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomialCreator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
@@ -44,6 +46,8 @@ class QrCodeGenerator
                 $levelFilteredLogger->setLogLevel($logLevel);
             }
 
+            $galloisFields = new GalloisField();
+
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
                     new ModeDetector(clone $levelFilteredLogger),
@@ -57,8 +61,9 @@ class QrCodeGenerator
                     clone $levelFilteredLogger
                 ),
                 new ReedSolomonEncoder(
-                    new GalloisField(clone $levelFilteredLogger),
                     new NumECCodewordsCalculator(clone $levelFilteredLogger),
+                    new GeneratorPolynomialCreator($galloisFields, clone $levelFilteredLogger),
+                    new RemainderCalculator($galloisFields, clone $levelFilteredLogger),
                     clone $levelFilteredLogger
                 ),
                 new MatrixBuilder(
