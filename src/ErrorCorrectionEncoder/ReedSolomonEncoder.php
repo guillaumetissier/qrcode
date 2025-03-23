@@ -5,6 +5,7 @@ namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
+use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class ReedSolomonEncoder
 {
@@ -13,9 +14,11 @@ class ReedSolomonEncoder
 
     public function __construct(
         private readonly GalloisField $galloisField,
-        private readonly NumECCodewordsCalculator $numECCodewordsCalculator
+        private readonly NumECCodewordsCalculator $numECCodewordsCalculator,
+        private readonly LevelFilteredLogger $logger
     )
     {
+        $this->logger->setPrefix(self::class);
     }
 
     public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
@@ -41,15 +44,12 @@ class ReedSolomonEncoder
         if (!$this->errorCorrectionLevel) {
             throw new VariableNotSetException('errorCorrectionLevel');
         }
+
         if (!$this->version) {
             throw new VariableNotSetException('version');
         }
 
-        $numECCodewords = $this->numECCodewordsCalculator
-            ->setVersion($this->version)
-            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
-            ->calculate();
-
+        $numECCodewords = $this->calculateNumECCodewords();
         $generatorPolynomial = $this->createGeneratorPolynomial($numECCodewords);
         $dataWithPadding = array_merge($data, array_fill(0, $numECCodewords, 0));
         $remainder = $this->calculateRemainder($dataWithPadding, $generatorPolynomial);
@@ -57,11 +57,31 @@ class ReedSolomonEncoder
         return array_merge($data, $remainder);
     }
 
+    private function calculateNumECCodewords(): int
+    {
+        $this->logger->notice('Calculate Num EC Codewords');
+
+        $this->logger->info("Input << Version = {$this->version->value}, ECL = {$this->errorCorrectionLevel->value}");
+
+        $numECCodewords = $this->numECCodewordsCalculator
+            ->setVersion($this->version)
+            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
+            ->calculate();
+
+        $this->logger->info("Output >> Num EC Codewords = $numECCodewords");
+
+        return $numECCodewords;
+    }
+
     /**
      * @throws OutOfRangeException
      */
     private function createGeneratorPolynomial(int $numECCodewords): array
     {
+        $this->logger->notice('Create Generator Polynomial');
+
+        $this->logger->info("Input << Num EC Codewords = $numECCodewords");
+
         $generatorPolynomial = [1];
         for ($i = 0; $i < $numECCodewords; $i++) {
             $generatorPolynomial = $this->multiplyPolynomials(
@@ -69,6 +89,9 @@ class ReedSolomonEncoder
                 [1, $this->galloisField->getExp($i)]
             );
         }
+
+        $this->logger->info('Output >> Generator Polynomial = ' . implode('|', $generatorPolynomial));
+
         return $generatorPolynomial;
     }
 
@@ -96,6 +119,8 @@ class ReedSolomonEncoder
      */
     private function calculateRemainder($data, $generator): array
     {
+        $this->logger->notice('Calculate Remainder');
+
         $dataLength = count($data);
         $genLength = count($generator);
 
@@ -111,6 +136,10 @@ class ReedSolomonEncoder
             }
         }
 
-        return array_slice($data, -($genLength - 1));
+        $remainder = array_slice($data, -($genLength - 1));
+
+        $this->logger->info('Output >> Remainder = ' . implode('|', $remainder));
+
+        return $remainder;
     }
 }

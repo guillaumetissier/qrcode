@@ -35,13 +35,13 @@ class QrCodeGenerator
     private string $data;
     private ErrorCorrectionLevel $errorCorrectionLevel = ErrorCorrectionLevel::LOW;
     private ?OutputOptions $outputOptions = null;
-    private ?Version $version = null;
 
     public static function getQrCodeGenerator(?LoggerInterface $logger = null, ?string $logLevel = null): self
     {
         if (!self::$Generator) {
             $levelFilteredLogger = new LevelFilteredLogger($logger);
             if ($logLevel) {
+                echo "LOG LEVEL: $logLevel\n";
                 $levelFilteredLogger->setLogLevel($logLevel);
             }
 
@@ -58,8 +58,9 @@ class QrCodeGenerator
                     clone $levelFilteredLogger
                 ),
                 new ReedSolomonEncoder(
-                    new GalloisField(),
-                    new NumECCodewordsCalculator()
+                    new GalloisField(clone $levelFilteredLogger),
+                    new NumECCodewordsCalculator(clone $levelFilteredLogger),
+                    clone $levelFilteredLogger
                 ),
                 new MatrixBuilder(
                     new PlaceFinderPatterns(),
@@ -115,34 +116,36 @@ class QrCodeGenerator
      */
     public function generate(): void
     {
-        $this->logger->notice('1. Encoding data');
+        $this->logger->notice('*** 1. Encoding data ***');
 
         $encodedData = $this->dataEncoder
             ->setData($this->data)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
-        $this->logger->notice('2. Adding error correction');
+        $version = $this->dataEncoder->getVersion();
+
+        $this->logger->notice('*** 2. Adding error correction ***');
 
         $dataWithErrorCorrection = $this->reedSolomonEncoder
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
-            ->setVersion($this->dataEncoder->getVersion())
+            ->setVersion($version)
             ->addErrorCorrection(str_split($encodedData));
 
-        $this->logger->notice('3. Building QR code matrix');
+//        $this->logger->notice('*** 3. Building QR code matrix ***');
+//
+//        $matrix = $this->matrixBuilder
+//            ->setVersion($version)
+//            ->setData(implode($dataWithErrorCorrection))
+//            ->build();
+//
+//        $this->logger->notice('*** 4. Rendering QR code matrix ***');
+//
+//        $this->matrixRendererBuilder
+//            ->buildRenderer($this->outputOptions)
+//            ->setMatrix($matrix)
+//            ->render();
 
-        $matrix = $this->matrixBuilder
-            ->setVersion($this->version)
-            ->setData(implode($dataWithErrorCorrection))
-            ->build();
-
-        $this->logger->notice('4. Rendering QR code matrix');
-
-        $this->matrixRendererBuilder
-            ->buildRenderer($this->outputOptions)
-            ->setMatrix($matrix)
-            ->render();
-
-        $this->logger->notice('QR code was generated !');
+        $this->logger->notice('*** QR code was generated ***');
     }
 }

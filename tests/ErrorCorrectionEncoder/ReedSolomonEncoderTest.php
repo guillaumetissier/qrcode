@@ -3,6 +3,7 @@
 namespace Tests\ErrorCorrectionEncoder;
 
 use PHPUnit\Framework\TestCase;
+use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
@@ -11,13 +12,15 @@ use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 
-class ReedSolomonEncoderTest extends TestCase
+class ReedSolomonEncoderTest extends LoggerTestCase
 {
     private ReedSolomonEncoder $encoder;
 
     protected function setUp(): void
     {
-        $this->encoder = new ReedSolomonEncoder(new GalloisField(), new NumECCodewordsCalculator());
+        parent::setUp();
+
+        $this->encoder = new ReedSolomonEncoder(new GalloisField(), new NumECCodewordsCalculator(), $this->logger);
     }
 
     /**

@@ -23,7 +23,7 @@ class ImagePainter implements PainterInterface
 
         for ($y = 0; $y < $size; $y++) {
             for ($x = 0; $x < $size; $x++) {
-                if ($data[$y][$x]) {
+                if ($data[$y][$x] ?? false) {
                     $canvas->paintRectangle(Image::BLACK,
                         $x * $scale,
                         $y * $scale,

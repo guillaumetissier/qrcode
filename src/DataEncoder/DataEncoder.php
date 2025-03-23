@@ -63,10 +63,12 @@ class DataEncoder
     public function getMode(): Mode
     {
         if ($this->mode === null) {
-            $this->logger->info('Detecting mode');
+            $this->logger->notice('Detecting mode');
             $this->mode = $this->modeDetector
                 ->setData($this->data)
                 ->detect();
+
+            $this->logger->info("Output >> Mode = {$this->mode->value}");
         }
 
         return $this->mode;
@@ -75,10 +77,12 @@ class DataEncoder
     public function getVersion(): Version
     {
         if ($this->version === null) {
-            $this->logger->info('Detecting version');
+            $this->logger->notice('Detecting version');
             $this->version = $this->versionSelectorFactory
                 ->getVersionSelector($this->mode, $this->errorCorrectionLevel)
                 ->selectVersion(strlen($this->data));
+
+            $this->logger->info("Output >> Version = {$this->version->value}");
         }
 
         return $this->version;
@@ -87,11 +91,13 @@ class DataEncoder
     public function getEncodedData(): string
     {
         if ($this->encodedData === null) {
-            $this->logger->info('Encoding data');
+            $this->logger->notice('Encoding data');
             $this->encodedData = $this->encoderFactory
                 ->getEncoder($this->mode)
                 ->setData($this->data)
                 ->encode();
+
+            $this->logger->info("Output >> Encoded data = {$this->encodedData}");
         }
 
         return $this->encodedData;
@@ -100,12 +106,14 @@ class DataEncoder
     public function getPaddedData(): string
     {
         if ($this->paddedData === null) {
-            $this->logger->info('Padding data');
+            $this->logger->notice('Padding data');
             $this->paddedData = $this->paddingAdder
                 ->setMode($this->mode)
                 ->setVersion($this->version)
                 ->setData($this->encodedData)
                 ->appendPadding();
+
+            $this->logger->info("Output >> Padded data = {$this->paddedData}");
         }
 
         return $this->paddedData;

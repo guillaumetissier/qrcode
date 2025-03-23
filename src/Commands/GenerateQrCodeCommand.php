@@ -33,7 +33,9 @@ class GenerateQrCodeCommand extends Command
         if (null === ($text = $input->getOption('text'))) {
             exit('Enter a text to encode' . PHP_EOL);
         }
-        $logLevel = $input->getOption('logLevel');
+        $logLevel = str_replace('=', '', $input->getOption('logLevel'));
+        $options = $input->getOptions();
+        echo "LOG LEVEL: $logLevel" . PHP_EOL . implode(PHP_EOL, $options);
         $generator = QrCodeGenerator::getQrCodeGenerator(new ConsoleLogger(), $logLevel);
 
         $generator
