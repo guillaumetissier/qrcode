@@ -3,11 +3,11 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class AlphanumericQuartileVersionSelector extends BaseVersionSelector
 {
-    public function __construct(LevelFilteredLogger $logger)
+    public function __construct(IOLoggerInterface $logger)
     {
         /*
          * see https://www.qrcode.com/en/about/version.html

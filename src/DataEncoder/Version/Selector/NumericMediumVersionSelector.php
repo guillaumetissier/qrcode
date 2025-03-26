@@ -3,7 +3,7 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class NumericMediumVersionSelector extends BaseVersionSelector
 {
@@ -11,7 +11,7 @@ class NumericMediumVersionSelector extends BaseVersionSelector
      * see https://www.qrcode.com/en/about/version.html checked
      * ISO/IEC 18004:2000(E) 8.4.9 (p28-32)
      */
-    public function __construct(LevelFilteredLogger $logger)
+    public function __construct(IOLoggerInterface $logger)
     {
         parent::__construct($logger, [
             Version::V01->value => 34,

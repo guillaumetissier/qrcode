@@ -3,13 +3,13 @@
 namespace Tests\DataEncoder\Encoder;
 
 use ThePhpGuild\QrCode\DataEncoder\Encoder\NumericEncoder;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class NumericEncoderTest extends BaseEncoderTestCase
 {
     public function setUp(): void
     {
-        $this->encoder = new NumericEncoder($this->createMock(LevelFilteredLogger::class));
+        $this->encoder = new NumericEncoder($this->createMock(IOLoggerInterface::class));
     }
 
     public static function provideDataToEncode(): array

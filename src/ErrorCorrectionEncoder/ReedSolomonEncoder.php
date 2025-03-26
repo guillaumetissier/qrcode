@@ -6,7 +6,7 @@ use Monolog\Logger;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class ReedSolomonEncoder
 {
@@ -17,10 +17,9 @@ class ReedSolomonEncoder
         private readonly NumECCodewordsCalculator $numECCodewordsCalculator,
         private readonly GeneratorPolynomialCreator $generatorPolynomialCreator,
         private readonly RemainderCalculator $remainderCalculator,
-        private readonly LevelFilteredLogger $logger
+        private readonly IOLoggerInterface $logger
     )
     {
-        $this->logger->setPrefix(self::class);
     }
 
     public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self

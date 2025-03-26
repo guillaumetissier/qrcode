@@ -4,15 +4,14 @@ namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\CciBitsCounter
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
 {
     protected ?Version $version = null;
 
-    public function __construct(private readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(static::class);
     }
 
     public function getVersion(): ?Version
@@ -33,7 +32,7 @@ abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
             throw new VariableNotSetException('version');
         }
 
-        $this->logger->input("Version = {$this->version->value}");
+        $this->logger->input("Version = {$this->version->value}", ['class' => static::class]);
 
         $cciBitsCount = $this->modeDependentCount();
 

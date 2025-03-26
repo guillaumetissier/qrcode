@@ -5,7 +5,7 @@ namespace Tests\DataEncoder\Mode;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class ModeIndicatorTest extends TestCase
 {
@@ -13,7 +13,7 @@ class ModeIndicatorTest extends TestCase
 
     public function setUp(): void
     {
-        $this->indicator = new ModeIndicator($this->createMock(LevelFilteredLogger::class));
+        $this->indicator = new ModeIndicator($this->createMock(IOLoggerInterface::class));
     }
 
     /**

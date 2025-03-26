@@ -5,11 +5,9 @@ namespace ThePhpGuild\QrCode\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-class LevelFilteredLogger implements LoggerInterface
+class LevelFilteredLogger implements IOLoggerInterface
 {
     private ?string $logLevel = null;
-
-    private ?string $prefix = null;
 
     public function __construct(private ?LoggerInterface $logger = null)
     {
@@ -23,14 +21,6 @@ class LevelFilteredLogger implements LoggerInterface
     public function setLogLevel(string $logLevel): self
     {
         $this->logLevel = $logLevel;
-
-        return $this;
-    }
-
-    public function setPrefix(?string $prefix): self
-    {
-        $prefixChunks = explode("\\", $prefix);
-        $this->prefix = $prefixChunks[count($prefixChunks) - 1];
 
         return $this;
     }
@@ -49,63 +39,63 @@ class LevelFilteredLogger implements LoggerInterface
     {
         if (!$this->logger || !$this->showLog(LogLevel::DEBUG)) return;
 
-        $this->logger->debug($this->addPrefix($message), $context);
+        $this->logger->debug($this->addPrefix($message, $context), $context);
     }
 
     public function info(string|\Stringable $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::INFO)) return;
 
-        $this->logger->info($this->addPrefix($message), $context);
+        $this->logger->info($this->addPrefix($message, $context), $context);
     }
 
     public function notice(\Stringable|string $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::NOTICE)) return;
 
-        $this->logger->notice($this->addPrefix($message), $context);
+        $this->logger->notice($this->addPrefix($message, $context), $context);
     }
 
     public function warning(string|\Stringable $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::WARNING)) return;
 
-        $this->logger->warning($this->addPrefix($message), $context);
+        $this->logger->warning($this->addPrefix($message, $context), $context);
     }
 
     public function error(string|\Stringable $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::ERROR)) return;
 
-        $this->logger->error($this->addPrefix($message), $context);
+        $this->logger->error($this->addPrefix($message, $context), $context);
     }
 
     public function critical(string|\Stringable $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::CRITICAL)) return;
 
-        $this->logger->critical($this->addPrefix($message), $context);
+        $this->logger->critical($this->addPrefix($message, $context), $context);
     }
 
     public function alert(\Stringable|string $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::ALERT)) return;
 
-        $this->logger->alert($this->addPrefix($message), $context);
+        $this->logger->alert($this->addPrefix($message, $context), $context);
     }
 
     public function emergency(\Stringable|string $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog(LogLevel::EMERGENCY)) return;
 
-        $this->logger->emergency($this->addPrefix($message), $context);
+        $this->logger->emergency($this->addPrefix($message, $context), $context);
     }
 
     public function log($level, \Stringable|string $message, array $context = []): void
     {
         if (!$this->logger || !$this->showLog($level)) return;
 
-        $this->logger->log($level, $this->addPrefix($message), $context);
+        $this->logger->log($level, $this->addPrefix($message, $context), $context);
     }
 
     private function showLog(string $level): bool
@@ -126,10 +116,19 @@ class LevelFilteredLogger implements LoggerInterface
         return $levels[$level] <= $levels[$this->logLevel];
     }
 
-    private function addPrefix(string $message): string
+    private function addPrefix(string $message, array $context): string
     {
-        return !!$this->prefix
-            ? '[' . str_pad($this->prefix, 34, '.', STR_PAD_RIGHT) ."] {$message}"
-            : $message;
+        return (null === ($prefix = $this->extractPrefix($context))) ? $message : $prefix . $message;
+    }
+
+    private function extractPrefix(array $context): ?string
+    {
+        if (null === ($class = $context['class'] ?? null)) {
+            return null;
+        }
+
+        $classChunks = explode("\\", $class);
+
+        return '[' . str_pad($classChunks[count($classChunks) - 1], 34, '.') .'] ';
     }
 }

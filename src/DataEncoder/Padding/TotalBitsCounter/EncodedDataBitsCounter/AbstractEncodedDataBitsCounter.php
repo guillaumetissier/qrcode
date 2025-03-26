@@ -2,15 +2,14 @@
 
 namespace ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\EncodedDataBitsCounter;
 
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterInterface
 {
     protected ?int $dataLength = null;
 
-    public function __construct(private readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(static::class);
     }
 
     public function setDataLength(int $dataLength): self
@@ -22,7 +21,7 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
 
     public function count(): int
     {
-        $this->logger->input("Data length = {$this->dataLength}");
+        $this->logger->input("Data length = {$this->dataLength}", ['class' => static::class]);
 
         $encodedDataBitsCount = $this->modeDependentCount();
 

@@ -4,13 +4,12 @@ namespace ThePhpGuild\QrCode\DataEncoder\Version\Selector;
 
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class VersionSelectorFactory
 {
-    public function __construct(private readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(self::class);
     }
 
     public function getVersionSelector(Mode $mode, ErrorCorrectionLevel $errorCorrectionLevel): VersionSelectorInterface

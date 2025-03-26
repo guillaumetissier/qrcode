@@ -3,16 +3,15 @@
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class GeneratorPolynomialCreator
 {
     public function __construct(
         private readonly GalloisField $galloisField,
-        private readonly LevelFilteredLogger $logger
+        private readonly IOLoggerInterface $logger
     )
     {
-        $this->logger->setPrefix(self::class);
     }
 
     /**
@@ -20,7 +19,7 @@ class GeneratorPolynomialCreator
      */
     public function create($numECCodewords): array
     {
-        $this->logger->input("Num EC Codewords = $numECCodewords");
+        $this->logger->input("Num EC Codewords = $numECCodewords", ['class' => static::class]);
 
         $generatorPolynomial = [1];
         for ($i = 0; $i < $numECCodewords; $i++) {

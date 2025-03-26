@@ -3,16 +3,15 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 abstract class AbstractLengthBits implements LengthBitsInterface
 {
     protected ?int $dataLength = null;
     protected ?Version $version = null;
 
-    public function __construct(protected readonly LevelFilteredLogger $logger)
+    public function __construct(protected readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(static::class);
     }
 
     public function setDataLength(?int $dataLength): self
@@ -31,7 +30,7 @@ abstract class AbstractLengthBits implements LengthBitsInterface
 
     public function getLengthBits(): string
     {
-        $this->logger->input("Version = {$this->version->value}");
+        $this->logger->input("Version = {$this->version->value}", ['class' => static::class]);
 
         $lengthBits = $this->getModeDependentLengthBits();
 

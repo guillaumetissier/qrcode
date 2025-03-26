@@ -9,7 +9,7 @@ class NumericEncoder extends AbstractEncoder
         $binaryData = '';
         $length = strlen($this->data);
 
-        $this->logger->input("{$this->data} (length: {$length})");
+        $this->logger->input("{$this->data} (length: {$length})", ['class' => static::class]);
 
         for ($i = 0; $i < $length; $i += 3) {
             $chunk = substr($this->data, $i, 3);

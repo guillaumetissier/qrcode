@@ -3,16 +3,15 @@
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class RemainderCalculator
 {
     public function __construct(
         private readonly GalloisField $galloisField,
-        private readonly LevelFilteredLogger $logger
+        private readonly IOLoggerInterface $logger
     )
     {
-        $this->logger->setPrefix(self::class);
     }
 
     /**
@@ -20,7 +19,7 @@ class RemainderCalculator
      */
     public function calculate(array $data, array $generator): array
     {
-        $this->logger->input("Data " . implode($data));
+        $this->logger->input("Data " . implode($data), ['class' => static::class]);
 
         $dataLength = count($data);
         $genLength = count($generator);

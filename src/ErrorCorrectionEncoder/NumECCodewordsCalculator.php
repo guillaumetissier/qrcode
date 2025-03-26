@@ -4,16 +4,15 @@ namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class NumECCodewordsCalculator
 {
     private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
     private ?Version $version = null;
 
-    public function __construct(private readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(self::class);
     }
 
     public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
@@ -43,7 +42,10 @@ class NumECCodewordsCalculator
             throw new VariableNotSetException('version');
         }
 
-        $this->logger->input("Version = {$this->version->value}, ECL = {$this->errorCorrectionLevel->value}");
+        $this->logger->input(
+            "Version = {$this->version->value}, ECL = {$this->errorCorrectionLevel->value}",
+            ['class' => static::class]
+        );
 
         $numEcCodewordsCount = [
             1 =>  ['L' => 7,   'M' => 10,  'Q' => 13,  'H' => 17],

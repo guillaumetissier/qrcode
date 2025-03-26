@@ -3,15 +3,14 @@
 namespace ThePhpGuild\QrCode\DataEncoder\Mode;
 
 use ThePhpGuild\QrCode\Exception\UnknownMode;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class ModeIndicator
 {
     private ?Mode $mode = null;
 
-    public function __construct(private readonly LevelFilteredLogger $logger)
+    public function __construct(private readonly IOLoggerInterface $logger)
     {
-        $this->logger->setPrefix(self::class);
     }
 
     public static function GetTotalBits(): int
@@ -35,7 +34,7 @@ class ModeIndicator
             throw new UnknownMode();
         }
 
-        $this->logger->input("Mode = {$this->mode->value}");
+        $this->logger->input("Mode = {$this->mode->value}", ['class' => static::class]);
 
         $modeIndicator = match ($this->mode) {
             Mode::NUMERIC => '0001',

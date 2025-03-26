@@ -3,7 +3,6 @@
 namespace ThePhpGuild\QrCode\Commands;
 
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
@@ -12,7 +11,6 @@ use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
 use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomialCreator;
@@ -20,6 +18,7 @@ use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Exception;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
 use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
@@ -85,10 +84,9 @@ class QrCodeGenerator
         private readonly ReedSolomonEncoder $reedSolomonEncoder,
         private readonly MatrixBuilder $matrixBuilder,
         private readonly MatrixRendererBuilder $matrixRendererBuilder,
-        private readonly LevelFilteredLogger $logger
+        private readonly IOLoggerInterface $logger
     )
     {
-        $this->logger->setPrefix(self::class);
     }
 
     public function setData(string $data): self

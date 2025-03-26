@@ -8,13 +8,13 @@ use ThePhpGuild\QrCode\DataEncoder\Encoder\ByteEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
 use ThePhpGuild\QrCode\DataEncoder\Encoder\NumericEncoder;
 use ThePhpGuild\QrCode\DataEncoder\Mode\Mode;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class EncoderFactoryTest extends TestCase
 {
     public function setUp(): void
     {
-        $this->factory = new EncoderFactory($this->createMock(LevelFilteredLogger::class));
+        $this->factory = new EncoderFactory($this->createMock(IOLoggerInterface::class));
     }
 
     /**

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Logger\LoggerTestCase;
 use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\AlphanumericLengthBits;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class AlphanumericLengthBitsTest extends LoggerTestCase
 {

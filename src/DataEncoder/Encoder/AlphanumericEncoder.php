@@ -10,7 +10,7 @@ class AlphanumericEncoder extends AbstractEncoder
         $charMap = array_flip(str_split("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"));
         $length = strlen($this->data);
 
-        $this->logger->input("{$this->data} (length: {$length})");
+        $this->logger->input("{$this->data} (length: {$length})", ['class' => static::class]);
 
         for ($i = 0; $i < $length; $i += 2) {
             $chunk = substr($this->data, $i, 2);
