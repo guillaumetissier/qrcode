@@ -22,7 +22,7 @@ class AlphanumericEncoder extends AbstractEncoder
             }
         }
 
-        $this->logger->output($binaryData);
+        $this->logger->output($binaryData, ['class' => static::class]);
 
         return $binaryData;
     }

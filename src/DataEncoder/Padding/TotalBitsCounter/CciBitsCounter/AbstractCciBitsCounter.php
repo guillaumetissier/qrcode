@@ -36,7 +36,7 @@ abstract class AbstractCciBitsCounter implements CciBitsCounterInterface
 
         $cciBitsCount = $this->modeDependentCount();
 
-        $this->logger->output("CCI bits count = $cciBitsCount");
+        $this->logger->output("CCI bits count = $cciBitsCount", ['class' => static::class]);
 
         return $cciBitsCount;
     }

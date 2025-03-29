@@ -42,7 +42,7 @@ class ModeIndicator
             Mode::BYTE => '0100'
         };
 
-        $this->logger->output("Mode indicator = $modeIndicator");
+        $this->logger->output("Mode indicator = $modeIndicator", ['class' => static::class]);
 
         return $modeIndicator;
     }

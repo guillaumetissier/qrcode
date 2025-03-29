@@ -17,7 +17,7 @@ class NumericEncoder extends AbstractEncoder
             $binaryData .= $chunkBits;
         }
 
-        $this->logger->output($binaryData);
+        $this->logger->output($binaryData, ['class' => static::class]);
 
         return $binaryData;
     }

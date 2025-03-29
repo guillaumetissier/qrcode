@@ -25,7 +25,7 @@ abstract class AbstractEncodedDataBitsCounter implements EncodedDataBitsCounterI
 
         $encodedDataBitsCount = $this->modeDependentCount();
 
-        $this->logger->output("Encoded data bits count = $encodedDataBitsCount");
+        $this->logger->output("Encoded data bits count = $encodedDataBitsCount", ['class' => static::class]);
 
         return $encodedDataBitsCount;
     }

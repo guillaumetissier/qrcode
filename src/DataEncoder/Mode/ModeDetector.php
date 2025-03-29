@@ -22,16 +22,16 @@ class ModeDetector
     public function detect(): Mode
     {
         if ($this->isNumeric()) {
-            $this->logger->output("Mode = NUMERIC");
+            $this->logger->output("Mode = NUMERIC", ['class' => static::class]);
             return Mode::NUMERIC;
         }
 
         if ($this->isAlphanumeric()) {
-            $this->logger->output("Mode = ALPHANUMERIC");
+            $this->logger->output("Mode = ALPHANUMERIC", ['class' => static::class]);
             return Mode::ALPHANUMERIC;
         }
 
-        $this->logger->output("Mode = BYTE");
+        $this->logger->output("Mode = BYTE", ['class' => static::class]);
         return Mode::BYTE;
     }
 

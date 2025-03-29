@@ -21,7 +21,7 @@ class BaseVersionSelector implements VersionSelectorInterface
 
         foreach ($this->capacityTable as $version => $capacity) {
             if ($dataLength <= $capacity) {
-                $this->logger->output("Version = {$version}");
+                $this->logger->output("Version = {$version}", ['class' => static::class]);
 
                 return Version::from($version);
             }

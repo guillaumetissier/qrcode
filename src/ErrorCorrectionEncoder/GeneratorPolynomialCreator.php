@@ -29,7 +29,10 @@ class GeneratorPolynomialCreator
             );
         }
 
-        $this->logger->output("Generator Polynomial = " . json_encode($generatorPolynomial));
+        $this->logger->output(
+            "Generator Polynomial = " . json_encode($generatorPolynomial),
+            ['class' => static::class]
+        );
 
         return $generatorPolynomial;
     }

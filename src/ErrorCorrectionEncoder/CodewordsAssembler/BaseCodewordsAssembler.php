@@ -80,7 +80,7 @@ class BaseCodewordsAssembler implements CodewordsAssemblerInterface
             }
         }
 
-        $this->logger->output("Assembled = $assembled");
+        $this->logger->output("Assembled = $assembled", ['class' => static::class]);
 
         return $assembled;
     }

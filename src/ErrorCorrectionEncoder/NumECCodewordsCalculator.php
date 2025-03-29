@@ -90,7 +90,7 @@ class NumECCodewordsCalculator
             40 => ['L' => 750, 'M' => 1372, 'Q' => 2040, 'H' => 2430],
         ][$this->version->value][$this->errorCorrectionLevel->value];
 
-        $this->logger->output("Num EC Codewords = $numEcCodewordsCount");
+        $this->logger->output("Num EC Codewords = $numEcCodewordsCount", ['class' => static::class]);
 
         return $numEcCodewordsCount;
     }

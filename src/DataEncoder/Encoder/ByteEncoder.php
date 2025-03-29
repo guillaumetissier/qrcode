@@ -15,7 +15,7 @@ class ByteEncoder extends AbstractEncoder
             $binaryData .= str_pad(decbin(ord($this->data[$i])), 8, '0', STR_PAD_LEFT);
         }
 
-        $this->logger->output($binaryData);
+        $this->logger->output($binaryData, ['class' => static::class]);
 
         return $binaryData;
     }

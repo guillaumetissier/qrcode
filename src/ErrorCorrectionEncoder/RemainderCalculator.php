@@ -38,7 +38,7 @@ class RemainderCalculator
 
         $remainder = array_slice($data, -($genLength - 1));
 
-        $this->logger->output('Remainder = ' . implode('|', $remainder));
+        $this->logger->output('Remainder = ' . implode('|', $remainder), ['class' => static::class]);
 
         return $remainder;
     }

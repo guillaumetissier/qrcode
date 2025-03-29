@@ -34,7 +34,7 @@ abstract class AbstractLengthBits implements LengthBitsInterface
 
         $lengthBits = $this->getModeDependentLengthBits();
 
-        $this->logger->output("Length bits = $lengthBits");
+        $this->logger->output("Length bits = $lengthBits", ['class' => static::class]);
 
         return $lengthBits;
     }
