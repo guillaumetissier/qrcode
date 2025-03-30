@@ -2,16 +2,15 @@
 
 namespace ThePhpGuild\QrCode\Matrix;
 
-use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-
 class QrMatrix
 {
     private array $matrix = [];
+
     private int $size;
 
-    public function __construct(Version $version)
+    public function __construct(int $size)
     {
-        $this->size = 21 + 4 * ($version->value - 1);
+        $this->size = $size;
         $this->matrix = array_fill(0, $this->size, array_fill(0, $this->size, null));
     }
 

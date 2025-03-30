@@ -5,7 +5,7 @@ namespace ThePhpGuild\QrCode\Matrix;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
 
-class PlaceFormatAndVersionInfo extends AbstractPlacePatterns
+class FormatAndVersionInfoDrawer extends AbstractPatternDrawer
 {
     private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
@@ -16,7 +16,7 @@ class PlaceFormatAndVersionInfo extends AbstractPlacePatterns
         return $this;
     }
 
-    public function execute(): QrMatrix
+    public function draw(): QrMatrix
     {
         for ($i = 0; $i < 15; $i++) {
             if ($i < 6) {

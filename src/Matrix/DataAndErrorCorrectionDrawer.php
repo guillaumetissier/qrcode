@@ -4,7 +4,7 @@ namespace ThePhpGuild\QrCode\Matrix;
 
 use ThePhpGuild\QrCode\Exception\NoDataException;
 
-class PlaceDataAndErrorCorrection extends AbstractPlacePatterns
+class DataAndErrorCorrectionDrawer extends AbstractPatternDrawer
 {
     private ?string $data = null;
 
@@ -19,7 +19,7 @@ class PlaceDataAndErrorCorrection extends AbstractPlacePatterns
      * @return QrMatrix
      * @throws NoDataException
      */
-    public function execute(): QrMatrix
+    public function draw(): QrMatrix
     {
         if (null === $this->data) {
             throw new NoDataException();

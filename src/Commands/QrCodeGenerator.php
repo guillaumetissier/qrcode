@@ -20,12 +20,15 @@ use ThePhpGuild\QrCode\ErrorCorrectionEncoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
+use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
+use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Positions as AlignmentPatternsPositions;
+use ThePhpGuild\QrCode\Matrix\DataAndErrorCorrectionDrawer;
+use ThePhpGuild\QrCode\Matrix\FinderPatternsDrawer;
+use ThePhpGuild\QrCode\Matrix\FormatAndVersionInfoDrawer;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
-use ThePhpGuild\QrCode\Matrix\PlaceAlignmentPatterns;
-use ThePhpGuild\QrCode\Matrix\PlaceDataAndErrorCorrection;
-use ThePhpGuild\QrCode\Matrix\PlaceFinderPatterns;
-use ThePhpGuild\QrCode\Matrix\PlaceFormatAndVersionInfo;
-use ThePhpGuild\QrCode\Matrix\PlaceTimingPatterns;
+use ThePhpGuild\QrCode\Matrix\MatrixSizeCalculator;
+use ThePhpGuild\QrCode\Matrix\PatternDrawer;
+use ThePhpGuild\QrCode\Matrix\TimingPatternsDrawer;
 use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 
@@ -66,11 +69,13 @@ class QrCodeGenerator
                     $levelFilteredLogger
                 ),
                 new MatrixBuilder(
-                    new PlaceFinderPatterns(),
-                    new PlaceAlignmentPatterns(),
-                    new PlaceTimingPatterns(),
-                    new PlaceFormatAndVersionInfo(),
-                    new PlaceDataAndErrorCorrection()
+                    new MatrixSizeCalculator(),
+                    new TimingPatternsDrawer(),
+                    new FinderPatternsDrawer(),
+                    new AlignmentPatternsDrawer(new AlignmentPatternsPositions()),
+                    new PatternDrawer(),
+                    new FormatAndVersionInfoDrawer(),
+                    new DataAndErrorCorrectionDrawer()
                 ),
                 new MatrixRendererBuilder(),
                 $levelFilteredLogger

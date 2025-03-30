@@ -4,6 +4,7 @@ namespace ThePhpGuild\QrCode\Matrix;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\NoDataException;
+use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer;
 
 class MatrixBuilder
 {
@@ -11,11 +12,13 @@ class MatrixBuilder
     private ?string $data = null;
 
     public function __construct(
-        private readonly PlaceFinderPatterns $placeFinderPatterns,
-        private readonly PlaceAlignmentPatterns $placeAlignmentPatterns,
-        private readonly PlaceTimingPatterns $placeTimingPatterns,
-        private readonly PlaceFormatAndVersionInfo $placeFormatAndVersionInfo,
-        private readonly PlaceDataAndErrorCorrection $placeDataAndErrorCorrection
+        private readonly MatrixSizeCalculator $sizeCalculator,
+        private readonly TimingPatternsDrawer         $timingPatternsDrawer,
+        private readonly FinderPatternsDrawer         $finderPatternsDrawer,
+        private readonly Drawer                       $alignmentPatternsDrawer,
+        private readonly PatternDrawer                $patternDrawer,
+        private readonly FormatAndVersionInfoDrawer   $formatAndVersionInfoDrawer,
+        private readonly DataAndErrorCorrectionDrawer $dataAndErrorCorrectionDrawer
     )
     {
     }
@@ -40,12 +43,14 @@ class MatrixBuilder
      */
     public function build(): QrMatrix
     {
-        $matrix = new QrMatrix($this->version);
-        $matrix = $this->placeFinderPatterns->setMatrix($matrix)->execute();
-        $matrix = $this->placeAlignmentPatterns->setMatrix($matrix)->setVersion($this->version)->execute();
-        $matrix = $this->placeTimingPatterns->setMatrix($matrix)->execute();
-        $matrix = $this->placeFormatAndVersionInfo->setMatrix($matrix)->execute();
+        $size = $this->sizeCalculator->setVersion($this->version)->calculate();
+        $matrix = new QrMatrix($size);
+        $matrix = $this->timingPatternsDrawer->setMatrix($matrix)->draw();
+        $matrix = $this->finderPatternsDrawer->setMatrix($matrix)->draw();
+        $matrix = $this->alignmentPatternsDrawer->setMatrix($matrix)->setVersion($this->version)->draw();
+        $matrix = $this->patternDrawer->setMatrix($matrix)->draw();
+        $matrix = $this->formatAndVersionInfoDrawer->setMatrix($matrix)->draw();
 
-        return $this->placeDataAndErrorCorrection->setMatrix($matrix)->setData($this->data)->execute();
+        return $this->dataAndErrorCorrectionDrawer->setMatrix($matrix)->setData($this->data)->draw();
     }
 }

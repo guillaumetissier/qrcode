@@ -2,9 +2,9 @@
 
 namespace ThePhpGuild\QrCode\Matrix;
 
-class PlaceTimingPatterns extends AbstractPlacePatterns
+class PatternDrawer extends AbstractPatternDrawer
 {
-    public function execute(): QrMatrix
+    public function draw(): QrMatrix
     {
         for ($i = 8; $i < $this->matrix->getSize() - 8; $i++) {
             $this->matrix->set(6, $i, $i % 2 == 0);

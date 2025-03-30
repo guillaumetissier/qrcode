@@ -2,9 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Matrix;
 
-use ThePhpGuild\QrCode\DataEncoder\Version\Version;
-
-abstract class AbstractPlacePatterns
+abstract class AbstractPatternDrawer
 {
     protected ?QrMatrix $matrix = null;
 
@@ -15,5 +13,5 @@ abstract class AbstractPlacePatterns
         return $this;
     }
 
-    abstract public function execute(): QrMatrix;
+    abstract public function draw(): QrMatrix;
 }
