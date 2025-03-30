@@ -18,22 +18,22 @@ class VersionSelectorFactory
 
         $versionSelector = match ($mode) {
             Mode::ALPHANUMERIC => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new AlphanumericLowVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::MEDIUM => new AlphanumericMediumVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::QUARTILE => new AlphanumericQuartileVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::HIGH => new AlphanumericHighVersionSelector(clone $this->logger),
+                ErrorCorrectionLevel::LOW => new AlphanumericLowVersionSelector($this->logger),
+                ErrorCorrectionLevel::MEDIUM => new AlphanumericMediumVersionSelector($this->logger),
+                ErrorCorrectionLevel::QUARTILE => new AlphanumericQuartileVersionSelector($this->logger),
+                ErrorCorrectionLevel::HIGH => new AlphanumericHighVersionSelector($this->logger),
             },
             Mode::NUMERIC => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new NumericLowVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::MEDIUM => new NumericMediumVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::QUARTILE => new NumericQuartileVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::HIGH => new NumericHighVersionSelector(clone $this->logger),
+                ErrorCorrectionLevel::LOW => new NumericLowVersionSelector($this->logger),
+                ErrorCorrectionLevel::MEDIUM => new NumericMediumVersionSelector($this->logger),
+                ErrorCorrectionLevel::QUARTILE => new NumericQuartileVersionSelector($this->logger),
+                ErrorCorrectionLevel::HIGH => new NumericHighVersionSelector($this->logger),
             },
             Mode::BYTE => match ($errorCorrectionLevel) {
-                ErrorCorrectionLevel::LOW => new ByteLowVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::MEDIUM => new ByteMediumVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::QUARTILE => new ByteQuartileVersionSelector(clone $this->logger),
-                ErrorCorrectionLevel::HIGH => new ByteHighVersionSelector(clone $this->logger),
+                ErrorCorrectionLevel::LOW => new ByteLowVersionSelector($this->logger),
+                ErrorCorrectionLevel::MEDIUM => new ByteMediumVersionSelector($this->logger),
+                ErrorCorrectionLevel::QUARTILE => new ByteQuartileVersionSelector($this->logger),
+                ErrorCorrectionLevel::HIGH => new ByteHighVersionSelector($this->logger),
             }
         };
 

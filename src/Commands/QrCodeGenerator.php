@@ -49,21 +49,21 @@ class QrCodeGenerator
 
             self::$Generator = new QrCodeGenerator(
                 new DataEncoder(
-                    new ModeDetector(clone $levelFilteredLogger),
-                    new VersionSelectorFactory(clone $levelFilteredLogger),
-                    new EncoderFactory(clone $levelFilteredLogger),
+                    new ModeDetector($levelFilteredLogger),
+                    new VersionSelectorFactory($levelFilteredLogger),
+                    new EncoderFactory($levelFilteredLogger),
                     new PaddingAppender(
-                        new TotalBitsCounterBuilder(clone $levelFilteredLogger),
-                        new ModeIndicator(clone $levelFilteredLogger),
-                        new LengthBitsFactory(clone $levelFilteredLogger),
+                        new TotalBitsCounterBuilder($levelFilteredLogger),
+                        new ModeIndicator($levelFilteredLogger),
+                        new LengthBitsFactory($levelFilteredLogger),
                     ),
-                    clone $levelFilteredLogger
+                    $levelFilteredLogger
                 ),
                 new ReedSolomonEncoder(
-                    new NumECCodewordsCalculator(clone $levelFilteredLogger),
-                    new GeneratorPolynomialCreator($galloisFields, clone $levelFilteredLogger),
-                    new RemainderCalculator($galloisFields, clone $levelFilteredLogger),
-                    clone $levelFilteredLogger
+                    new NumECCodewordsCalculator($levelFilteredLogger),
+                    new GeneratorPolynomialCreator($galloisFields, $levelFilteredLogger),
+                    new RemainderCalculator($galloisFields, $levelFilteredLogger),
+                    $levelFilteredLogger
                 ),
                 new MatrixBuilder(
                     new PlaceFinderPatterns(),

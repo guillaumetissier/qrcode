@@ -21,16 +21,16 @@ class TotalBitsCounterBuilder
     {
         return match ($mode) {
             Mode::ALPHANUMERIC => new TotalBitsCounter(
-                new AlphanumericCciBitsCounter(clone $this->logger),
-                new AlphanumericEncodedDataBitsCounter(clone $this->logger)
+                new AlphanumericCciBitsCounter($this->logger),
+                new AlphanumericEncodedDataBitsCounter($this->logger)
             ),
             Mode::BYTE => new TotalBitsCounter(
-                new ByteCciBitsCounter(clone $this->logger),
-                new ByteEncodedDataBitsCounter(clone $this->logger)
+                new ByteCciBitsCounter($this->logger),
+                new ByteEncodedDataBitsCounter($this->logger)
             ),
             Mode::NUMERIC => new TotalBitsCounter(
-                new NumericCciBitsCounter(clone $this->logger),
-                new NumericEncodedDataBitsCounter(clone $this->logger)
+                new NumericCciBitsCounter($this->logger),
+                new NumericEncodedDataBitsCounter($this->logger)
             ),
         };
     }

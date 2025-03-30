@@ -16,9 +16,9 @@ class LengthBitsFactory
         $this->logger->input("Mode = {$mode->value}", ['class' => static::class]);
 
         $lengthBits = match ($mode) {
-            Mode::ALPHANUMERIC => new AlphanumericLengthBits(clone $this->logger),
-            Mode::BYTE => new ByteLengthBits(clone $this->logger),
-            Mode::NUMERIC => new NumericLengthBits(clone $this->logger),
+            Mode::ALPHANUMERIC => new AlphanumericLengthBits($this->logger),
+            Mode::BYTE => new ByteLengthBits($this->logger),
+            Mode::NUMERIC => new NumericLengthBits($this->logger),
         };
 
         $this->logger->output("Creation of " . $lengthBits::class, ['class' => static::class]);
