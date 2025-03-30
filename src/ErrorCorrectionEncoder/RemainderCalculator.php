@@ -2,6 +2,7 @@
 
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GalloisField;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 

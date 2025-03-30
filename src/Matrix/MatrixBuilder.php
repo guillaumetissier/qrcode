@@ -4,7 +4,8 @@ namespace ThePhpGuild\QrCode\Matrix;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Exception\NoDataException;
-use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer;
+use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
+use ThePhpGuild\QrCode\Matrix\FinderPatterns\Drawer as FinderPatternsDrawer;
 
 class MatrixBuilder
 {
@@ -13,11 +14,11 @@ class MatrixBuilder
 
     public function __construct(
         private readonly MatrixSizeCalculator $sizeCalculator,
-        private readonly TimingPatternsDrawer         $timingPatternsDrawer,
-        private readonly FinderPatternsDrawer         $finderPatternsDrawer,
-        private readonly Drawer                       $alignmentPatternsDrawer,
-        private readonly PatternDrawer                $patternDrawer,
-        private readonly FormatAndVersionInfoDrawer   $formatAndVersionInfoDrawer,
+        private readonly TimingPatternsDrawer $timingPatternsDrawer,
+        private readonly FinderPatternsDrawer $finderPatternsDrawer,
+        private readonly AlignmentPatternsDrawer $alignmentPatternsDrawer,
+        private readonly PatternDrawer $patternDrawer,
+        private readonly FormatAndVersionInfoDrawer $formatAndVersionInfoDrawer,
         private readonly DataAndErrorCorrectionDrawer $dataAndErrorCorrectionDrawer
     )
     {

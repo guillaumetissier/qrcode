@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
 
-use Monolog\Logger;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GeneratorPolynomialCreator;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;

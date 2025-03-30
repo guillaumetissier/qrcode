@@ -12,8 +12,8 @@ use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
 use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
 use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomialCreator;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GalloisField;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GeneratorPolynomialCreator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
 use ThePhpGuild\QrCode\ErrorCorrectionEncoder\RemainderCalculator;
@@ -23,7 +23,8 @@ use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
 use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Positions as AlignmentPatternsPositions;
 use ThePhpGuild\QrCode\Matrix\DataAndErrorCorrectionDrawer;
-use ThePhpGuild\QrCode\Matrix\FinderPatternsDrawer;
+use ThePhpGuild\QrCode\Matrix\FinderPatterns\Drawer as FinderPatternsDrawer;
+use ThePhpGuild\QrCode\Matrix\FinderPatterns\Positions as FinderPatternsPositions;
 use ThePhpGuild\QrCode\Matrix\FormatAndVersionInfoDrawer;
 use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
 use ThePhpGuild\QrCode\Matrix\MatrixSizeCalculator;
@@ -71,7 +72,7 @@ class QrCodeGenerator
                 new MatrixBuilder(
                     new MatrixSizeCalculator(),
                     new TimingPatternsDrawer(),
-                    new FinderPatternsDrawer(),
+                    new FinderPatternsDrawer(new FinderPatternsPositions(new MatrixSizeCalculator())),
                     new AlignmentPatternsDrawer(new AlignmentPatternsPositions()),
                     new PatternDrawer(),
                     new FormatAndVersionInfoDrawer(),

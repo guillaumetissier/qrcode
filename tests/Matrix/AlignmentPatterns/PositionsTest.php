@@ -5,7 +5,6 @@ namespace Tests\Matrix\AlignmentPatterns;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Positions;
-use ThePhpGuild\QrCode\Matrix\MatrixSizeCalculator;
 
 class PositionsTest extends TestCase
 {
@@ -15,32 +14,7 @@ class PositionsTest extends TestCase
     {
         parent::setUp();
 
-        $this->positions = new Positions(new MatrixSizeCalculator());
-    }
-
-    public static function provideDataToTestGetRowColumnCoordinates(): \Generator
-    {
-        yield [Version::V01, []];
-        yield [Version::V02, [6, 18]];
-        yield [Version::V03, [6, 22]];
-        yield [Version::V04, [6, 26]];
-        yield [Version::V05, [6, 30]];
-        yield [Version::V06, [6, 34]];
-        yield [Version::V07, [6, 22, 38]];
-        yield [Version::V08, [6, 24, 42]];
-        yield [Version::V09, [6, 26, 46]];
-        yield [Version::V10, [6, 28, 50]];
-        yield [Version::V11, [6, 30, 54]];
-        yield [Version::V12, [6, 32, 58]];
-        yield [Version::V13, [6, 34, 62]];
-        yield [Version::V14, [6, 26, 46, 66]];
-        yield [Version::V15, [6, 26, 48, 70]];
-        yield [Version::V16, [6, 26, 50, 74]];
-        yield [Version::V17, [6, 30, 54, 78]];
-        yield [Version::V18, [6, 30, 56, 82]];
-        yield [Version::V19, [6, 30, 58, 86]];
-        yield [Version::V20, [6, 34, 62, 90]];
-
+        $this->positions = new Positions();
     }
 
     /**

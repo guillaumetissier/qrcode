@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder;
+namespace ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial;
 
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 

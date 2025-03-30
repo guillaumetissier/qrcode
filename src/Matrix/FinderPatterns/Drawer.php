@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Matrix\AlignmentPatterns;
+namespace ThePhpGuild\QrCode\Matrix\FinderPatterns;
 
 use ThePhpGuild\QrCode\DataEncoder\Version\Version;
 use ThePhpGuild\QrCode\Matrix\AbstractPatternDrawer;
@@ -14,7 +14,7 @@ class Drawer extends AbstractPatternDrawer
     {
     }
 
-    public function setVersion(?Version $version): self
+    public function setVersion(Version $version): self
     {
         $this->version = $version;
 
@@ -23,19 +23,15 @@ class Drawer extends AbstractPatternDrawer
 
     public function draw(): QrMatrix
     {
-        if ($this->version->value < 2) {
-            return $this->matrix;
-        }
+        $positions = $this->positions->setVersion($this->version)->getPositions();
 
-        $alignmentPositions = $this->positions->getPositions();
-
-        foreach ($alignmentPositions as [$centerX, $centerY]) {
-            for ($x = -2; $x <= 2; $x++) {
-                for ($y = -2; $y <= 2; $y++) {
+        foreach ($positions as [$centerX, $centerY]) {
+            for ($x = -3; $x <= 3; $x++) {
+                for ($y = -3; $y <= 3; $y++) {
                     $this->matrix->set(
                         $centerX + $x,
                         $centerY + $y,
-                        (abs($x) == 2 || abs($y) == 2 || ($x == 0 && $y == 0))
+                        abs($x) == 3 || abs($y) == 3 || (abs($x) <= 1 && abs($y) <= 1)
                     );
                 }
             }

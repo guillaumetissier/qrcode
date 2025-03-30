@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\ErrorCorrectionEncoder;
+namespace Tests\ErrorCorrectionEncoder\GeneratorPolynomial;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GalloisField;
+use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GalloisField;
 use ThePhpGuild\QrCode\Exception\OutOfRangeException;
 
 class GalloisFieldTest extends TestCase
