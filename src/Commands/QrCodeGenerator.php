@@ -3,33 +3,34 @@
 namespace ThePhpGuild\QrCode\Commands;
 
 use Psr\Log\LoggerInterface;
-use ThePhpGuild\QrCode\DataEncoder\DataEncoder;
-use ThePhpGuild\QrCode\DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\QrCode\DataEncoder\Mode\ModeDetector;
-use ThePhpGuild\QrCode\DataEncoder\Mode\ModeIndicator;
-use ThePhpGuild\QrCode\DataEncoder\Padding\LengthBits\LengthBitsFactory;
-use ThePhpGuild\QrCode\DataEncoder\Padding\PaddingAppender;
-use ThePhpGuild\QrCode\DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
-use ThePhpGuild\QrCode\DataEncoder\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GalloisField;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\GeneratorPolynomial\GeneratorPolynomialCreator;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\NumECCodewordsCalculator;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\ReedSolomonEncoder;
-use ThePhpGuild\QrCode\ErrorCorrectionEncoder\RemainderCalculator;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Step1DataAnalyser;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeIndicator;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
+use ThePhpGuild\QrCode\Step2DataEncoder\Step2DataEncoder;
+use ThePhpGuild\QrCode\Step2DataEncoder\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\Step2DataEncoder\Padding\LengthBits\LengthBitsFactory;
+use ThePhpGuild\QrCode\Step2DataEncoder\Padding\PaddingAppender;
+use ThePhpGuild\QrCode\Step2DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\GalloisField;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\GeneratorPolynomialCreator;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\NumECCodewordsCalculator;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ReedSolomonEncoder;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
-use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
-use ThePhpGuild\QrCode\Matrix\AlignmentPatterns\Positions as AlignmentPatternsPositions;
-use ThePhpGuild\QrCode\Matrix\DataAndErrorCorrectionDrawer;
-use ThePhpGuild\QrCode\Matrix\FinderPatterns\Drawer as FinderPatternsDrawer;
-use ThePhpGuild\QrCode\Matrix\FinderPatterns\Positions as FinderPatternsPositions;
-use ThePhpGuild\QrCode\Matrix\FormatAndVersionInfoDrawer;
-use ThePhpGuild\QrCode\Matrix\MatrixBuilder;
-use ThePhpGuild\QrCode\Matrix\MatrixSizeCalculator;
-use ThePhpGuild\QrCode\Matrix\PatternDrawer;
-use ThePhpGuild\QrCode\Matrix\TimingPatternsDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Positions as AlignmentPatternsPositions;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\DataAndErrorCorrectionDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Drawer as FinderPatternsDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Positions as FinderPatternsPositions;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FormatAndVersionInfoDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\MatrixBuilder;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\MatrixSizeCalculator;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\PatternDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\TimingPatternsDrawer;
 use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 
@@ -52,9 +53,12 @@ class QrCodeGenerator
             $galloisFields = new GalloisField();
 
             self::$Generator = new QrCodeGenerator(
-                new DataEncoder(
+                new Step1DataAnalyser(
                     new ModeDetector($levelFilteredLogger),
                     new VersionSelectorFactory($levelFilteredLogger),
+                    $levelFilteredLogger
+                ),
+                new Step2DataEncoder(
                     new EncoderFactory($levelFilteredLogger),
                     new PaddingAppender(
                         new TotalBitsCounterBuilder($levelFilteredLogger),
@@ -86,11 +90,12 @@ class QrCodeGenerator
     }
 
     public function __construct(
-        private readonly DataEncoder $dataEncoder,
-        private readonly ReedSolomonEncoder $reedSolomonEncoder,
-        private readonly MatrixBuilder $matrixBuilder,
+        private readonly Step1DataAnalyser     $dataAnalyser,
+        private readonly Step2DataEncoder      $dataEncoder,
+        private readonly ReedSolomonEncoder    $reedSolomonEncoder,
+        private readonly MatrixBuilder         $matrixBuilder,
         private readonly MatrixRendererBuilder $matrixRendererBuilder,
-        private readonly IOLoggerInterface $logger
+        private readonly IOLoggerInterface     $logger
     )
     {
     }
@@ -117,23 +122,27 @@ class QrCodeGenerator
     }
 
     /**
-     * @throws Exception\NoDataException
      * @throws Exception\OutOfRangeException
-     * @throws Exception\UnhandledFileTypeException
      * @throws Exception\VariableNotSetException
      */
     public function generate(): void
     {
-        $this->logger->notice('*** 1. Encoding data ***');
+        $this->logger->notice('*** Step 1. Analyse data ***');
 
-        $encodedData = $this->dataEncoder
+        $mode = $this->dataAnalyser
             ->setData($this->data)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
+            ->getMode();
+        $version = $this->dataAnalyser->getVersion();
+
+        $this->logger->notice('*** Step 2. Encode data ***');
+        $encodedData = $this->dataEncoder
+            ->setData($this->data)
+            ->setMode($mode)
+            ->setVersion($version)
             ->encode();
 
-        $version = $this->dataEncoder->getVersion();
-
-        $this->logger->notice('*** 2. Adding error correction ***');
+        $this->logger->notice('*** Step 3. Code error correction ***');
 
         $dataWithErrorCorrection = $this->reedSolomonEncoder
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)

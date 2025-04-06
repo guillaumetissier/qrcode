@@ -4,7 +4,7 @@ namespace ThePhpGuild\QrCode\MatrixRenderer;
 
 use ThePhpGuild\QrCode\Exception\ImageNotCreatedException;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\Matrix\QrMatrix;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputInterface;
 use ThePhpGuild\QrCode\MatrixRenderer\Canvas\Image;

@@ -1,0 +1,42 @@
+<?php
+
+namespace Tests\Step2DataEncoder\Padding\LengthBits;
+
+use Tests\Logger\LoggerTestCase;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Step2DataEncoder\Padding\LengthBits\ByteLengthBits;
+
+class ByteLengthBitsTest extends LoggerTestCase
+{
+    private ByteLengthBits $lengthBits;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->lengthBits = new ByteLengthBits($this->logger);
+    }
+
+    /**
+     * @dataProvider provideDataToGetLengthBits
+     */
+    public function testGetLengthBits(int $dataLength, Version $version, string $expectedLengthBits): void
+    {
+        $this->assertEquals(
+            $expectedLengthBits,
+            $this->lengthBits->setDataLength($dataLength)->setVersion($version)->getLengthBits()
+        );
+    }
+
+    public static function provideDataToGetLengthBits(): array
+    {
+        return [
+            [1, Version::V01, '00000001'],
+            [255, Version::V09, '11111111'],
+            [1, Version::V10, '0000000000000001'],
+            [65535, Version::V26, '1111111111111111'],
+            [1, Version::V27, '0000000000000001'],
+            [65535, Version::V40, '1111111111111111'],
+        ];
+    }
+}

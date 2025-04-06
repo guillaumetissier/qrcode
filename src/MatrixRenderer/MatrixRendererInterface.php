@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\MatrixRenderer;
 
-use ThePhpGuild\QrCode\Matrix\QrMatrix;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 
 interface MatrixRendererInterface
