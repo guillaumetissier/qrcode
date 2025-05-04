@@ -15,14 +15,14 @@ class NumECCodewordsCalculator
     {
     }
 
-    public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
+    public function setErrorCorrectionLevel(?ErrorCorrectionLevel $errorCorrectionLevel): self
     {
         $this->errorCorrectionLevel = $errorCorrectionLevel;
 
         return $this;
     }
 
-    public function setVersion(Version $version): self
+    public function setVersion(?Version $version): self
     {
         $this->version = $version;
 

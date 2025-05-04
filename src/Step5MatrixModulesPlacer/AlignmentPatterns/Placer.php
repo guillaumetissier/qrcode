@@ -3,10 +3,10 @@
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns;
 
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternDrawer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 
-class Drawer extends AbstractPatternDrawer
+class Placer extends AbstractPatternPlacer
 {
     private ?Version $version = null;
 
@@ -21,7 +21,7 @@ class Drawer extends AbstractPatternDrawer
         return $this;
     }
 
-    public function draw(): QrMatrix
+    public function place(): QrMatrix
     {
         if ($this->version->value < 2) {
             return $this->matrix;

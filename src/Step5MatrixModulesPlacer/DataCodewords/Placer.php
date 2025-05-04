@@ -1,10 +1,12 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
+namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer\DataCodewords;
 
 use ThePhpGuild\QrCode\Exception\NoDataException;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 
-class DataAndErrorCorrectionDrawer extends AbstractPatternDrawer
+class Placer extends AbstractPatternPlacer
 {
     private ?string $data = null;
 
@@ -19,7 +21,7 @@ class DataAndErrorCorrectionDrawer extends AbstractPatternDrawer
      * @return QrMatrix
      * @throws NoDataException
      */
-    public function draw(): QrMatrix
+    public function place(): QrMatrix
     {
         if (null === $this->data) {
             throw new NoDataException();

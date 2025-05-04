@@ -12,9 +12,9 @@ use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 class Step1DataAnalyser
 {
     private ?string $data = null;
+    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
     private ?Mode $mode = null;
     private ?Version $version = null;
-    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
     public function __construct(
         private readonly ModeDetector $modeDetector,
@@ -44,7 +44,7 @@ class Step1DataAnalyser
     public function getMode(): Mode
     {
         if ($this->mode === null) {
-            $this->logger->info('Detecting mode');
+            $this->logger->info('Detecting mode', ['class' => self::class]);
             $this->mode = $this->modeDetector->setData($this->data)->detect();
         }
 
@@ -54,7 +54,7 @@ class Step1DataAnalyser
     public function getVersion(): Version
     {
         if ($this->version === null) {
-            $this->logger->info('Detecting version');
+            $this->logger->info('Detecting version', ['class' => self::class]);
             $this->version = $this->versionSelectorFactory
                 ->getVersionSelector($this->getMode(), $this->errorCorrectionLevel)
                 ->selectVersion(strlen($this->data));

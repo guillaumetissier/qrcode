@@ -2,9 +2,9 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
-class PatternDrawer extends AbstractPatternDrawer
+class PatternPlacer extends AbstractPatternPlacer
 {
-    public function draw(): QrMatrix
+    public function place(): QrMatrix
     {
         for ($i = 8; $i < $this->matrix->getSize() - 8; $i++) {
             $this->matrix->set(6, $i, $i % 2 == 0);

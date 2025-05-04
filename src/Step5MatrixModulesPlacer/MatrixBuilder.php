@@ -2,10 +2,12 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
 use ThePhpGuild\QrCode\Exception\NoDataException;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Drawer as AlignmentPatternsDrawer;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Drawer as FinderPatternsDrawer;
+use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Placer as AlignmentPatternsPlacer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\DataCodewords\Placer as DataCodewordsPlacer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Placer as FinderPatternsPlacer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\TimingPatterns\Placer as TimingPatternsPlacer;
 
 class MatrixBuilder
 {
@@ -14,12 +16,11 @@ class MatrixBuilder
 
     public function __construct(
         private readonly MatrixSizeCalculator $sizeCalculator,
-        private readonly TimingPatternsDrawer $timingPatternsDrawer,
-        private readonly FinderPatternsDrawer $finderPatternsDrawer,
-        private readonly AlignmentPatternsDrawer $alignmentPatternsDrawer,
-        private readonly PatternDrawer $patternDrawer,
-        private readonly FormatAndVersionInfoDrawer $formatAndVersionInfoDrawer,
-        private readonly DataAndErrorCorrectionDrawer $dataAndErrorCorrectionDrawer
+        private readonly TimingPatternsPlacer $timingPatternsPlacer,
+        private readonly FinderPatternsPlacer $finderPatternsPlacer,
+        private readonly AlignmentPatternsPlacer $alignmentPatternsPlacer,
+        private readonly PatternPlacer $patternDrawer,
+        private readonly DataCodewordsPlacer $dataCodewordsDrawer
     )
     {
     }
@@ -46,12 +47,11 @@ class MatrixBuilder
     {
         $size = $this->sizeCalculator->setVersion($this->version)->calculate();
         $matrix = new QrMatrix($size);
-        $matrix = $this->timingPatternsDrawer->setMatrix($matrix)->draw();
-        $matrix = $this->finderPatternsDrawer->setMatrix($matrix)->setVersion($this->version)->draw();
-        $matrix = $this->alignmentPatternsDrawer->setMatrix($matrix)->setVersion($this->version)->draw();
-        $matrix = $this->patternDrawer->setMatrix($matrix)->draw();
-        $matrix = $this->formatAndVersionInfoDrawer->setMatrix($matrix)->draw();
+        $matrix = $this->timingPatternsPlacer->setMatrix($matrix)->place();
+        $matrix = $this->finderPatternsPlacer->setMatrix($matrix)->setVersion($this->version)->place();
+        $matrix = $this->alignmentPatternsPlacer->setMatrix($matrix)->setVersion($this->version)->place();
+        $matrix = $this->patternDrawer->setMatrix($matrix)->place();
 
-        return $this->dataAndErrorCorrectionDrawer->setMatrix($matrix)->setData($this->data)->draw();
+        return $this->dataCodewordsDrawer->setMatrix($matrix)->setData($this->data)->place();
     }
 }

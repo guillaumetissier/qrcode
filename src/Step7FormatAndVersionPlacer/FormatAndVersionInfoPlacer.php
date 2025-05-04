@@ -1,11 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
+namespace ThePhpGuild\QrCode\Step7FormatAndVersionPlacer;
 
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 
-class FormatAndVersionInfoDrawer extends AbstractPatternDrawer
+class FormatAndVersionInfoPlacer extends AbstractPatternPlacer
 {
     private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
@@ -16,7 +18,7 @@ class FormatAndVersionInfoDrawer extends AbstractPatternDrawer
         return $this;
     }
 
-    public function draw(): QrMatrix
+    public function place(): QrMatrix
     {
         for ($i = 0; $i < 15; $i++) {
             if ($i < 6) {
