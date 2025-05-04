@@ -14,7 +14,7 @@ class Gf256Operations implements OperationsInterface
 
     public function subtract(?int $a, ?int $b): int
     {
-        return $a ^ $b;
+        return $this->add($a, $b);
     }
 
     public function multiply(?int $a, ?int $b): int
@@ -25,5 +25,10 @@ class Gf256Operations implements OperationsInterface
         $logSum = ($this->gf256->log($a) + $this->gf256->log($b)) % 255;
 
         return $this->gf256->alphaExp($logSum);
+    }
+
+    public function divide(?int $a, ?int $b): int
+    {
+        return $this->multiply($a, $b);
     }
 }

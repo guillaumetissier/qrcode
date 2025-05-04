@@ -100,8 +100,10 @@ class PolynomialOperations
         $remainder = new Polynomial($dividend);
 
         for ($power = $quotient->getDegree(); $power >= 0; $power--) {
-            $quotientCoefficient = $remainder->getDominantCoefficient() / $divisorDominantCoefficient;
-            $quotient->setCoefficient($power, $quotientCoefficient);
+            $quotient->setCoefficient(
+                $power,
+                $this->operations->divide($remainder->getDominantCoefficient(), $divisorDominantCoefficient)
+            );
             $remainder = $this->subtract($dividend, $this->multiply($quotient, $divisor));
         }
 

@@ -18,4 +18,12 @@ class IntegerOperations implements OperationsInterface
     {
         return (!$a || !$b) ? 0 : $a * $b;
     }
+
+    public function divide(?int $a, ?int $b): int
+    {
+        if (!$b) {
+            throw new \DivisionByZeroError('Division by zero');
+        }
+        return !$a ? 0 : $a / $b;
+    }
 }
