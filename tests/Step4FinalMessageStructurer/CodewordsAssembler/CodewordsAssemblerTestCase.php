@@ -3,7 +3,7 @@
 namespace Tests\Step4FinalMessageStructurer\CodewordsAssembler;
 
 use Tests\Logger\LoggerTestCase;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Step4FinalMessageStructurer\CodewordsAssembler\BaseCodewordsAssembler;
 
 class CodewordsAssemblerTestCase extends LoggerTestCase

@@ -12,17 +12,15 @@ use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Polyno
 
 class FactoryTest extends LoggerTestCase
 {
-    private Gf256 $gf256;
     private Factory $factory;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->gf256 = Gf256::getGf256();
         $this->factory = new Factory(
-            new Gf256BinomialGenerator($this->gf256),
-            new Gf256PolynomialOperations(new Gf256Operations($this->gf256)),
+            new Gf256BinomialGenerator(Gf256::getInstance()),
+            new Gf256PolynomialOperations(Gf256Operations::getInstance()),
             $this->logger
         );
     }
@@ -33,7 +31,7 @@ class FactoryTest extends LoggerTestCase
     public function testCreate(int $numECCodewords, string $expectedPolynomial): void
     {
         $actualPolynomial = new Gf256Polynomial(
-            $this->gf256,
+            Gf256::getInstance(),
             $this->factory->create($numECCodewords)
         );
         $this->assertEquals($expectedPolynomial, "$actualPolynomial");

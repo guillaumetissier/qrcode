@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 

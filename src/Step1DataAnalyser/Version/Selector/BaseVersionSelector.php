@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\DataTooVoluminous;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 

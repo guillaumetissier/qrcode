@@ -3,7 +3,7 @@
 namespace Tests\Step5MatrixModulesPlacer;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\MatrixSizeCalculator;
 
 class MatrixSizeCalculatorTest extends TestCase

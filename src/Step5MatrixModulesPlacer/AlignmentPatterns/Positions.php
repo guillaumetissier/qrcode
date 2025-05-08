@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\PositionsInterface;
 
 class Positions implements PositionsInterface

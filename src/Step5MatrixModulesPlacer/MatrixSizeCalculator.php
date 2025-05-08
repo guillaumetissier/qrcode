@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 
 class MatrixSizeCalculator
 {

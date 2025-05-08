@@ -3,8 +3,8 @@
 namespace Tests\Step1DataAnalyser\Mode;
 
 use PHPUnit\Framework\TestCase;
+use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\Mode;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
 
 class ModeDetectorTest extends TestCase

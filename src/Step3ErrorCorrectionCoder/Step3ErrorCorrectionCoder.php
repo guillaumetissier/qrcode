@@ -2,10 +2,12 @@
 
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Polynomial;
 
 class Step3ErrorCorrectionCoder
@@ -17,7 +19,7 @@ class Step3ErrorCorrectionCoder
     public function __construct(
         private readonly NumECCodewordsCalculator $numECCodewordsCalculator,
         private readonly GeneratorPolynomialFactory $generatorPolynomialFactory,
-        private readonly RemainderCalculator $remainderCalculator,
+        private readonly Gf256PolynomialOperations $gf256PolynomialOperations,
         private readonly IOLoggerInterface $logger
     )
     {
@@ -74,6 +76,6 @@ class Step3ErrorCorrectionCoder
     {
         $this->logger->info('Calculate Remainder');
 
-        return $this->remainderCalculator->calculate($data, $generatorPolynomial);
+        return $this->gf256PolynomialOperations->divide(new Polynomial($data), $generatorPolynomial);
     }
 }

@@ -3,7 +3,8 @@
 namespace Tests\Step1DataAnalyser\Version\Selector;
 
 use Tests\Logger\LoggerTestCase;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\Mode;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\AlphanumericHighVersionSelector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\AlphanumericLowVersionSelector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\AlphanumericMediumVersionSelector;
@@ -17,7 +18,6 @@ use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\NumericLowVersionSelec
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\NumericMediumVersionSelector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\NumericQuartileVersionSelector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
 
 class VersionSelectorFactoryTest extends LoggerTestCase
 {

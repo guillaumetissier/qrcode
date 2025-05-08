@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\Mode;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class VersionSelectorFactory

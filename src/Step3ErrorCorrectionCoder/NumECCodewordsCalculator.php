@@ -2,7 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 

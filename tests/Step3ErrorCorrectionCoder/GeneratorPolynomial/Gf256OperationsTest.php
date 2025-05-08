@@ -12,8 +12,7 @@ class Gf256OperationsTest extends TestCase
 
     protected function setUp(): void
     {
-        $gf256 = Gf256::getGf256();
-        $this->gf256Operations = new Gf256Operations($gf256);
+        $this->gf256Operations = Gf256Operations::getInstance();
     }
 
     /**

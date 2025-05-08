@@ -2,6 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step1DataAnalyser\Mode;
 
+use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class ModeDetector

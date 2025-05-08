@@ -3,16 +3,14 @@
 namespace Tests\Step3ErrorCorrectionCoder;
 
 use Tests\Logger\LoggerTestCase;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Operations;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256BinomialGenerator;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\NumECCodewordsCalculator;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\Step3ErrorCorrectionCoder;
 
 class Step3ErrorCorrectionCoderTest extends LoggerTestCase
@@ -23,16 +21,14 @@ class Step3ErrorCorrectionCoderTest extends LoggerTestCase
     {
         parent::setUp();
 
-        $gf256 = Gf256::getGf256();
-        $gf256Operations = new Gf256Operations($gf256);
         $this->encoder = new Step3ErrorCorrectionCoder(
             new NumECCodewordsCalculator($this->logger),
             new GeneratorPolynomialFactory(
-                new Gf256BinomialGenerator($gf256),
-                new Gf256PolynomialOperations($gf256Operations),
+                new Gf256BinomialGenerator(Gf256::getInstance()),
+                Gf256PolynomialOperations::getInstance(),
                 $this->logger
             ),
-            new RemainderCalculator($gf256Operations, $this->logger),
+            Gf256PolynomialOperations::getInstance(),
             $this->logger
         );
     }

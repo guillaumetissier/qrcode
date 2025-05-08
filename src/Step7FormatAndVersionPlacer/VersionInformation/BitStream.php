@@ -2,7 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step7FormatAndVersionPlacer\VersionInformation;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 
 class BitStream
 {

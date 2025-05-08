@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step4FinalMessageStructurer\CodewordsAssembler;
 
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
 
 class CodewordsAssemblerFactory
 {

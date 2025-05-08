@@ -3,25 +3,27 @@
 namespace ThePhpGuild\QrCode\Commands;
 
 use Psr\Log\LoggerInterface;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeIndicator;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Step1DataAnalyser;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\Step2DataEncoder\Encoder\EncoderFactory;
-use ThePhpGuild\QrCode\Step2DataEncoder\Padding\LengthBits\LengthBitsFactory;
-use ThePhpGuild\QrCode\Step2DataEncoder\Padding\PaddingAppender;
-use ThePhpGuild\QrCode\Step2DataEncoder\Padding\TotalBitsCounter\TotalBitsCounterBuilder;
-use ThePhpGuild\QrCode\Step2DataEncoder\Step2DataEncoder;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Operations;
+use ThePhpGuild\QrCode\Step2DataEncodation\CharCountIndicator;
+use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter;
+use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter\Factory as DataCodewordsCounterFactory;
+use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\Step2DataEncodation\ModeIndicator;
+use ThePhpGuild\QrCode\Step2DataEncodation\Step2DataEncoder;
+use ThePhpGuild\QrCode\Step2DataEncodation\Terminator;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256BinomialGenerator;
+use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\NumECCodewordsCalculator;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\RemainderCalculator;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\Step3ErrorCorrectionCoder;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Placer as AlignmentPatternsDrawer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Positions as AlignmentPatternsPositions;
@@ -49,8 +51,6 @@ class QrCodeGenerator
                 $levelFilteredLogger->setLogLevel($logLevel);
             }
 
-            $galloisFields = new Gf256Operations();
-
             self::$Generator = new QrCodeGenerator(
                 new Step1DataAnalyser(
                     new ModeDetector($levelFilteredLogger),
@@ -59,17 +59,20 @@ class QrCodeGenerator
                 ),
                 new Step2DataEncoder(
                     new EncoderFactory($levelFilteredLogger),
-                    new PaddingAppender(
-                        new TotalBitsCounterBuilder($levelFilteredLogger),
-                        new ModeIndicator($levelFilteredLogger),
-                        new LengthBitsFactory($levelFilteredLogger),
-                    ),
+                    new ModeIndicator(),
+                    new CharCountIndicator(),
+                    new Terminator(),
+                    new DataCodewordsCounter(new DataCodewordsCounterFactory()),
                     $levelFilteredLogger
                 ),
                 new Step3ErrorCorrectionCoder(
                     new NumECCodewordsCalculator($levelFilteredLogger),
-                    new Factory($galloisFields, $levelFilteredLogger),
-                    new RemainderCalculator($galloisFields, $levelFilteredLogger),
+                    new GeneratorPolynomialFactory(
+                        new Gf256BinomialGenerator(Gf256::getInstance()),
+                        Gf256PolynomialOperations::getInstance(),
+                        $levelFilteredLogger
+                    ),
+                    Gf256PolynomialOperations::getInstance(),
                     $levelFilteredLogger
                 ),
                 new MatrixBuilder(
@@ -138,6 +141,7 @@ class QrCodeGenerator
             ->setData($this->data)
             ->setMode($mode)
             ->setVersion($version)
+            ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
         $this->logger->notice('*** Step 3. Code error correction ***');

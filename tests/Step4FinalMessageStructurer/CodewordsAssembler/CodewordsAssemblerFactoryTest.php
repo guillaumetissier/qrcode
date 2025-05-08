@@ -3,7 +3,7 @@
 namespace Tests\Step4FinalMessageStructurer\CodewordsAssembler;
 
 use Tests\Logger\LoggerTestCase;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step4FinalMessageStructurer\CodewordsAssembler as CA;
 
 class CodewordsAssemblerFactoryTest extends LoggerTestCase

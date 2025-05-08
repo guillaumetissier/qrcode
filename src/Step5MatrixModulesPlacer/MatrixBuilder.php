@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\NoDataException;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Placer as AlignmentPatternsPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\DataCodewords\Placer as DataCodewordsPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Placer as FinderPatternsPlacer;

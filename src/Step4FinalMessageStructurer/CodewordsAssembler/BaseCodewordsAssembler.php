@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step4FinalMessageStructurer\CodewordsAssembler;
 
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
 
 class BaseCodewordsAssembler implements CodewordsAssemblerInterface
 {

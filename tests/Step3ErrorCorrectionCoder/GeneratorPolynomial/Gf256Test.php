@@ -11,7 +11,7 @@ class Gf256Test extends TestCase
 
     public function setUp(): void
     {
-        $this->gf256 = Gf256::getGf256();
+        $this->gf256 = Gf256::getInstance();
     }
 
     /**

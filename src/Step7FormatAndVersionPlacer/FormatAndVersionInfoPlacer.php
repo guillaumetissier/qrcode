@@ -2,8 +2,8 @@
 
 namespace ThePhpGuild\QrCode\Step7FormatAndVersionPlacer;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 

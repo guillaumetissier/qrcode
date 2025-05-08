@@ -3,8 +3,8 @@
 namespace Tests\Step3ErrorCorrectionCoder;
 
 use Tests\Logger\LoggerTestCase;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\NumECCodewordsCalculator;
 
 class NumECCodewordsCalculatorTest extends LoggerTestCase

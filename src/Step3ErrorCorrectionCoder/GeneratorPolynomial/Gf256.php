@@ -4,17 +4,17 @@ namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
 
 class Gf256
 {
-    private static ?Gf256 $gf256 = null;
+    private static ?Gf256 $instance = null;
     private array $exp = [];
     private array $log = [];
     private int $primitivePolynomial = 0x11d;
 
-    public static function getGf256(): Gf256
+    public static function getInstance(): Gf256
     {
-        if (null === self::$gf256) {
-            self::$gf256 = new Gf256();
+        if (null === self::$instance) {
+            self::$instance = new Gf256();
         }
-        return self::$gf256;
+        return self::$instance;
     }
 
     // consider the 5th element of the GF256, it can be annotated a⁴ or 16

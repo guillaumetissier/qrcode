@@ -2,12 +2,12 @@
 
 namespace ThePhpGuild\QrCode\Step1DataAnalyser;
 
-use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\Mode;
+use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\Mode;
+use ThePhpGuild\QrCode\Enums\Version;
+use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
 class Step1DataAnalyser
 {

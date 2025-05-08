@@ -3,7 +3,7 @@
 namespace Tests\Step5MatrixModulesPlacer\AlignmentPatterns;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Version;
+use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Positions;
 
 class PositionsTest extends TestCase
