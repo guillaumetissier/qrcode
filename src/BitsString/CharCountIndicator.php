@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step2DataEncodation;
+namespace ThePhpGuild\QrCode\BitsString;
 
 use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Enums\Version;

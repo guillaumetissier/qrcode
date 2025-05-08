@@ -2,11 +2,15 @@
 
 namespace ThePhpGuild\QrCode\Step2DataEncodation;
 
+use ThePhpGuild\QrCode\BitsString\CharCountIndicator;
+use ThePhpGuild\QrCode\BitsString\DataBits;
+use ThePhpGuild\QrCode\BitsString\ModeIndicator;
+use ThePhpGuild\QrCode\BitsString\Terminator;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\Factory as EncoderFactory;
 
 class Step2DataEncoder
 {

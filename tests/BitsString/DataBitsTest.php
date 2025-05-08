@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Step2DataEncodation;
+namespace Tests\BitsString;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step2DataEncodation\DataBits;
+use ThePhpGuild\QrCode\BitsString\DataBits;
 
 class DataBitsTest extends TestCase
 {

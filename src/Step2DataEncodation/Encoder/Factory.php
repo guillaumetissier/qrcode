@@ -5,7 +5,7 @@ namespace ThePhpGuild\QrCode\Step2DataEncodation\Encoder;
 use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 
-class EncoderFactory
+class Factory
 {
     public function __construct(private readonly IOLoggerInterface $logger)
     {

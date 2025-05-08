@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Step2DataEncodation;
+namespace Tests\BitsString;
 
 use PHPUnit\Framework\TestCase;
+use ThePhpGuild\QrCode\BitsString\ModeIndicator;
 use ThePhpGuild\QrCode\Enums\Mode;
-use ThePhpGuild\QrCode\Step2DataEncodation\ModeIndicator;
 
 class ModeIndicatorTest extends TestCase
 {

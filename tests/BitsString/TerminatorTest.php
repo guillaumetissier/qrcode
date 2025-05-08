@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Step2DataEncodation;
+namespace Tests\BitsString;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step2DataEncodation\Terminator;
+use ThePhpGuild\QrCode\BitsString\Terminator;
 
 class TerminatorTest extends TestCase
 {

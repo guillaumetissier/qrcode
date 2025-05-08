@@ -3,6 +3,9 @@
 namespace ThePhpGuild\QrCode\Commands;
 
 use Psr\Log\LoggerInterface;
+use ThePhpGuild\QrCode\BitsString\CharCountIndicator;
+use ThePhpGuild\QrCode\BitsString\ModeIndicator;
+use ThePhpGuild\QrCode\BitsString\Terminator;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Exception;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
@@ -12,13 +15,10 @@ use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Step1DataAnalyser;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
-use ThePhpGuild\QrCode\Step2DataEncodation\CharCountIndicator;
 use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter;
 use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter\Factory as DataCodewordsCounterFactory;
-use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderFactory;
-use ThePhpGuild\QrCode\Step2DataEncodation\ModeIndicator;
+use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\Factory;
 use ThePhpGuild\QrCode\Step2DataEncodation\Step2DataEncoder;
-use ThePhpGuild\QrCode\Step2DataEncodation\Terminator;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256BinomialGenerator;
@@ -58,7 +58,7 @@ class QrCodeGenerator
                     $levelFilteredLogger
                 ),
                 new Step2DataEncoder(
-                    new EncoderFactory($levelFilteredLogger),
+                    new Factory($levelFilteredLogger),
                     new ModeIndicator(),
                     new CharCountIndicator(),
                     new Terminator(),

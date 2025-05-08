@@ -3,17 +3,17 @@
 namespace Tests\Step2DataEncodation;
 
 use PHPUnit\Framework\TestCase;
+use ThePhpGuild\QrCode\BitsString\CharCountIndicator;
+use ThePhpGuild\QrCode\BitsString\ModeIndicator;
+use ThePhpGuild\QrCode\BitsString\Terminator;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step2DataEncodation\CharCountIndicator;
 use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter;
-use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\Factory;
 use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderInterface;
-use ThePhpGuild\QrCode\Step2DataEncodation\ModeIndicator;
 use ThePhpGuild\QrCode\Step2DataEncodation\Step2DataEncoder;
-use ThePhpGuild\QrCode\Step2DataEncodation\Terminator;
 
 class Step2DataEncoderTest extends TestCase
 {
@@ -42,9 +42,9 @@ class Step2DataEncoderTest extends TestCase
         );
     }
 
-    private function getEncoderFactory(string $encodedData): EncoderFactory
+    private function getEncoderFactory(string $encodedData): Factory
     {
-        $mock = $this->createMock(EncoderFactory::class);
+        $mock = $this->createMock(Factory::class);
         $mock
             ->method('getEncoder')
             ->willReturn(new class($encodedData) implements EncoderInterface {

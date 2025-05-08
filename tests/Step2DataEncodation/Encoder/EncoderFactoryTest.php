@@ -7,14 +7,14 @@ use ThePhpGuild\QrCode\Enums\Mode;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\AlphanumericEncoder;
 use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\ByteEncoder;
-use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\EncoderFactory;
+use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\Factory;
 use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\NumericEncoder;
 
 class EncoderFactoryTest extends TestCase
 {
     public function setUp(): void
     {
-        $this->factory = new EncoderFactory($this->createMock(IOLoggerInterface::class));
+        $this->factory = new Factory($this->createMock(IOLoggerInterface::class));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step2DataEncodation;
+namespace ThePhpGuild\QrCode\BitsString;
 
 interface BitsStringInterface extends \Stringable
 {
