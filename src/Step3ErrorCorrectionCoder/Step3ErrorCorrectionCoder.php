@@ -2,6 +2,7 @@
 
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder;
 
+use ThePhpGuild\QrCode\BitsString\DataBits;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
@@ -42,14 +43,17 @@ class Step3ErrorCorrectionCoder
     /**
      * @throws VariableNotSetException
      */
-    public function addErrorCorrection(array $data): array
+    public function addErrorCorrection(DataBits $data): DataBits
     {
+        if ($this->errorCorrectionLevel === null || $this->version === null) {
+            throw new VariableNotSetException($this->errorCorrectionLevel ? 'errorCorrectionLevel' : 'version');
+        }
+
         $numECCodewords = $this->calculateNumECCodewords();
         $generatorPolynomial = $this->createGeneratorPolynomial($numECCodewords);
-        $dataWithPadding = array_merge($data, array_fill(0, $numECCodewords, 0));
-        $remainder = $this->calculateRemainder($dataWithPadding, $generatorPolynomial);
+        $remainder = $this->calculateRemainder($data, $generatorPolynomial);
 
-        return array_merge($data, $remainder);
+        return $data->append($remainder);
     }
 
     /**
@@ -72,10 +76,10 @@ class Step3ErrorCorrectionCoder
         return $this->generatorPolynomialFactory->create($numECCodewords);
     }
 
-    private function calculateRemainder(array $data, Polynomial $generatorPolynomial): array
+    private function calculateRemainder(DataBits $data, Polynomial $generatorPolynomial): array
     {
         $this->logger->info('Calculate Remainder');
 
-        return $this->gf256PolynomialOperations->divide(new Polynomial($data), $generatorPolynomial);
+        return $this->gf256PolynomialOperations->divide(new Polynomial($data->toCodewords()), $generatorPolynomial);
     }
 }

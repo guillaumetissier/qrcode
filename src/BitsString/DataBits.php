@@ -4,20 +4,21 @@ namespace ThePhpGuild\QrCode\BitsString;
 
 class DataBits implements BitsStringInterface
 {
-    public function __construct(private string $data = '')
+    public function __construct(private BitsStringInterface|string|array $data = '')
     {
+        $this->data = $this->toBitsString($data);
     }
 
-    public function prepend(BitsStringInterface|string $data): self
+    public function prepend(BitsStringInterface|string|array $data): self
     {
-        $this->data = $data.$this->data;
+        $this->data = $this->toBitsString($data).$this->data;
 
         return $this;
     }
 
-    public function append(BitsStringInterface|string $data): self
+    public function append(BitsStringInterface|string|array $data): self
     {
-        $this->data .= $data;
+        $this->data .= $this->toBitsString($data);
 
         return $this;
     }
@@ -48,5 +49,30 @@ class DataBits implements BitsStringInterface
     public function toCodewords(): array
     {
         return str_split($this->data, 8);
+    }
+
+    private function toBitsString(BitsStringInterface|string|array $data): string
+    {
+        if ($data instanceof BitsStringInterface) {
+            return str_replace(' ', '', "$data");
+        }
+
+        if (is_string($data)) {
+            if (!preg_match('/^[01\s]*$/', $data)) {
+                throw new \InvalidArgumentException("Invalid string provided");
+            }
+            return str_replace(' ', '', "$data");
+        }
+
+        $string = implode('', $data);
+        if (preg_match('/^[01\s]*$/', $string)) {
+            return str_replace(' ', '', $string);
+        }
+
+        foreach ($data as &$value) {
+            $value = sprintf('%08b', $value);
+        }
+
+        return implode('', $data);
     }
 }

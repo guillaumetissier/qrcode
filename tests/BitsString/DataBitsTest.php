@@ -3,15 +3,47 @@
 namespace Tests\BitsString;
 
 use PHPUnit\Framework\TestCase;
+use ThePhpGuild\QrCode\BitsString\BitsStringInterface;
 use ThePhpGuild\QrCode\BitsString\DataBits;
 
 class DataBitsTest extends TestCase
 {
-    public function testAppend(): void
+
+    /**
+     * @dataProvider provideDataToTestConstruct
+     */
+    public function testConstruct(BitsStringInterface|string|array $initial, string $expected): void
+    {
+        $dataBits = new DataBits($initial);
+        $this->assertEquals($expected, "$dataBits");
+    }
+
+    public static function provideDataToTestConstruct(): \Generator
+    {
+        yield [new DataBits('010001000010101'), '01000100 0010101'];
+        yield [new DataBits('0100 01000010 101'), '01000100 0010101'];
+        yield [new DataBits(['0000', '11111', '000000', '11111111']), '00001111 10000001 1111111'];
+        yield ['0100 0100 0010 1010', '01000100 00101010'];
+        yield [['1111', '00001111'], '11110000 1111'];
+        yield [['01000100', '00001111'], '01000100 00001111'];
+        yield [[234, 40, 199], '11101010 00101000 11000111'];
+    }
+
+    /**
+     * @dataProvider provideDataToTestAppend
+     */
+    public function testAppend(BitsStringInterface|string|array $appended, string $expected): void
     {
         $dataBits = new DataBits('010111001010');
-        $dataBits->append('010001000010101');
-        $this->assertEquals('01011100 10100100 01000010 101', "$dataBits");
+        $dataBits->append($appended);
+        $this->assertEquals($expected, "$dataBits");
+    }
+
+    public static function provideDataToTestAppend(): \Generator
+    {
+        yield ['010001000010101', '01011100 10100100 01000010 101'];
+        yield [new DataBits('010001000010101'), '01011100 10100100 01000010 101'];
+        yield [['01000100', '00001111'], '01011100 10100100 01000000 1111'];
     }
 
     public function testPrepend(): void

@@ -3,6 +3,7 @@
 namespace Tests\Step3ErrorCorrectionCoder;
 
 use Tests\Logger\LoggerTestCase;
+use ThePhpGuild\QrCode\BitsString\DataBits;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
@@ -36,12 +37,16 @@ class Step3ErrorCorrectionCoderTest extends LoggerTestCase
     public function testThrowsExceptionIfErrorCorrectionLevelNotSet(): void
     {
         $this->expectException(VariableNotSetException::class);
-        $this->encoder->setVersion(Version::V14)->addErrorCorrection([32, 91, 11, 120]);
+        $this->encoder
+            ->setVersion(Version::V14)
+            ->addErrorCorrection(new DataBits([32, 91, 11, 120]));
     }
 
     public function testThrowsExceptionIfVersionNotSet(): void
     {
         $this->expectException(VariableNotSetException::class);
-        $this->encoder->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM)->addErrorCorrection([32, 91, 11, 120]);
+        $this->encoder
+            ->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM)
+            ->addErrorCorrection(new DataBits([32, 91, 11, 120]));
     }
 }
