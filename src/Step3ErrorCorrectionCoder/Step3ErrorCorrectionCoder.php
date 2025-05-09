@@ -4,6 +4,7 @@ namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder;
 
 use ThePhpGuild\QrCode\BitsString\DataBits;
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
+use ThePhpGuild\QrCode\Enums\NumeralSystem;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
@@ -80,6 +81,9 @@ class Step3ErrorCorrectionCoder
     {
         $this->logger->info('Calculate Remainder');
 
-        return $this->gf256PolynomialOperations->divide(new Polynomial($data->toCodewords()), $generatorPolynomial);
+        return $this->gf256PolynomialOperations->divide(
+            new Polynomial($data->toCodewords(NumeralSystem::DECIMAL)),
+            $generatorPolynomial
+        );
     }
 }

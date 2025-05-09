@@ -5,6 +5,7 @@ namespace Tests\BitsString;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\BitsString\BitsStringInterface;
 use ThePhpGuild\QrCode\BitsString\DataBits;
+use ThePhpGuild\QrCode\Enums\NumeralSystem;
 
 class DataBitsTest extends TestCase
 {
@@ -82,5 +83,6 @@ class DataBitsTest extends TestCase
     {
         $dataBits = new DataBits('11101110111001010101011110000000');
         $this->assertEquals(['11101110', '11100101', '01010111', '10000000'], $dataBits->toCodewords());
+        $this->assertEquals([238, 229, 87, 128], $dataBits->toCodewords(NumeralSystem::DECIMAL));
     }
 }

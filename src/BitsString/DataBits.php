@@ -2,6 +2,8 @@
 
 namespace ThePhpGuild\QrCode\BitsString;
 
+use ThePhpGuild\QrCode\Enums\NumeralSystem;
+
 class DataBits implements BitsStringInterface
 {
     public function __construct(private BitsStringInterface|string|array $data = '')
@@ -46,9 +48,19 @@ class DataBits implements BitsStringInterface
         return strlen($this->data) / 8;
     }
 
-    public function toCodewords(): array
+    public function toCodewords(NumeralSystem $numeralSystem = NumeralSystem::BINARY): array
     {
-        return str_split($this->data, 8);
+        $binaries = str_split($this->data, 8);
+
+        if ($numeralSystem === NumeralSystem::BINARY) {
+            return $binaries;
+        }
+
+        foreach ($binaries as &$binary) {
+            $binary = bindec($binary);
+        }
+
+        return $binaries;
     }
 
     private function toBitsString(BitsStringInterface|string|array $data): string
