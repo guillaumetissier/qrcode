@@ -2,6 +2,9 @@
 
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
 
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
+use ThePhpGuild\QrCode\Scalar\Gf256;
+
 class Gf256BinomialGenerator
 {
     public function __construct(private readonly Gf256 $gf256)

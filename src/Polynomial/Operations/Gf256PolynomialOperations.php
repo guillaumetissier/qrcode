@@ -1,6 +1,8 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Polynomial\Operations;
+
+use ThePhpGuild\QrCode\Scalar\Operations\Gf256Operations;
 
 class Gf256PolynomialOperations extends PolynomialOperations
 {
@@ -15,7 +17,7 @@ class Gf256PolynomialOperations extends PolynomialOperations
         return self::$instance;
     }
 
-    public function __construct(Gf256Operations $gf256Operations)
+    private function __construct(Gf256Operations $gf256Operations)
     {
         parent::__construct($gf256Operations);
     }

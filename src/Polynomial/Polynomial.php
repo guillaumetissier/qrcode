@@ -1,8 +1,10 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Polynomial;
 
-class Polynomial
+use ThePhpGuild\QrCode\Enums\PowerOrder;
+
+class Polynomial implements PolynomialInterface
 {
     const POWER_ORDER = 1;
 

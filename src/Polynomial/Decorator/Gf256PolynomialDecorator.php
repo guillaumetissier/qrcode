@@ -1,11 +1,16 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Polynomial\Decorator;
 
-class Gf256Polynomial
+use ThePhpGuild\QrCode\Polynomial\PolynomialInterface;
+use ThePhpGuild\QrCode\Scalar\Gf256;
+
+class Gf256PolynomialDecorator extends AbstractPolynomialDecorator
 {
-    public function __construct(private readonly Gf256 $gf256, private readonly Polynomial $polynomial)
-    {}
+    public function __construct(private readonly Gf256 $gf256, PolynomialInterface $polynomial)
+    {
+        parent::__construct($polynomial);
+    }
 
     public function __toString(): string
     {

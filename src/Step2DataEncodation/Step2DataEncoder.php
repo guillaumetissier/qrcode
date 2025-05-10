@@ -74,7 +74,7 @@ class Step2DataEncoder
     {
         $modeIndicator = $this->modeIndicator->setMode($this->mode);
 
-        $this->logger->info("Mode indicator: {$modeIndicator}");
+        $this->logger->info("Mode indicator: {$modeIndicator}", ['class' => self::class]);
 
         $dataBits->append($modeIndicator);
     }
@@ -86,7 +86,7 @@ class Step2DataEncoder
             ->setVersion($this->version)
             ->setCharCount(strlen($this->data));
 
-        $this->logger->info("Char Count indicator: {$charCountIndicator}");
+        $this->logger->info("Char Count indicator: {$charCountIndicator}", ['class' => self::class]);
 
         $dataBits->append($charCountIndicator);
     }
@@ -95,14 +95,14 @@ class Step2DataEncoder
     {
         $encodedData = $this->encoderFactory->getEncoder($this->mode)->setData($this->data)->encode();
 
-        $this->logger->info("Encoded data: {$encodedData}");
+        $this->logger->info("Encoded data: {$encodedData}", ['class' => self::class]);
 
         $dataBits->append($encodedData);
     }
 
     private function appendTerminator(DataBits $dataBits): void
     {
-        $this->logger->info("Terminator: {$this->terminator}");
+        $this->logger->info("Terminator: {$this->terminator}", ['class' => self::class]);
 
         $dataBits->append($this->terminator);
     }
@@ -123,7 +123,7 @@ class Step2DataEncoder
             }
         }
 
-        $this->logger->info("Padding codewords: {$padding}");
+        $this->logger->info("Padding codewords: {$padding}", ['class' => self::class]);
 
         $dataBits->append($padding);
     }

@@ -3,12 +3,11 @@
 namespace Tests\Step3ErrorCorrectionCoder\GeneratorPolynomial;
 
 use Tests\Logger\LoggerTestCase;
+use ThePhpGuild\QrCode\Polynomial\Decorator\Gf256PolynomialDecorator;
+use ThePhpGuild\QrCode\Polynomial\Operations\Gf256PolynomialOperations;
+use ThePhpGuild\QrCode\Scalar\Gf256;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Operations;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Polynomial;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256BinomialGenerator;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
 
 class FactoryTest extends LoggerTestCase
 {
@@ -20,7 +19,7 @@ class FactoryTest extends LoggerTestCase
 
         $this->factory = new Factory(
             new Gf256BinomialGenerator(Gf256::getInstance()),
-            new Gf256PolynomialOperations(Gf256Operations::getInstance()),
+            Gf256PolynomialOperations::getInstance(),
             $this->logger
         );
     }
@@ -30,7 +29,7 @@ class FactoryTest extends LoggerTestCase
      */
     public function testCreate(int $numECCodewords, string $expectedPolynomial): void
     {
-        $actualPolynomial = new Gf256Polynomial(
+        $actualPolynomial = new Gf256PolynomialDecorator(
             Gf256::getInstance(),
             $this->factory->create($numECCodewords)
         );

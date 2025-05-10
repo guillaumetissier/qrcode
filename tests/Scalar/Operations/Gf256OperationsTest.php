@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace Tests\Scalar\Operations;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Operations;
+use ThePhpGuild\QrCode\Scalar\Operations\Gf256Operations;
 
 class Gf256OperationsTest extends TestCase
 {
@@ -56,6 +55,9 @@ class Gf256OperationsTest extends TestCase
             [96, 70, 120],
             [114, 187, 11],
             [66, 55, 47],
+            [16, 216, 1],
+            [33, 216, 218],
+            [214, 216, 231]
         ];
     }
 }

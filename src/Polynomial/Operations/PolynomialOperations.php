@@ -1,8 +1,12 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Polynomial\Operations;
 
-class PolynomialOperations
+use ThePhpGuild\QrCode\Enums\PowerOrder;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
+use ThePhpGuild\QrCode\Scalar\Operations\OperationsInterface;
+
+class PolynomialOperations implements PolynomialOperationsInterface
 {
     public function __construct(private readonly OperationsInterface $operations)
     {}
@@ -91,7 +95,7 @@ class PolynomialOperations
         }
 
         if ($dividend->getDegree() < $divisor->getDegree()) {
-            throw new \DivisionByZeroError('Polynomial division by a polynomial with greater degree');
+            return [0, $dividend];
         }
 
         $divisorDegree = $divisor->getDegree();

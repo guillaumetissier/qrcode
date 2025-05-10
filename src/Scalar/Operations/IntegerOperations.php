@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Scalar\Operations;
 
 class IntegerOperations implements OperationsInterface
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace ThePhpGuild\QrCode\Scalar\Operations;
+
+use ThePhpGuild\QrCode\Scalar\Gf256;
 
 class Gf256Operations implements OperationsInterface
 {

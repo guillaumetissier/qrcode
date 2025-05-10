@@ -12,6 +12,8 @@ use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
 use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
 use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Polynomial\Operations\Gf256PolynomialOperations;
+use ThePhpGuild\QrCode\Scalar\Gf256;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Mode\ModeDetector;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Step1DataAnalyser;
 use ThePhpGuild\QrCode\Step1DataAnalyser\Version\Selector\VersionSelectorFactory;
@@ -20,9 +22,7 @@ use ThePhpGuild\QrCode\Step2DataEncodation\DataCodewordsCounter\Factory as DataC
 use ThePhpGuild\QrCode\Step2DataEncodation\Encoder\Factory;
 use ThePhpGuild\QrCode\Step2DataEncodation\Step2DataEncoder;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256BinomialGenerator;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\NumECCodewordsCalculator;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\Step3ErrorCorrectionCoder;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Placer as AlignmentPatternsDrawer;
@@ -93,7 +93,7 @@ class QrCodeGenerator
     public function __construct(
         private readonly Step1DataAnalyser         $dataAnalyser,
         private readonly Step2DataEncoder          $dataEncoder,
-        private readonly Step3ErrorCorrectionCoder $reedSolomonEncoder,
+        private readonly Step3ErrorCorrectionCoder $errorCorrectionCoder,
         private readonly MatrixBuilder             $matrixBuilder,
         private readonly MatrixRendererBuilder     $matrixRendererBuilder,
         private readonly IOLoggerInterface         $logger
@@ -129,7 +129,6 @@ class QrCodeGenerator
     public function generate(): void
     {
         $this->logger->notice('*** Step 1. Analyse data ***');
-
         $mode = $this->dataAnalyser
             ->setData($this->data)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
@@ -143,13 +142,14 @@ class QrCodeGenerator
             ->setVersion($version)
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
+        $this->logger->notice("*** Step 2. Encoded data = $encodedData");
 
         $this->logger->notice('*** Step 3. Code error correction ***');
-
-        $dataWithErrorCorrection = $this->reedSolomonEncoder
+        $dataWithErrorCorrection = $this->errorCorrectionCoder
             ->setErrorCorrectionLevel($this->errorCorrectionLevel)
             ->setVersion($version)
-            ->addErrorCorrection(str_split($encodedData));
+            ->addErrorCorrection($encodedData);
+        $this->logger->notice("*** Step 3. Data with error correction = $dataWithErrorCorrection");
 
 //        $this->logger->notice('*** 3. Building QR code matrix ***');
 //

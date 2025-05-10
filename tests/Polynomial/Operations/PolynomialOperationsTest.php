@@ -1,28 +1,16 @@
 <?php
 
-namespace Tests\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace Tests\Polynomial\Operations;
 
-use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\IntegerOperations;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Polynomial;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\PolynomialOperations;
+use ThePhpGuild\QrCode\Polynomial\Operations\PolynomialOperations;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
+use ThePhpGuild\QrCode\Scalar\Operations\IntegerOperations;
 
-class PolynomialOperationsTest extends TestCase
+class PolynomialOperationsTest extends BasePolynomialOperationsTestCase
 {
-    private PolynomialOperations $polynomialOperations;
-
     public function setUp(): void
     {
         $this->polynomialOperations = new PolynomialOperations(new IntegerOperations());
-    }
-
-    /**
-     * @dataProvider provideDataToTestAdd
-     */
-    public function testAdd(Polynomial $p1, Polynomial $p2, string $expected): void
-    {
-        $actual = $this->polynomialOperations->add($p1, $p2);
-        $this->assertEquals($expected, "$actual");
     }
 
     public static function provideDataToTestAdd(): \Generator
@@ -44,15 +32,6 @@ class PolynomialOperationsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDataToTestSubtract
-     */
-    public function testSubtract(Polynomial $p1, Polynomial $p2, string $expected): void
-    {
-        $actual = $this->polynomialOperations->subtract($p1, $p2);
-        $this->assertEquals($expected, "$actual");
-    }
-
     public static function provideDataToTestSubtract(): \Generator
     {
         yield [
@@ -70,15 +49,6 @@ class PolynomialOperationsTest extends TestCase
             new Polynomial([13, 7, 11]),
             '1.x^4 + 23.x^3 + -10.x^2 + 5.x^1 + -6.x^0',
         ];
-    }
-
-    /**
-     * @dataProvider provideDataToTestMultiply
-     */
-    public function testMultiply(Polynomial $multiplicand, Polynomial|int|float $multiplier, string $expected): void
-    {
-        $actual = $this->polynomialOperations->multiply($multiplicand, $multiplier);
-        $this->assertEquals($expected, "$actual");
     }
 
     public static function provideDataToTestMultiply(): \Generator
@@ -113,22 +83,6 @@ class PolynomialOperationsTest extends TestCase
             new Polynomial([2, 4, 6, 8]),
             '2.x^5 + 10.x^4 + 28.x^3 + 46.x^2 + 54.x^1 + 40.x^0',
         ];
-    }
-
-
-    /**
-     * @dataProvider provideDataToTestDivide
-     */
-    public function testDivide(Polynomial $dividend, Polynomial|int|float $divisor, array|string $expected): void
-    {
-        $actual = $this->polynomialOperations->divide($dividend, $divisor);
-        if (is_array($expected)) {
-            $this->assertEquals($expected[0], "{$actual[0]}");
-            $this->assertEquals($expected[1], "{$actual[1]}");
-        } else {
-            $this->assertEquals($expected, "$actual");
-        }
-
     }
 
     public static function provideDataToTestDivide(): \Generator

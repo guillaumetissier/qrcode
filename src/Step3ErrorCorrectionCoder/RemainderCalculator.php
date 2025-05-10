@@ -3,8 +3,8 @@
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder;
 
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256Operations;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Polynomial;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
+use ThePhpGuild\QrCode\Scalar\Operations\Gf256Operations;
 
 class RemainderCalculator
 {

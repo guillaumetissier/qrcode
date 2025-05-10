@@ -8,9 +8,9 @@ use ThePhpGuild\QrCode\Enums\NumeralSystem;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\VariableNotSetException;
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
+use ThePhpGuild\QrCode\Polynomial\Operations\Gf256PolynomialOperations;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
 use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Factory as GeneratorPolynomialFactory;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Gf256PolynomialOperations;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Polynomial;
 
 class Step3ErrorCorrectionCoder
 {
@@ -19,10 +19,10 @@ class Step3ErrorCorrectionCoder
     private ?Version $version = null;
 
     public function __construct(
-        private readonly NumECCodewordsCalculator $numECCodewordsCalculator,
+        private readonly NumECCodewordsCalculator   $numECCodewordsCalculator,
         private readonly GeneratorPolynomialFactory $generatorPolynomialFactory,
-        private readonly Gf256PolynomialOperations $gf256PolynomialOperations,
-        private readonly IOLoggerInterface $logger
+        private readonly Gf256PolynomialOperations  $gf256PolynomialOperations,
+        private readonly IOLoggerInterface          $logger
     )
     {
     }
@@ -50,11 +50,17 @@ class Step3ErrorCorrectionCoder
             throw new VariableNotSetException($this->errorCorrectionLevel ? 'errorCorrectionLevel' : 'version');
         }
 
-        $numECCodewords = $this->calculateNumECCodewords();
+        $numECCodewords      = $this->calculateNumECCodewords();
         $generatorPolynomial = $this->createGeneratorPolynomial($numECCodewords);
-        $remainder = $this->calculateRemainder($data, $generatorPolynomial);
+        /** @var Polynomial $remainder
+         * The error correction codewords are the remainder after dividing the data codewords by a polynomial g(x)
+         * used for error correction codes (see Annex A). The highest order coefficient of the remainder is the first
+         * error correction codeword, and the zero-power coefficient is the last error correction codeword and the last
+         * codeword in the block.
+         */
+        [, $remainder] = $this->calculateRemainder($data, $generatorPolynomial);
 
-        return $data->append($remainder);
+        return $data->append($remainder->getCoefficients());
     }
 
     /**
@@ -62,7 +68,7 @@ class Step3ErrorCorrectionCoder
      */
     private function calculateNumECCodewords(): int
     {
-        $this->logger->info('Calculate Num EC Codewords');
+        $this->logger->info('Calculate Num EC Codewords', ['class' => self::class]);
 
         return $this->numECCodewordsCalculator
             ->setVersion($this->version)
@@ -72,14 +78,14 @@ class Step3ErrorCorrectionCoder
 
     private function createGeneratorPolynomial(int $numECCodewords): Polynomial
     {
-        $this->logger->info('Create Generator Polynomial');
+        $this->logger->info('Create Generator Polynomial', ['class' => self::class]);
 
         return $this->generatorPolynomialFactory->create($numECCodewords);
     }
 
     private function calculateRemainder(DataBits $data, Polynomial $generatorPolynomial): array
     {
-        $this->logger->info('Calculate Remainder');
+        $this->logger->info('Calculate Remainder', ['class' => self::class]);
 
         return $this->gf256PolynomialOperations->divide(
             new Polynomial($data->toCodewords(NumeralSystem::DECIMAL)),

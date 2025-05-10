@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Step3ErrorCorrectionCoder\GeneratorPolynomial;
+namespace Tests\Polynomial;
 
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\Polynomial;
-use ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial\PowerOrder;
+use ThePhpGuild\QrCode\Enums\PowerOrder;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
 
 class PolynomialTest extends TestCase
 {

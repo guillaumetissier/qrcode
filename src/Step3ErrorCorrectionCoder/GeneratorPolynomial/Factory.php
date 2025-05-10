@@ -3,6 +3,8 @@
 namespace ThePhpGuild\QrCode\Step3ErrorCorrectionCoder\GeneratorPolynomial;
 
 use ThePhpGuild\QrCode\Logger\IOLoggerInterface;
+use ThePhpGuild\QrCode\Polynomial\Operations\Gf256PolynomialOperations;
+use ThePhpGuild\QrCode\Polynomial\Polynomial;
 
 class Factory
 {
