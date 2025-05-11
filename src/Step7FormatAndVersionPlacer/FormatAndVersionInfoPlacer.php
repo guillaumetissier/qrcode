@@ -4,8 +4,8 @@ namespace ThePhpGuild\QrCode\Step7FormatAndVersionPlacer;
 
 use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Enums\Version;
+use ThePhpGuild\QrCode\Matrix\Matrix;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 
 class FormatAndVersionInfoPlacer extends AbstractPatternPlacer
 {
@@ -18,7 +18,7 @@ class FormatAndVersionInfoPlacer extends AbstractPatternPlacer
         return $this;
     }
 
-    public function place(): QrMatrix
+    public function place(): Matrix
     {
         for ($i = 0; $i < 15; $i++) {
             if ($i < 6) {

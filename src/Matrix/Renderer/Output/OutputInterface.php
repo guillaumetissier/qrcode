@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\Output;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\Output;
 
 interface OutputInterface
 {

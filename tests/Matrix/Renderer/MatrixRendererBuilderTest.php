@@ -1,16 +1,16 @@
 <?php
 
-namespace MatrixRenderer;
+namespace Tests\Matrix\Renderer;
 
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\MatrixRenderer;
-use ThePhpGuild\QrCode\MatrixRenderer\MatrixRendererBuilder;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
-use ThePhpGuild\QrCode\MatrixRenderer\Painter\ImagePainter;
-use ThePhpGuild\QrCode\MatrixRenderer\Painter\PdfDocumentPainter;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\MatrixRenderer;
+use ThePhpGuild\QrCode\Matrix\Renderer\MatrixRendererBuilder;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\Painter\ImagePainter;
+use ThePhpGuild\QrCode\Matrix\Renderer\Painter\PdfDocumentPainter;
 
 class MatrixRendererBuilderTest extends TestCase
 {

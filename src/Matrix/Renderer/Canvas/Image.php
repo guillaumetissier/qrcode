@@ -1,13 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\Canvas;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\Canvas;
 
 use ThePhpGuild\QrCode\Exception\ImageNotCreatedException;
 use ThePhpGuild\QrCode\Exception\InvalidOutputOptions;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputInterface;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputInterface;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
 
 class Image implements CanvasInterface, OutputInterface
 {

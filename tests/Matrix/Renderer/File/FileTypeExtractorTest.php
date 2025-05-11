@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\MatrixRenderer\File;
+namespace Tests\Matrix\Renderer\File;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileTypeExtractor;
 
 class FileTypeExtractorTest extends TestCase
 {

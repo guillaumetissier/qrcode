@@ -1,11 +1,11 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\Canvas;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\Canvas;
 
 use TCPDF;
 use ThePhpGuild\QrCode\Exception\InvalidOutputOptions;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputInterface;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputInterface;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
 
 class PdfDocument implements CanvasInterface, OutputInterface
 {

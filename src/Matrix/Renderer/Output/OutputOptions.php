@@ -1,11 +1,11 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\Output;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\Output;
 
 use ThePhpGuild\QrCode\Exception\InvalidOutputOptions;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileTypeExtractor;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileTypeExtractor;
 
 class OutputOptions
 {

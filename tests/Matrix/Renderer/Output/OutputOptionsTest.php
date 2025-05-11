@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\MatrixRenderer\Output;
+namespace Tests\Matrix\Renderer\Output;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Exception\InvalidOutputOptions;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
 
 class OutputOptionsTest extends TestCase
 {

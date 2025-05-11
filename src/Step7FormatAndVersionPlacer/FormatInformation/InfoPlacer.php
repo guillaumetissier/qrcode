@@ -2,12 +2,12 @@
 
 namespace ThePhpGuild\QrCode\Step7FormatAndVersionPlacer\FormatInformation;
 
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
+use ThePhpGuild\QrCode\Matrix\Matrix;
 use ThePhpGuild\QrCode\Step7FormatAndVersionPlacer\AbstractInfoPlacer;
 
 class InfoPlacer extends AbstractInfoPlacer
 {
-    public function placeInfo(string $info): QrMatrix
+    public function placeInfo(string $info): Matrix
     {
         return $this->matrix;
     }

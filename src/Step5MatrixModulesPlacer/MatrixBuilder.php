@@ -4,6 +4,7 @@ namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Exception\NoDataException;
+use ThePhpGuild\QrCode\Matrix\Matrix;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns\Placer as AlignmentPatternsPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\DataCodewords\Placer as DataCodewordsPlacer;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FinderPatterns\Placer as FinderPatternsPlacer;
@@ -40,13 +41,13 @@ class MatrixBuilder
     }
 
     /**
-     * @return QrMatrix
+     * @return Matrix
      * @throws NoDataException
      */
-    public function build(): QrMatrix
+    public function build(): Matrix
     {
         $size = $this->sizeCalculator->setVersion($this->version)->calculate();
-        $matrix = new QrMatrix($size);
+        $matrix = new Matrix($size);
         $matrix = $this->timingPatternsPlacer->setMatrix($matrix)->place();
         $matrix = $this->finderPatternsPlacer->setMatrix($matrix)->setVersion($this->version)->place();
         $matrix = $this->alignmentPatternsPlacer->setMatrix($matrix)->setVersion($this->version)->place();

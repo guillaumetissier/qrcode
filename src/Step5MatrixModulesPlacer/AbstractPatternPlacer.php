@@ -2,16 +2,18 @@
 
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 
+use ThePhpGuild\QrCode\Matrix\Matrix;
+
 abstract class AbstractPatternPlacer implements PatternPlacerInterface
 {
-    protected ?QrMatrix $matrix = null;
+    protected ?Matrix $matrix = null;
 
-    public function setMatrix(?QrMatrix $matrix): self
+    public function setMatrix(?Matrix $matrix): self
     {
         $this->matrix = $matrix;
 
         return $this;
     }
 
-    abstract public function place(): QrMatrix;
+    abstract public function place(): Matrix;
 }

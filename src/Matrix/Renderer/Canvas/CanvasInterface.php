@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\Canvas;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\Canvas;
 
 interface CanvasInterface
 {

@@ -3,8 +3,8 @@
 namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AlignmentPatterns;
 
 use ThePhpGuild\QrCode\Enums\Version;
+use ThePhpGuild\QrCode\Matrix\Matrix;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\AbstractPatternPlacer;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
 
 class Placer extends AbstractPatternPlacer
 {
@@ -21,7 +21,7 @@ class Placer extends AbstractPatternPlacer
         return $this;
     }
 
-    public function place(): QrMatrix
+    public function place(): Matrix
     {
         if ($this->version->value < 2) {
             return $this->matrix;

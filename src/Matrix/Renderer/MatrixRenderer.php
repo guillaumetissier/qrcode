@@ -1,17 +1,17 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer;
+namespace ThePhpGuild\QrCode\Matrix\Renderer;
 
 use ThePhpGuild\QrCode\Exception\ImageNotCreatedException;
 use ThePhpGuild\QrCode\Exception\UnhandledFileTypeException;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\QrMatrix;
-use ThePhpGuild\QrCode\MatrixRenderer\File\FileType;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputInterface;
-use ThePhpGuild\QrCode\MatrixRenderer\Canvas\Image;
-use ThePhpGuild\QrCode\MatrixRenderer\Canvas\CanvasInterface;
-use ThePhpGuild\QrCode\MatrixRenderer\Canvas\PdfDocument;
-use ThePhpGuild\QrCode\MatrixRenderer\Painter\PainterInterface;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Matrix;
+use ThePhpGuild\QrCode\Matrix\Renderer\Canvas\CanvasInterface;
+use ThePhpGuild\QrCode\Matrix\Renderer\Canvas\Image;
+use ThePhpGuild\QrCode\Matrix\Renderer\Canvas\PdfDocument;
+use ThePhpGuild\QrCode\Matrix\Renderer\File\FileType;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputInterface;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\Painter\PainterInterface;
 
 class MatrixRenderer implements MatrixRendererInterface
 {
@@ -22,9 +22,9 @@ class MatrixRenderer implements MatrixRendererInterface
     {
     }
 
-    public function setMatrix(QrMatrix|array $matrix): self
+    public function setMatrix(Matrix|array $matrix): self
     {
-        $this->matrix = is_array($matrix) ? $matrix : $matrix->getMatrix();
+        $this->matrix = is_array($matrix) ? $matrix : $matrix->toArray();
 
         return $this;
     }

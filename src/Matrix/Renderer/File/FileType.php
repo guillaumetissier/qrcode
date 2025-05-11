@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\MatrixRenderer\File;
+namespace ThePhpGuild\QrCode\Matrix\Renderer\File;
 
 
 enum FileType

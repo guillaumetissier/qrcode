@@ -11,7 +11,7 @@ use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
 use ThePhpGuild\QrCode\Exception\MissingOption;
 use ThePhpGuild\QrCode\Exception\WrongValue;
 use ThePhpGuild\QrCode\Logger\ConsoleLogger;
-use ThePhpGuild\QrCode\MatrixRenderer\Output\OutputOptions;
+use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
 
 class GenerateQrCodeCommand extends Command
 {
