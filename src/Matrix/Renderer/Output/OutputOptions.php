@@ -21,16 +21,16 @@ class OutputOptions
 
     public function __construct(array $options)
     {
-        if (isset($options[self::FILENAME]) && is_string($options[self::FILENAME])) {
+        if (is_string($options[self::FILENAME] ?? false)) {
             $this->filename = $options[self::FILENAME];
         }
         if (isset($options[self::FILETYPE]) && $options[self::FILETYPE] instanceof FileType) {
             $this->fileType = $options[self::FILETYPE];
         }
-        if (isset($options[self::QUALITY]) && is_int($options[self::QUALITY])) {
+        if (is_int($options[self::QUALITY] ?? false)) {
             $this->quality = $options[self::QUALITY];
         }
-        if (isset($options[self::SCALE]) && is_int($options[self::SCALE])) {
+        if (is_int($options[self::SCALE] ?? false)) {
             $this->scale = $options[self::SCALE];
         }
     }

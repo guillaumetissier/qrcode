@@ -4,6 +4,7 @@ namespace Tests\Matrix;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Matrix\Matrix;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions\Position;
 
 class MatrixTest extends TestCase
 {
@@ -85,7 +86,7 @@ class MatrixTest extends TestCase
      */
     public function testSetValueFromTopLeft(int $row, int $col, int $value, array $expected): void
     {
-        $this->assertEquals($expected, $this->matrix->setValueFromTopLeft($row, $col, $value)->toArray());
+        $this->assertEquals($expected, $this->matrix->setValueFromTopLeft(new Position($col, $row), $value)->toArray());
     }
 
     public static function provideDataToTestSetValueFromTopLeft(): \Generator
@@ -106,7 +107,10 @@ class MatrixTest extends TestCase
      */
     public function testSetValueFromBottomRight(int $row, int $col, int $value, array $expected): void
     {
-        $this->assertEquals($expected, $this->matrix->setValueFromBottomRight($row, $col, $value)->toArray());
+        $this->assertEquals(
+            $expected,
+            $this->matrix->setValueFromBottomRight(new Position($col, $row), $value)->toArray()
+        );
     }
 
     public static function provideDataToTestSetValueFromBottomRight(): \Generator
