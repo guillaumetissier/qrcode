@@ -44,4 +44,48 @@ enum Version: int
     case V38 = 38;
     case V39 = 39;
     case V40 = 40;
+
+    public static function all(): \Generator
+    {
+        yield Version::V01;
+        yield Version::V02;
+        yield Version::V03;
+        yield Version::V04;
+        yield Version::V05;
+        yield Version::V06;
+        yield Version::V07;
+        yield Version::V08;
+        yield Version::V09;
+        yield Version::V10;
+        yield Version::V11;
+        yield Version::V12;
+        yield Version::V13;
+        yield Version::V14;
+        yield Version::V15;
+        yield Version::V16;
+        yield Version::V17;
+        yield Version::V18;
+        yield Version::V19;
+        yield Version::V20;
+        yield Version::V21;
+        yield Version::V22;
+        yield Version::V23;
+        yield Version::V24;
+        yield Version::V25;
+        yield Version::V26;
+        yield Version::V27;
+        yield Version::V28;
+        yield Version::V29;
+        yield Version::V30;
+        yield Version::V31;
+        yield Version::V32;
+        yield Version::V33;
+        yield Version::V34;
+        yield Version::V35;
+        yield Version::V36;
+        yield Version::V37;
+        yield Version::V38;
+        yield Version::V39;
+        yield Version::V40;
+    }
 }

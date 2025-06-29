@@ -4,15 +4,15 @@ namespace Tests\Step5MatrixModulesPlacer\Positions;
 
 use PHPUnit\Framework\TestCase;
 use ThePhpGuild\QrCode\Enums\FunctionPatternType;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions as Positions;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions as P;
 
 class FactoryTest extends TestCase
 {
-    private Positions\Factory $factory;
+    private P\Factory $factory;
 
     public function setUp(): void
     {
-        $this->factory = new Positions\Factory();
+        $this->factory = new P\Factory();
     }
 
     /**
@@ -29,11 +29,13 @@ class FactoryTest extends TestCase
 
     public static function provideDataToTestCreate(): \Generator
     {
-        yield [FunctionPatternType::ALIGNMENT_PATTERNS, Positions\AlignmentPatternsCenterPositions::class];
-        yield [FunctionPatternType::DATA_CODEWORDS, Positions\DataCodewordPositions::class];
-        yield [FunctionPatternType::EXTENSION_PATTERNS, Positions\ExtensionPatternsPositions::class];
-        yield [FunctionPatternType::POSITION_DETECTION_PATTERNS, Positions\FinderPatternsCenterPositions::class];
-        yield [FunctionPatternType::HORIZONTAL_TIMING_PATTERNS, Positions\HorizontalTimingPatternsPositions::class];
-        yield [FunctionPatternType::VERTICAL_TIMING_PATTERNS, Positions\VerticalTimingPatternsPositions::class];
+        yield [FunctionPatternType::ALIGNMENT_PATTERNS, P\AlignmentPatternsCenterPositions::class];
+        yield [FunctionPatternType::DATA_CODEWORDS, P\DataCodewordPositions::class];
+        yield [FunctionPatternType::BOTTOM_EXTENSION_PATTERNS, P\BottomExtensionPatternsPositions::class];
+        yield [FunctionPatternType::BOTTOM_RIGHT_EXTENSION_PATTERNS, P\BottomRightExtensionPatternsPositions::class];
+        yield [FunctionPatternType::RIGHT_EXTENSION_PATTERNS, P\RightExtensionPatternsPositions::class];
+        yield [FunctionPatternType::POSITION_DETECTION_PATTERNS, P\FinderPatternsCenterPositions::class];
+        yield [FunctionPatternType::HORIZONTAL_TIMING_PATTERNS, P\HorizontalTimingPatternsPositions::class];
+        yield [FunctionPatternType::VERTICAL_TIMING_PATTERNS, P\VerticalTimingPatternsPositions::class];
     }
 }

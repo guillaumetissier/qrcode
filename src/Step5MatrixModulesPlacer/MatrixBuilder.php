@@ -5,10 +5,10 @@ namespace ThePhpGuild\QrCode\Step5MatrixModulesPlacer;
 use ThePhpGuild\QrCode\Enums\FunctionPatternType;
 use ThePhpGuild\QrCode\Enums\Version;
 use ThePhpGuild\QrCode\Matrix\Matrix;
-
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FunctionPatternsPlacer\Factory as PatternsPlacerFactory;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\FunctionPatternsPlacer\PositionsDependent;
 use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions\Factory as PositionsFactory;
-use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions\PositionsInterface;
+use ThePhpGuild\QrCode\Step5MatrixModulesPlacer\Positions\SizeDependent;
 
 class MatrixBuilder
 {
@@ -41,16 +41,21 @@ class MatrixBuilder
     {
         $size = $this->sizeCalculator->setVersion($this->version)->calculate();
         $matrix = new Matrix($size);
-        foreach (FunctionPatternType::all() as $type) {
-            $position = $this->positionsFactory->create($type);
-            $placer = $this->patternsPlacerFactory->create($type);
 
-            if ($position instanceof VersionDependent) {
-                $placer->setPositions($position->setVersion($this->version)->getPositions());
+        foreach (FunctionPatternType::all() as $patternType) {
+            $positions = $this->positionsFactory->create($patternType);
+            $placer = $this->patternsPlacerFactory->create($patternType);
+
+            if ($positions instanceof VersionDependent) {
+                $positions->setVersion($this->version);
+            } elseif ($positions instanceof SizeDependent) {
+                $positions->setSize($size);
             }
-
             if ($placer instanceof DataDependent) {
                 $placer->setData($this->data);
+            }
+            if ($placer instanceof PositionsDependent) {
+                $placer->setPositions($positions);
             }
             $placer->place($matrix);
         }

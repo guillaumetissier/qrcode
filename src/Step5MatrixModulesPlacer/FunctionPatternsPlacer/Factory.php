@@ -11,7 +11,9 @@ class Factory
         return match ($patternType) {
             FunctionPatternType::ALIGNMENT_PATTERNS => new AlignmentPatternsPlacer(),
             FunctionPatternType::DATA_CODEWORDS => new DataCodewordsPlacer(),
-            FunctionPatternType::EXTENSION_PATTERNS => new ExtensionPatternsPlacer(),
+            FunctionPatternType::BOTTOM_EXTENSION_PATTERNS => new BottomExtensionPatternsPlacer(),
+            FunctionPatternType::BOTTOM_RIGHT_EXTENSION_PATTERNS => new BottomRightExtensionPatternsPlacer(),
+            FunctionPatternType::RIGHT_EXTENSION_PATTERNS => new RightExtensionPatternsPlacer(),
             FunctionPatternType::POSITION_DETECTION_PATTERNS => new PositionDetectionPatternsPlacer(),
             FunctionPatternType::VERTICAL_TIMING_PATTERNS,
             FunctionPatternType::HORIZONTAL_TIMING_PATTERNS => new TimingPatternsPlacer(),
