@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Enums;
+namespace Guillaumetissier\QrCode\Enums;
 
 enum ErrorCorrectionLevel: string
 {

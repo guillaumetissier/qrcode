@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Logger;
+namespace Guillaumetissier\QrCode\Tests\Logger;
 
+use Guillaumetissier\QrCode\Logger\LevelFilteredLogger;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class LevelFilteredLoggerTest extends TestCase
 {
@@ -22,9 +22,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testDebug(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('debug', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('debug', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->debug('Some message');
+        $this->logger?->setLogLevel($level)->debug('Some message');
     }
 
     public static function provideDataToDebug(): array
@@ -46,9 +46,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testInfo(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('info', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('info', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->info('Some message');
+        $this->logger?->setLogLevel($level)->info('Some message');
     }
 
     public static function provideDataToInfo(): array
@@ -70,9 +70,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testNotice(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('notice', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('notice', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->notice('Some message');
+        $this->logger?->setLogLevel($level)->notice('Some message');
     }
 
     public static function provideDataToNotice(): array
@@ -94,9 +94,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testWarning(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('warning', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('warning', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->warning('Some message');
+        $this->logger?->setLogLevel($level)->warning('Some message');
     }
 
     public static function provideDataToWarning(): array
@@ -118,9 +118,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testError(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('error', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('error', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->error('Some message');
+        $this->logger?->setLogLevel($level)->error('Some message');
     }
 
     public static function provideDataToError(): array
@@ -142,9 +142,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testCritical(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('critical', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('critical', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->critical('Some message');
+        $this->logger?->setLogLevel($level)->critical('Some message');
     }
 
     public static function provideDataToCritical(): array
@@ -166,9 +166,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testAlert(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('alert', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('alert', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->alert('Some message');
+        $this->logger?->setLogLevel($level)->alert('Some message');
     }
 
     public static function provideDataToAlert(): array
@@ -190,9 +190,9 @@ class LevelFilteredLoggerTest extends TestCase
      */
     public function testEmergency(string $level, bool $expectedMethodCalled): void
     {
-        $this->logger->setLogger($this->getLogger('emergency', $expectedMethodCalled));
+        $this->logger?->setLogger($this->getLogger('emergency', $expectedMethodCalled));
 
-        $this->logger->setLogLevel($level)->emergency('Some message');
+        $this->logger?->setLogLevel($level)->emergency('Some message');
     }
 
     public static function provideDataToEmergency(): array

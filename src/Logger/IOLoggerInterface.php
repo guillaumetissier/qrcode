@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Logger;
+namespace Guillaumetissier\QrCode\Logger;
 
 use Psr\Log\LoggerInterface;
 

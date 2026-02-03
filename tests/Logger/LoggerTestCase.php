@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Logger;
+namespace Guillaumetissier\QrCode\Tests\Logger;
 
+use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 use PHPUnit\Framework\TestCase;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class LoggerTestCase extends TestCase
 {
-    protected LevelFilteredLogger $logger;
+    protected IOLoggerInterface $logger;
 
     protected function setUp(): void
     {
-        $this->logger = $this->createMock(LevelFilteredLogger::class);
+        $this->logger = $this->createMock(IOLoggerInterface::class);
     }
 }

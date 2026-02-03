@@ -4,7 +4,7 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use ThePhpGuild\QrCode\Commands\GenerateQrCodeCommand;
+use Guillaumetissier\QrCode\Commands\GenerateQrCodeCommand;
 
 $application = new Application();
 $application->add(new GenerateQrCodeCommand());

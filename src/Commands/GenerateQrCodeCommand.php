@@ -1,17 +1,18 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Commands;
+namespace Guillaumetissier\QrCode\Commands;
 
+use Guillaumetissier\QrCode\Commands\Output\OutputOptions;
+use Guillaumetissier\QrCode\Enums\Mode;
+use Guillaumetissier\QrCode\Exception\MissingOption;
+use Guillaumetissier\QrCode\Exception\WrongValue;
+use Guillaumetissier\QrCode\Logger\ConsoleLogger;
+use Guillaumetissier\QrCode\QrCodeGenerator;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use ThePhpGuild\QrCode\Enums\ErrorCorrectionLevel;
-use ThePhpGuild\QrCode\Exception\MissingOption;
-use ThePhpGuild\QrCode\Exception\WrongValue;
-use ThePhpGuild\QrCode\Logger\ConsoleLogger;
-use ThePhpGuild\QrCode\Matrix\Renderer\Output\OutputOptions;
 
 class GenerateQrCodeCommand extends Command
 {
@@ -22,7 +23,7 @@ class GenerateQrCodeCommand extends Command
         $this
             ->addOption('text', 'T', InputOption::VALUE_REQUIRED, 'Text to encode and to convert into a QR code')
             ->addOption('output', 'O', InputOption::VALUE_OPTIONAL, 'Name of the file to save the QR code image')
-            ->addOption('ecl', 'E', InputOption::VALUE_REQUIRED, 'Error correction level [L, M, H, Q]' )
+            ->addOption('ecl', 'E', InputOption::VALUE_REQUIRED, 'Error correction level [L, M, H, Q]')
             ->addOption('logLevel', 'L', InputOption::VALUE_OPTIONAL, 'desc', LogLevel::WARNING)
             ->addOption('scale', 'S', InputOption::VALUE_OPTIONAL, 'Scale of the image', 1)
             ->addOption('quality', 'Q', InputOption::VALUE_OPTIONAL, 'Quality of the image [0-100]', 80)
@@ -36,17 +37,16 @@ class GenerateQrCodeCommand extends Command
         try {
             [$text, $output, $ecl, $logLevel] = $this->extractOptions($input);
 
-            QrCodeGenerator::getQrCodeGenerator($consoleLogger, $logLevel)
-                ->setData($text)
-                ->setErrorCorrectionLevel(ErrorCorrectionLevel::from($ecl))
-                ->setOutputOptions(new OutputOptions([
+            QrCodeGenerator::create($consoleLogger, $logLevel)
+                ->withData($text)
+                ->withErrorCorrectionLevel(Mode::from($ecl))
+                ->withOutputOptions(new OutputOptions([
                     OutputOptions::FILENAME => $output,
                 ]))
                 ->generate()
             ;
 
             return Command::SUCCESS;
-
         } catch (\Throwable $throwable) {
             $consoleLogger->alert($throwable->getMessage()) . PHP_EOL;
             return Command::FAILURE;
@@ -67,7 +67,7 @@ class GenerateQrCodeCommand extends Command
         }
         if (null === ($ecl = $input->getOption('ecl'))) {
             throw new MissingOption('ecl');
-        } else if (!in_array($ecl, ['L', 'M', 'H', 'Q'])) {
+        } elseif (!in_array($ecl, ['L', 'M', 'H', 'Q'])) {
             throw new WrongValue('ecl', $ecl);
         }
         $logLevel = str_replace('=', '', $input->getOption('logLevel'));

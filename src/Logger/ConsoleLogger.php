@@ -1,6 +1,6 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Logger;
+namespace Guillaumetissier\QrCode\Logger;
 
 use Psr\Log\LoggerInterface;
 
@@ -13,27 +13,27 @@ class ConsoleLogger implements LoggerInterface
 
     public function alert(\Stringable|string $message, array $context = []): void
     {
-        echo $this->coloredText("[ALE] $message" , 'black', 'red'). PHP_EOL;
+        echo $this->coloredText("[ALE] $message", 'black', 'red') . PHP_EOL;
     }
 
     public function critical(\Stringable|string $message, array $context = []): void
     {
-        echo $this->coloredText("[CRI] $message" , 'black', 'yellow'). PHP_EOL;
+        echo $this->coloredText("[CRI] $message", 'black', 'yellow') . PHP_EOL;
     }
 
     public function error(\Stringable|string $message, array $context = []): void
     {
-        echo $this->coloredText("[ERR] $message" , 'red'). PHP_EOL;
+        echo $this->coloredText("[ERR] $message", 'red') . PHP_EOL;
     }
 
     public function warning(\Stringable|string $message, array $context = []): void
     {
-        echo $this->coloredText("[WAR] $message", 'yellow'). PHP_EOL;
+        echo $this->coloredText("[WAR] $message", 'yellow') . PHP_EOL;
     }
 
     public function notice(\Stringable|string $message, array $context = []): void
     {
-        echo $this->coloredText("[NOT] $message", 'green'). PHP_EOL;
+        echo $this->coloredText("[NOT] $message", 'green') . PHP_EOL;
     }
 
     public function info(\Stringable|string $message, array $context = []): void
@@ -55,14 +55,14 @@ class ConsoleLogger implements LoggerInterface
     {
         $colors = [
             'black'   => '30', 'red'    => '31', 'green'  => '32',
-            'yellow'  => '33', 'blue'   => '34', 'magenta'=> '35',
-            'cyan'    => '36', 'white'  => '37', 'default'=> '39'
+            'yellow'  => '33', 'blue'   => '34', 'magenta' => '35',
+            'cyan'    => '36', 'white'  => '37', 'default' => '39'
         ];
 
         $backgrounds = [
             'black'   => '40', 'red'    => '41', 'green'  => '42',
-            'yellow'  => '43', 'blue'   => '44', 'magenta'=> '45',
-            'cyan'    => '46', 'white'  => '47', 'default'=> '49',
+            'yellow'  => '43', 'blue'   => '44', 'magenta' => '45',
+            'cyan'    => '46', 'white'  => '47', 'default' => '49',
             'orange'  => '38;5;208',
         ];
 
