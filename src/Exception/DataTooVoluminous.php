@@ -1,11 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Exception;
+declare(strict_types=1);
 
-class DataTooVoluminous extends \Exception
+namespace Guillaumetissier\QrCode\Exception;
+
+final class DataTooVoluminous extends \Exception
 {
-    public function __construct(int $code = 0, ?\Throwable $previous = null)
+    public function __construct()
     {
-        parent::__construct("Data too voluminous. It cannot be encoded.", $code, $previous);
+        parent::__construct("Data too voluminous. It cannot be encoded.", ExceptionCode::DATA_TOO_VOLUMINOUS->value);
     }
 }

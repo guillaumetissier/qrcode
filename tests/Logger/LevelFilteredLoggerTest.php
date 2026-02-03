@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Logger;
+namespace Guillaumetissier\QrCode\Tests\Logger;
 
+use Guillaumetissier\QrCode\Logger\LevelFilteredLogger;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use ThePhpGuild\QrCode\Logger\LevelFilteredLogger;
 
 class LevelFilteredLoggerTest extends TestCase
 {
@@ -27,6 +27,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->debug('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToDebug(): array
     {
         return [
@@ -51,6 +54,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->info('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToInfo(): array
     {
         return [
@@ -75,6 +81,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->notice('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToNotice(): array
     {
         return [
@@ -99,6 +108,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->warning('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToWarning(): array
     {
         return [
@@ -123,6 +135,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->error('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToError(): array
     {
         return [
@@ -147,6 +162,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->critical('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToCritical(): array
     {
         return [
@@ -171,6 +189,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->alert('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToAlert(): array
     {
         return [
@@ -195,6 +216,9 @@ class LevelFilteredLoggerTest extends TestCase
         $this->logger->setLogLevel($level)->emergency('Some message');
     }
 
+    /**
+     * @return array<array{string, bool}>
+     */
     public static function provideDataToEmergency(): array
     {
         return [

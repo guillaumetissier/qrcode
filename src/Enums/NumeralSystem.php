@@ -1,6 +1,8 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Enums;
+declare(strict_types=1);
+
+namespace Guillaumetissier\QrCode\Enums;
 
 enum NumeralSystem: int
 {

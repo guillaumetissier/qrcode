@@ -1,11 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Exception;
+declare(strict_types=1);
 
-class ImageNotCreatedException extends \Exception
+namespace Guillaumetissier\QrCode\Exception;
+
+final class ImageNotCreatedException extends \Exception
 {
-    public function __construct(int $code = 0, ?\Throwable $previous = null)
+    public function __construct()
     {
-        parent::__construct("Image not created", $code, $previous);
+        parent::__construct("Image not created", ExceptionCode::IMAGE_NOT_CREATED->value);
     }
 }

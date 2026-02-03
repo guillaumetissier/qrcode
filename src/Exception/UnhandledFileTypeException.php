@@ -1,11 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Exception;
+declare(strict_types=1);
 
-class UnhandledFileTypeException extends \Exception
+namespace Guillaumetissier\QrCode\Exception;
+
+final class UnhandledFileTypeException extends \Exception
 {
-    public function __construct(string $extension = '', int $code = 0, ?\Throwable $previous = null)
+    public function __construct(string $extension = '')
     {
-        parent::__construct("Unhandled file type $extension", $code, $previous);
+        parent::__construct("Unhandled file type $extension", ExceptionCode::UNHANDLED_FILE_TYPE->value);
     }
 }

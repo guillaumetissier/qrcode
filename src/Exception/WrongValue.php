@@ -1,11 +1,13 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Exception;
+declare(strict_types=1);
 
-class WrongValue extends \Exception
+namespace Guillaumetissier\QrCode\Exception;
+
+final class WrongValue extends \Exception
 {
-    public function __construct(string $variable, string $value, int $code = 0, ?\Throwable $previous = null)
+    public function __construct(string $variable, string $value)
     {
-        parent::__construct("Wrong value ($value) for $variable", $code, $previous);
+        parent::__construct("Wrong value ($value) for $variable", ExceptionCode::WRONG_VALUE->value);
     }
 }

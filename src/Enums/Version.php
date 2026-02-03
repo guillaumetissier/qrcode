@@ -1,6 +1,8 @@
 <?php
 
-namespace ThePhpGuild\QrCode\Enums;
+declare(strict_types=1);
+
+namespace Guillaumetissier\QrCode\Enums;
 
 enum Version: int
 {
@@ -45,47 +47,57 @@ enum Version: int
     case V39 = 39;
     case V40 = 40;
 
-    public static function all(): \Generator
+    public function size(): int
     {
-        yield Version::V01;
-        yield Version::V02;
-        yield Version::V03;
-        yield Version::V04;
-        yield Version::V05;
-        yield Version::V06;
-        yield Version::V07;
-        yield Version::V08;
-        yield Version::V09;
-        yield Version::V10;
-        yield Version::V11;
-        yield Version::V12;
-        yield Version::V13;
-        yield Version::V14;
-        yield Version::V15;
-        yield Version::V16;
-        yield Version::V17;
-        yield Version::V18;
-        yield Version::V19;
-        yield Version::V20;
-        yield Version::V21;
-        yield Version::V22;
-        yield Version::V23;
-        yield Version::V24;
-        yield Version::V25;
-        yield Version::V26;
-        yield Version::V27;
-        yield Version::V28;
-        yield Version::V29;
-        yield Version::V30;
-        yield Version::V31;
-        yield Version::V32;
-        yield Version::V33;
-        yield Version::V34;
-        yield Version::V35;
-        yield Version::V36;
-        yield Version::V37;
-        yield Version::V38;
-        yield Version::V39;
-        yield Version::V40;
+        return 21 + 4 * ($this->value - 1);
+    }
+
+    /**
+     * @return Version[]
+     */
+    public static function all(): array
+    {
+        return [
+            Version::V01,
+            Version::V02,
+            Version::V03,
+            Version::V04,
+            Version::V05,
+            Version::V06,
+            Version::V07,
+            Version::V08,
+            Version::V09,
+            Version::V10,
+            Version::V11,
+            Version::V12,
+            Version::V13,
+            Version::V14,
+            Version::V15,
+            Version::V16,
+            Version::V17,
+            Version::V18,
+            Version::V19,
+            Version::V20,
+            Version::V21,
+            Version::V22,
+            Version::V23,
+            Version::V24,
+            Version::V25,
+            Version::V26,
+            Version::V27,
+            Version::V28,
+            Version::V29,
+            Version::V30,
+            Version::V31,
+            Version::V32,
+            Version::V33,
+            Version::V34,
+            Version::V35,
+            Version::V36,
+            Version::V37,
+            Version::V38,
+            Version::V39,
+            Version::V40,
+        ];
     }
 }
