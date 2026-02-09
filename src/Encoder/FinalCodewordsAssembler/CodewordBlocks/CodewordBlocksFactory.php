@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler\CodewordBlocks;
 
+use Guillaumetissier\QrCode\Common\Helper\ClassNameHelper;
 use Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler\CodewordBlocksFactoryInterface;
 use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
@@ -32,7 +33,10 @@ final class CodewordBlocksFactory implements CodewordBlocksFactoryInterface
             throw new \Exception('Instance does not implement CodewordBlocksInterface');
         }
 
-        $this->logger?->output("Codeword Blocks = " . get_class($codewordBlocks), ['class' => self::class]);
+        $this->logger?->output(
+            "Codeword Blocks = " . ClassNameHelper::getClassName(get_class($codewordBlocks)),
+            ['class' => self::class]
+        );
 
         return $codewordBlocks;
     }

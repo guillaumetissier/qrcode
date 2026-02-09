@@ -8,6 +8,7 @@ use Guillaumetissier\QrCode\BitMatrixPainter\Painter\ImagePainter;
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Exception\NoDataException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ImagePainterTest extends TestCase
@@ -23,30 +24,12 @@ class ImagePainterTest extends TestCase
 
     public function testWithCanvasReturnsFluentInterface(): void
     {
-        $result = $this->painter->withCanvas($this->canvas);
-
-        $this->assertSame($this->painter, $result);
-    }
-
-    public function testWithCanvasSetsCanvas(): void
-    {
-        $this->painter->withCanvas($this->canvas);
-
-        $this->assertSame($this->canvas, $this->painter->getCanvas());
+        $this->assertSame($this->painter, $this->painter->withCanvas($this->canvas));
     }
 
     public function testWithScaleReturnsFluentInterface(): void
     {
-        $result = $this->painter->withScale(5);
-
-        $this->assertSame($this->painter, $result);
-    }
-
-    public function testWithScaleSetsScale(): void
-    {
-        $this->painter->withScale(15);
-
-        $this->assertEquals(15, $this->painter->getScale());
+        $this->assertSame($this->painter, $this->painter->withScale(5));
     }
 
     public function testWithScaleThrowsExceptionForZero(): void
@@ -63,16 +46,6 @@ class ImagePainterTest extends TestCase
         $this->expectExceptionMessage('Scale must be a positive integer');
 
         $this->painter->withScale(-5);
-    }
-
-    public function testGetScaleReturnsDefaultValue(): void
-    {
-        $this->assertEquals(10, $this->painter->getScale());
-    }
-
-    public function testGetCanvasReturnsNullByDefault(): void
-    {
-        $this->assertNull($this->painter->getCanvas());
     }
 
     public function testPaintThrowsExceptionWhenCanvasNotSet(): void
@@ -297,12 +270,9 @@ class ImagePainterTest extends TestCase
 
     public function testFluentInterfaceChaining(): void
     {
-        $result = $this->painter
-            ->withCanvas($this->canvas)
-            ->withScale(7);
-
-        $this->assertSame($this->painter, $result);
-        $this->assertSame($this->canvas, $this->painter->getCanvas());
-        $this->assertEquals(7, $this->painter->getScale());
+        $this->assertSame(
+            $this->painter,
+            $this->painter->withCanvas($this->canvas)->withScale(7)
+        );
     }
 }

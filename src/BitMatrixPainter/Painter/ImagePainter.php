@@ -84,14 +84,4 @@ final class ImagePainter implements PainterInterface
             }
         }
     }
-
-    public function getScale(): int
-    {
-        return $this->scale;
-    }
-
-    public function getCanvas(): ?CanvasInterface
-    {
-        return $this->canvas;
-    }
 }

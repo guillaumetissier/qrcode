@@ -39,6 +39,8 @@ final class ModeDetector implements ModeDetectorInterface
             throw MissingInfoException::missingInfo('data', self::class);
         }
 
+        $this->logger?->input("Data = '{$this->data}'", ['class' => self::class]);
+
         if (ctype_digit($this->data)) {
             $this->logger?->output("Mode = NUMERIC", ['class' => self::class]);
             return Mode::NUMERIC;

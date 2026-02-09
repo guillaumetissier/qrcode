@@ -9,6 +9,8 @@ use Guillaumetissier\QrCode\BitString\CharCountIndicator;
 use Guillaumetissier\QrCode\BitString\CharCountIndicatorInterface;
 use Guillaumetissier\QrCode\BitString\ModeIndicator;
 use Guillaumetissier\QrCode\BitString\ModeIndicatorInterface;
+use Guillaumetissier\QrCode\BitString\Padding;
+use Guillaumetissier\QrCode\BitString\PaddingInterface;
 use Guillaumetissier\QrCode\BitString\Terminator;
 use Guillaumetissier\QrCode\BitString\TerminatorInterface;
 use Guillaumetissier\QrCode\Encoder\DataEncoder\DataCodewordsCounter\DataCodewordsCounterFactory;
@@ -33,21 +35,23 @@ final class DataEncoder implements DataEncoderInterface
     public static function create(?IOLoggerInterface $logger = null): self
     {
         return new self(
+            DataCodewordsCounterFactory::create($logger),
             ModeEncoderFactory::create($logger),
             ModeIndicator::create($logger),
             CharCountIndicator::create($logger),
             Terminator::create(),
-            DataCodewordsCounterFactory::create(),
+            Padding::create($logger),
             $logger
         );
     }
 
     private function __construct(
+        private readonly DataCodewordsCounterFactoryInterface $dataCodewordsCounterFactory,
         private readonly ModeEncoderFactoryInterface $modeEncoderFactory,
         private readonly ModeIndicatorInterface $modeIndicator,
         private readonly CharCountIndicatorInterface $charCountIndicator,
         private readonly TerminatorInterface $terminator,
-        private readonly DataCodewordsCounterFactoryInterface $dataCodewordsCounterFactory,
+        private readonly PaddingInterface $padding,
         private readonly ?IOLoggerInterface $logger = null
     ) {
     }
@@ -107,6 +111,12 @@ final class DataEncoder implements DataEncoderInterface
 
         $dataBitString = BitString::empty();
 
+        $this->logger?->info('Calculate total codewords', ['class' => self::class]);
+        $totalCodewords = $this->dataCodewordsCounterFactory
+            ->getDataCodewordsCounter($this->errorCorrectionLevel)
+            ->withVersion($this->version)
+            ->count();
+
         $this->logger?->info('Append mode Indicator', ['class' => self::class]);
         $dataBitString
             ->append($this->modeIndicator
@@ -131,28 +141,14 @@ final class DataEncoder implements DataEncoderInterface
         $this->logger?->info('Append terminator', ['class' => self::class]);
         $dataBitString->append($this->terminator->bitString());
 
-        $totalCodewords = $this->dataCodewordsCounterFactory
-            ->getDataCodewordsCounter($this->errorCorrectionLevel)
-            ->withVersion($this->version)
-            ->count();
 
         $this->logger?->info('Append padding', ['class' => self::class]);
-        $this->appendPadding($dataBitString, $totalCodewords);
+        $dataBitString
+            ->append($this->padding
+                ->withDataBitCount($dataBitString->bitCount())
+                ->withTotalCodewords($totalCodewords)
+                ->bitString());
 
         return $dataBitString;
-    }
-
-    private function appendPadding(BitString $dataBitString, int $totalCodewords): void
-    {
-        $bitCount = $dataBitString->bitCount();
-        $dataBitString->append(BitString::zeros((8 - $bitCount % 8)));
-        $codewordCount = $dataBitString->bitCount() / 8;
-
-        if ($totalCodewords > $codewordCount) {
-            $paddingCodewords = [BitString::fromString('11101100'), BitString::fromString('00010001')];
-            for ($i = 0; $i < ($totalCodewords - $codewordCount); $i++) {
-                $dataBitString->append($paddingCodewords[$i % 2]);
-            }
-        }
     }
 }

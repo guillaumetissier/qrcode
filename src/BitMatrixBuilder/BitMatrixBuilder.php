@@ -94,32 +94,32 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             throw MissingInfoException::missingInfo('data', self::class);
         }
 
-        $this->logger?->info('Creating empty matrix', ['class' => self::class]);
+        $this->logger?->notice('****** Create empty matrix ******', ['class' => self::class]);
         $functionPatternPositions = FunctionPatternPositions::empty();
         $matrix = $this->bitMatrixCreator
             ->withVersion($this->version)
             ->createEmptyMatrix();
 
-        $this->logger?->info("Placing function patterns", ['class' => self::class]);
+        $this->logger?->notice("****** Place function patterns ******", ['class' => self::class]);
         foreach (FunctionPatternType::all() as $functionPatternType) {
-            $this->logger?->info("Placing {$functionPatternType->value}", ['class' => self::class]);
+            $this->logger?->info("Place {$functionPatternType->value}", ['class' => self::class]);
             $this->patternsPlacerFactory
                 ->createPatternPlacer($functionPatternType)
                 ->withVersion($this->version)
                 ->place($matrix, $functionPatternPositions);
         }
 
-        $this->logger?->info("Placing data codewords", ['class' => self::class]);
+        $this->logger?->notice("****** Place data codewords ******", ['class' => self::class]);
         $this->codewordsPlacer
             ->withData($this->data)
             ->place($matrix, $functionPatternPositions);
 
-        $this->logger?->info("Masking matrix", ['class' => self::class]);
+        $this->logger?->notice("****** Mask matrix ******", ['class' => self::class]);
         [$mask, $matrix] = $this->masker
             ->withFunctionPatternPositions($functionPatternPositions)
             ->mask($matrix);
 
-        $this->logger?->info("Placing information modules", ['class' => self::class]);
+        $this->logger?->notice("****** Place information modules ******", ['class' => self::class]);
         $versionInfo = VersionInfo::create($this->version)
             ->toBitString();
         $formatInfo = FormatInfo::create($this->logger)
@@ -128,7 +128,7 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             ->bitString();
 
         foreach (InformationModule::all() as $infoModule) {
-            $this->logger?->info("Placing {$infoModule->value}", ['class' => self::class]);
+            $this->logger?->info("Place {$infoModule->value}", ['class' => self::class]);
             $info = match ($infoModule) {
                 InformationModule::TOP_RIGHT_VERSION_INFO,
                 InformationModule::BOTTOM_LEFT_VERSION_INFO => $versionInfo,
