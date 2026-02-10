@@ -17,12 +17,21 @@ final class PositionDetectionPatternsPlacer extends AbstractPatternsPlacer
     public function place(BitMatrix $matrix, FunctionPatternPositionsInterface $functionPatternPositions): void
     {
         foreach ($this->positions() as $position) {
-            for ($row = -3; $row <= 3; $row++) {
-                for ($col = -3; $col <= 3; $col++) {
+            for ($row = -4; $row <= 4; $row++) {
+                for ($col = -4; $col <= 4; $col++) {
+                    if (
+                        ($position->col() + $col < 0) ||
+                        ($position->row() + $row < 0) ||
+                        ($position->col() + $col > $matrix->size() - 1) ||
+                        ($position->row() + $row > $matrix->size() - 1)
+                    ) {
+                        continue;
+                    }
                     $pos = Position::fromTopLeft($position->col() + $col, $position->row() + $row);
                     $matrix->setValue(
                         $pos,
-                        abs($row) == 3 || abs($col) == 3 || (abs($row) <= 1 && abs($col) <= 1)
+                        (abs($row) == 3 || abs($col) == 3 || (abs($row) <= 1 && abs($col) <= 1)) &&
+                        abs($col) !== 4 && abs($row) !== 4
                     );
                     $functionPatternPositions->addPosition($pos);
                 }
