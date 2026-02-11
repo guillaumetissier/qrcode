@@ -57,18 +57,18 @@ final class BitMatrixMasker implements BitMatrixMaskerInterface
         foreach (Mask::all() as $mask) {
             $masker = $this->maskerFactory->createMasker($mask);
 
-            $this->logger?->info("Mask the matrix with mask {$mask->value}");
+            $this->logger?->info("Mask the matrix with mask {$mask->value}", ['class' => self::class]);
             $maskedMatrix = $masker
                 ->withFunctionPatternPositions($this->functionPatternPositions)
                 ->mask($matrix);
 
-            $this->logger?->info("Calculate the penalty score of mask {$mask->value}");
+            $this->logger?->info("Calculate the penalty score of mask {$mask->value}", ['class' => self::class]);
             $score = 0;
             foreach ($this->penaltyScoreCalculatorFactory->generatePenaltyScoreCalculators() as $scoreCalculator) {
                 $score += $scoreCalculator->calculateScore($maskedMatrix);
             }
 
-            $this->logger?->info("Penalty score for mask {$mask->value} = {$score}");
+            $this->logger?->info("Penalty score for mask {$mask->value} = {$score}", ['class' => self::class]);
 
             // if the new score is better (i.e. score is lower), keep that matrix
             if ($bestScore === null || $bestScore > $score) {
@@ -82,7 +82,7 @@ final class BitMatrixMasker implements BitMatrixMaskerInterface
             throw MissingInfoException::wasNotComputed('best mask', self::class);
         }
 
-        $this->logger?->output("Best matrix was masked with mask {$bestMask->value}");
+        $this->logger?->output("Best matrix was masked with mask {$bestMask->value}", ['class' => self::class]);
 
         return [$bestMask, $bestMatrix];
     }
