@@ -6,7 +6,7 @@ use Exception;
 use Generator;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\Masker\MaskerInterface;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\Common\Position;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +29,7 @@ abstract class MaskerTestCase extends TestCase
      */
     public function testMask(BitMatrix $matrix, string $expected): void
     {
-        $positions = FunctionPatternPositions::empty();
+        $positions = NonDataPositions::empty();
         $actual = $this->masker->withFunctionPatternPositions($positions)->mask($matrix);
         $this->assertSame($expected, "$actual");
     }
@@ -55,7 +55,7 @@ abstract class MaskerTestCase extends TestCase
     public function testMaskWithFunctionPatternPositions(BitMatrix $matrix, array $positions, string $expected): void
     {
         $actual = $this->masker
-            ->withFunctionPatternPositions(FunctionPatternPositions::fromArray($positions))
+            ->withFunctionPatternPositions(NonDataPositions::fromArray($positions))
             ->mask($matrix);
         $this->assertSame($expected, "$actual");
     }

@@ -5,7 +5,7 @@ namespace Guillaumetissier\QrCode\Tests\Encoder\ErrorCorrectionCalculator\NumECC
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewordsCalculator\NumECCodewordsCalculator;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
 use Guillaumetissier\QrCode\Enums\Version;
-use Guillaumetissier\QrCode\Exception\VariableNotSetException;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Tests\Logger\LoggerTestCase;
 
 class NumECCodewordsCalculatorTest extends LoggerTestCase
@@ -24,7 +24,7 @@ class NumECCodewordsCalculatorTest extends LoggerTestCase
      * @param ErrorCorrectionLevel $errorCorrectionLevel
      * @param int $expectedNumEcCodewords
      * @return void
-     * @throws VariableNotSetException
+     * @throws MissingInfoException
      * @dataProvider provideDataToCalculate
      */
     public function testCalculate(
@@ -34,7 +34,10 @@ class NumECCodewordsCalculatorTest extends LoggerTestCase
     ): void {
         $this->assertEquals(
             $expectedNumEcCodewords,
-            $this->calculator->withVersion($version)->withErrorCorrectionLevel($errorCorrectionLevel)->calculate()
+            $this->calculator
+                ->withVersion($version)
+                ->withErrorCorrectionLevel($errorCorrectionLevel)
+                ->calculate()
         );
     }
 

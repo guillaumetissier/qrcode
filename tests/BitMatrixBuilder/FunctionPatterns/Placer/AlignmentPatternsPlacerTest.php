@@ -3,7 +3,7 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\FunctionPatterns\Placer;
 
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\AlignmentPatternsPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
@@ -17,7 +17,7 @@ class AlignmentPatternsPlacerTest extends TestCase
         $version = Version::V02;
         $matrix = BitMatrix::empty($version->size());
         $finderPatterns = new AlignmentPatternsPlacer($this->createPatternPositionsMock());
-        $functionPatternPositions = FunctionPatternPositions::empty();
+        $functionPatternPositions = NonDataPositions::empty();
         $finderPatterns->withVersion($version)->place($matrix, $functionPatternPositions);
 
         $this->assertEquals(

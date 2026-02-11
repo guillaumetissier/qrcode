@@ -52,18 +52,10 @@ final class ImagePainter implements PainterInterface
         }
 
         $imageSize = $size * $this->scale;
-
-        // Paint background
-        $this->canvas->paintRectangle(
-            self::COLOR_BACKGROUND,
-            0,
-            0,
-            $imageSize,
-            $imageSize
-        );
+        $this->canvas->paintRectangle(self::COLOR_BACKGROUND, 0, 0, $imageSize, $imageSize);
 
         // Paint foreground modules
-        foreach ($matrix->getValuesFromTopLeft() as $positionValue) {
+        foreach ($matrix->values() as $positionValue) {
             [$position, $value] = $positionValue;
             $col = $position->col();
             $row = $position->row();
@@ -74,13 +66,7 @@ final class ImagePainter implements PainterInterface
                 $x2 = ($col + 1) * $this->scale;
                 $y2 = ($row + 1) * $this->scale;
 
-                $this->canvas->paintRectangle(
-                    self::COLOR_FOREGROUND,
-                    $x1,
-                    $y1,
-                    $x2,
-                    $y2
-                );
+                $this->canvas->paintRectangle(self::COLOR_FOREGROUND, $x1, $y1, $x2, $y2);
             }
         }
     }

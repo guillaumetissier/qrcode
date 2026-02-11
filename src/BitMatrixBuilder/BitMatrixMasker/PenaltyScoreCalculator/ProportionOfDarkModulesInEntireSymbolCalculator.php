@@ -17,7 +17,7 @@ final class ProportionOfDarkModulesInEntireSymbolCalculator implements PenaltySc
 
         for ($row = 0; $row < $size; $row++) {
             for ($col = 0; $col < $size; $col++) {
-                if ($matrix->getValueFromTopLeft($row, $col) === 1) {
+                if ($matrix->value($row, $col) === 1) {
                     $darkCount++;
                 }
             }

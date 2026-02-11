@@ -3,7 +3,7 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\FunctionPatterns\Placer;
 
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\RightExtensionPatternsPlacer;
 use Guillaumetissier\QrCode\Common\Position;
@@ -16,56 +16,56 @@ class RightExtensionPatternsPlacerTest extends TestCase
     {
         $version = Version::V07;
         $matrix = BitMatrix::empty($version->size());
-        $functionPatternPositions = FunctionPatternPositions::empty();
+        $functionPatternPositions = NonDataPositions::empty();
         $finderPatterns = new RightExtensionPatternsPlacer($this->createPatternPositionsMock($version->size()));
         $finderPatterns->withVersion($version)->place($matrix->showValues(), $functionPatternPositions);
 
         $this->assertEquals(
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx01' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL,
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '...........................................01' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL .
+            '.............................................' . PHP_EOL,
             "$matrix"
         );
     }

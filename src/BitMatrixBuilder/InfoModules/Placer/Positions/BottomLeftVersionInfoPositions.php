@@ -24,10 +24,13 @@ class BottomLeftVersionInfoPositions extends AbstractInfoModulePositions
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
-        $rowOffset = $this->version->size() - 11;
-        for ($col = 0; $col < 3; $col++) {
-            for ($row = 0; $row < 6; $row++) {
-                yield Position::fromTopLeft($col, $rowOffset + $row);
+        if ($this->version < Version::V07) {
+            return null;
+        }
+
+        for ($col = 0; $col <= 5; $col++) {
+            for ($row = 10; $row >= 8; $row--) {
+                yield Position::fromBottomLeft($col, $row, $this->version->size());
             }
         }
     }

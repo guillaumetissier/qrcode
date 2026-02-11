@@ -11,9 +11,7 @@ use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 use Guillaumetissier\QrCode\Tests\Logger\LoggerTestCase;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\ErrorCorrectionCalculator;
-use Guillaumetissier\QrCode\Enums\Mode;
 use Guillaumetissier\QrCode\Enums\Version;
-use Guillaumetissier\QrCode\Exception\VariableNotSetException;
 
 class ErrorCorrectionCalculatorTest extends LoggerTestCase
 {

@@ -16,11 +16,11 @@ final class AdjacentModulesInRowColInSameColorCalculator implements PenaltyScore
         $score = 0;
 
         for ($row = 0; $row < $size; $row++) {
-            $score += $this->calculatePartialScore($matrix->getRowValuesFromTopLeft($row));
+            $score += $this->calculatePartialScore($matrix->rowValues($row));
         }
 
         for ($col = 0; $col < $size; $col++) {
-            $score += $this->calculatePartialScore($matrix->getColValuesFromTopLeft($col));
+            $score += $this->calculatePartialScore($matrix->colValues($col));
         }
 
         return $score;

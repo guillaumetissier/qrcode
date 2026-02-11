@@ -6,7 +6,7 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns;
 
 use Guillaumetissier\QrCode\Common\Position;
 
-interface FunctionPatternPositionsInterface
+interface NonDataPositionsInterface
 {
     public function addPosition(Position $position): self;
 

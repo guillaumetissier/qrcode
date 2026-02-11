@@ -7,7 +7,7 @@ namespace Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewor
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewordsCalculatorInterface;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
 use Guillaumetissier\QrCode\Enums\Version;
-use Guillaumetissier\QrCode\Exception\VariableNotSetException;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class NumECCodewordsCalculator implements NumECCodewordsCalculatorInterface
@@ -40,16 +40,16 @@ final class NumECCodewordsCalculator implements NumECCodewordsCalculatorInterfac
     }
 
     /**
-     * @throws VariableNotSetException
+     * @throws MissingInfoException
      */
     public function calculate(): int
     {
-        if (!$this->errorCorrectionLevel) {
-            throw new VariableNotSetException('errorCorrectionLevel');
+        if (!$this->errorCorrectionLevel instanceof ErrorCorrectionLevel) {
+            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
         }
 
-        if (!$this->version) {
-            throw new VariableNotSetException('version');
+        if (!$this->version instanceof Version) {
+            throw MissingInfoException::missingInfo('version', self::class);
         }
 
         $this->logger?->input(

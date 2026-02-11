@@ -3,7 +3,6 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\InfoModules\Placer\Positions;
 
 use Generator;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\HorizontalTimingPatternPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\VerticalFormatInfoPositions;
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Enums\Version;
@@ -38,21 +37,22 @@ class VerticalFormatInfoPositionsTest extends TestCase
 
     public static function dataPositions(): Generator
     {
+        $col = 8;
         $positions = [
-            Position::fromTopLeft(8, 0), Position::fromTopLeft(8, 1), Position::fromTopLeft(8, 2),
-            Position::fromTopLeft(8, 3), Position::fromTopLeft(8, 4), Position::fromTopLeft(8, 5),
-            Position::fromTopLeft(8, 7), Position::fromTopLeft(8, 8),
+            Position::fromTopLeft($col, 0), Position::fromTopLeft($col, 1), Position::fromTopLeft($col, 2),
+            Position::fromTopLeft($col, 3), Position::fromTopLeft($col, 4), Position::fromTopLeft($col, 5),
+            Position::fromTopLeft($col, 7), Position::fromTopLeft($col, 8),
         ];
 
         foreach (Version::all() as $version) {
-            $i = $version->size() - 8;
+            $size = $version->size();
             yield [
                 $version,
                 array_merge($positions, [
-                    Position::fromTopLeft(8, $i), Position::fromTopLeft(8, $i + 1),
-                    Position::fromTopLeft(8, $i + 2), Position::fromTopLeft(8, $i + 3),
-                    Position::fromTopLeft(8, $i + 4), Position::fromTopLeft(8, $i + 5),
-                    Position::fromTopLeft(8, $i + 6), Position::fromTopLeft(8, $i + 7),
+                    Position::fromBottomLeft($col, 6, $size), Position::fromBottomLeft($col, 5, $size),
+                    Position::fromBottomLeft($col, 4, $size), Position::fromBottomLeft($col, 3, $size),
+                    Position::fromBottomLeft($col, 2, $size), Position::fromBottomLeft($col, 1, $size),
+                    Position::fromBottomLeft($col, 0, $size),
                 ]),
             ];
         }

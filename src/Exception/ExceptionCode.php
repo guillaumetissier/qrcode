@@ -16,6 +16,5 @@ enum ExceptionCode: int
     case UNHANDLED_FILE_TYPE = 8;
     case UNKNOWN_MODE = 9;
     case UNKNOWN_VERSION = 10;
-    case VARIABLE_NOT_SET = 11;
-    case WRONG_VALUE = 12;
+    case WRONG_VALUE = 11;
 }

@@ -10,6 +10,7 @@ enum InformationModule: string
     case VERTICAL_FORMAT_INFO = 'Vertical format info';
     case BOTTOM_LEFT_VERSION_INFO = 'Bottom left version info';
     case TOP_RIGHT_VERSION_INFO = 'Top right version info';
+    case DARK_MODULE = 'Dark module';
 
     /**
      * @return InformationModule[]
@@ -21,6 +22,7 @@ enum InformationModule: string
             self::VERTICAL_FORMAT_INFO,
             self::BOTTOM_LEFT_VERSION_INFO,
             self::TOP_RIGHT_VERSION_INFO,
+            self::DARK_MODULE,
         ];
     }
 }

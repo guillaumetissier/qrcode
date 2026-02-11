@@ -3,7 +3,7 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\FunctionPatterns\Placer;
 
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\HorizontalTimingPatternPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\VerticalTimingPatternPositions;
@@ -21,7 +21,7 @@ class TimingPatternsPlacerTest extends TestCase
         $version = Version::V02;
         $matrix = BitMatrix::empty($version->size());
         $positions->withVersion($version);
-        $functionPatternPositions = FunctionPatternPositions::empty();
+        $functionPatternPositions = NonDataPositions::empty();
         $patternsPlacer = new TimingPatternsPlacer($positions);
         $patternsPlacer->place($matrix, $functionPatternPositions);
 

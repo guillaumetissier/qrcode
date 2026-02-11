@@ -9,7 +9,7 @@ use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
-class VerticalFormatInfoPositions extends AbstractInfoModulePositions
+final class VerticalFormatInfoPositions extends AbstractInfoModulePositions
 {
     /**
      * ISO/IEC 18004:2000(E) - 8.9 - p.54
@@ -24,16 +24,18 @@ class VerticalFormatInfoPositions extends AbstractInfoModulePositions
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
-        for ($i = 0; $i < 9; $i++) {
-            if ($i === 6) {
+        $col = 8;
+
+        for ($row = 0; $row <= 8; $row++) {
+            if ($row === 6) {
                 continue;
             }
-            yield Position::fromTopLeft(8, $i);
+            yield Position::fromTopLeft($col, $row);
         }
 
         $size = $this->version->size();
-        for ($i = 0; $i < 8; $i++) {
-            yield Position::fromTopLeft(8, $size - 8 + $i);
+        for ($row = 6; $row >= 0; $row--) {
+            yield Position::fromBottomLeft($col, $row, $size);
         }
     }
 }

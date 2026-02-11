@@ -63,21 +63,14 @@ class ImagePainterTest extends TestCase
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn(0);
 
-        $this->painter->withCanvas($this->canvas);
-
         $this->expectException(NoDataException::class);
 
-        $this->painter->paint($matrix);
+        $this->painter->withCanvas($this->canvas)->paint($matrix);
     }
 
     public function testPaintDrawsBackgroundRectangle(): void
     {
-        $matrix = $this->createMock(BitMatrix::class);
-        $matrix->method('size')->willReturn(5);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
-            return;
-            yield;
-        })());
+        $matrix = BitMatrix::empty(5);
 
         $this->canvas
             ->expects($this->once())
@@ -91,12 +84,7 @@ class ImagePainterTest extends TestCase
 
     public function testPaintDrawsBackgroundWithCustomScale(): void
     {
-        $matrix = $this->createMock(BitMatrix::class);
-        $matrix->method('size')->willReturn(5);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
-            return;
-            yield;
-        })());
+        $matrix = BitMatrix::empty(5);
 
         $this->canvas
             ->expects($this->once())
@@ -113,7 +101,7 @@ class ImagePainterTest extends TestCase
     {
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn(3);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
+        $matrix->method('values')->willReturn((function () {
             yield [Position::fromTopLeft(0, 0), true];
         })());
 
@@ -152,7 +140,7 @@ class ImagePainterTest extends TestCase
     {
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn(2);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
+        $matrix->method('values')->willReturn((function () {
             yield [Position::fromTopLeft(0, 0), false]; // White module - should not paint
             yield [Position::fromTopLeft(0, 1), false]; // White module - should not paint
         })());
@@ -171,7 +159,7 @@ class ImagePainterTest extends TestCase
     {
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn(3);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
+        $matrix->method('values')->willReturn((function () {
             yield [Position::fromTopLeft(0, 0), true];  // Black at (0,0)
             yield [Position::fromTopLeft(0, 1), false]; // White at (0,1)
             yield [Position::fromTopLeft(1, 0), false]; // White at (1,0)
@@ -211,7 +199,7 @@ class ImagePainterTest extends TestCase
     {
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn(2);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () {
+        $matrix->method('values')->willReturn((function () {
             yield [Position::fromTopLeft(0, 0), true]; // White module - should not paint
             yield [Position::fromTopLeft(0, 1), true]; // White module - should not paint
         })());
@@ -249,7 +237,7 @@ class ImagePainterTest extends TestCase
         $size = 100;
         $matrix = $this->createMock(BitMatrix::class);
         $matrix->method('size')->willReturn($size);
-        $matrix->method('getValuesFromTopLeft')->willReturn((function () use ($size) {
+        $matrix->method('values')->willReturn((function () use ($size) {
             for ($row = 0; $row < $size; $row++) {
                 for ($col = 0; $col < $size; $col++) {
                     yield [Position::fromTopLeft($row, $col), ($row + $col) % 2 === 0];

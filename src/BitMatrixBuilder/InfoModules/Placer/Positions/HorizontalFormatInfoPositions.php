@@ -25,16 +25,16 @@ class HorizontalFormatInfoPositions extends AbstractInfoModulePositions
         }
 
         $size = $this->version->size();
+        $row = 8;
 
-        for ($i = 0; $i < 8; $i++) {
-            yield Position::fromTopLeft($size - $i - 1, 8);
+        for ($col = 0; $col <= 7; $col++) {
+            yield Position::fromTopRight($col, $row, $size);
         }
 
-        for ($i = 0; $i < 9; $i++) {
-            if (8 - $i === 6) {
-                continue;
-            }
-            yield Position::fromTopLeft(8 - $i, 8);
+        yield Position::fromTopLeft(7, $row);
+
+        for ($col = 5; $col >= 0; $col--) {
+            yield Position::fromTopLeft($col, $row);
         }
     }
 }

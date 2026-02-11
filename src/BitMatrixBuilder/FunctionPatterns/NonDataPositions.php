@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns;
 
+use Generator;
 use Guillaumetissier\QrCode\Common\Position;
 
-final class FunctionPatternPositions implements FunctionPatternPositionsInterface
+final class NonDataPositions implements NonDataPositionsInterface
 {
     public static function empty(): self
     {
@@ -36,6 +37,21 @@ final class FunctionPatternPositions implements FunctionPatternPositionsInterfac
     public function addPosition(Position $position): self
     {
         $this->positions[] = $position->toInt();
+
+        return $this;
+    }
+
+    /**
+     * @param ?Generator<Position> $positions
+     * @return $this
+     */
+    public function addPositions(?Generator $positions): self
+    {
+        if ($positions !== null) {
+            foreach ($positions as $position) {
+                $this->positions[] = $position->toInt();
+            }
+        }
 
         return $this;
     }

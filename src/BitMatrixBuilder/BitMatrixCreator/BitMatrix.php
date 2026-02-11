@@ -78,16 +78,28 @@ class BitMatrix
         return $this;
     }
 
-    public function getValueFromTopLeft(int $row, int $col): ?int
+    public function value(int $row, int $col): ?int
     {
         return $this->matrix[$row][$col];
+    }
+
+    /**
+     * @return Generator<array{Position, int|null}>
+     */
+    public function values(): Generator
+    {
+        for ($row = 0; $row < $this->size; $row++) {
+            for ($col = 0; $col < $this->size; $col++) {
+                yield [Position::fromTopLeft($col, $row), $this->matrix[$row][$col]];
+            }
+        }
     }
 
     /**
      * @param int $row
      * @return Generator<int|null>
      */
-    public function getRowValuesFromTopLeft(int $row): Generator
+    public function rowValues(int $row): Generator
     {
         for ($col = 0; $col < $this->size; $col++) {
             yield $this->matrix[$row][$col];
@@ -98,7 +110,7 @@ class BitMatrix
      * @param int $col
      * @return Generator<int|null>
      */
-    public function getColValuesFromTopLeft(int $col): Generator
+    public function colValues(int $col): Generator
     {
         for ($row = 0; $row < $this->size; $row++) {
             yield $this->matrix[$row][$col];
@@ -113,18 +125,6 @@ class BitMatrix
         return $this->matrix;
     }
 
-    /**
-     * @return Generator<array{Position, int|null}>
-     */
-    public function getValuesFromTopLeft(): Generator
-    {
-        for ($row = 0; $row < $this->size; $row++) {
-            for ($col = 0; $col < $this->size; $col++) {
-                yield [Position::fromTopLeft($col, $row), $this->matrix[$row][$col]];
-            }
-        }
-    }
-
     public function __toString(): string
     {
         $string = '';
@@ -132,11 +132,7 @@ class BitMatrix
             for ($col = 0; $col < $this->size; $col++) {
                 $val = $this->matrix[$row][$col];
                 if ($this->showValues) {
-                    if (null === $val) {
-                        $string .= 'x';
-                    } else {
-                        $string .= $val;
-                    }
+                    $string .= ($val === null ? "." : $val);
                 } elseif ($val === 1) {
                     $string .= '█';
                 } else {

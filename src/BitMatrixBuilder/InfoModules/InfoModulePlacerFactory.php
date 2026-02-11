@@ -10,6 +10,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\InfoModulePlacer
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactory;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactoryInterface;
 use Guillaumetissier\QrCode\Enums\InformationModule;
+use Guillaumetissier\QrCode\Enums\Version;
 
 final class InfoModulePlacerFactory implements InfoModulePlacerFactoryInterface
 {
@@ -18,7 +19,7 @@ final class InfoModulePlacerFactory implements InfoModulePlacerFactoryInterface
         return new self(InfoModulePositionFactory::create());
     }
 
-    private function __construct(private readonly InfoModulePositionFactoryInterface $positionFactory)
+    private function __construct(private readonly InfoModulePositionFactoryInterface $infoModulePositionFactory)
     {
     }
 
@@ -26,15 +27,21 @@ final class InfoModulePlacerFactory implements InfoModulePlacerFactoryInterface
     {
     }
 
-    public function createInfoModulePlacer(InformationModule $informationModule): InfoModulePlacerInterface
-    {
-        $positions = $this->positionFactory->createInfoModulePositions($informationModule);
+    public function createInfoModulePlacer(
+        InformationModule $informationModule,
+        Version $version
+    ): ?InfoModulePlacerInterface {
+        $positions = $this->infoModulePositionFactory->createInfoModulePositions($informationModule, $version);
+        if ($positions === null) {
+            return null;
+        }
 
         return match ($informationModule) {
             InformationModule::BOTTOM_LEFT_VERSION_INFO,
             InformationModule::TOP_RIGHT_VERSION_INFO,
             InformationModule::HORIZONTAL_FORMAT_INFO,
-            InformationModule::VERTICAL_FORMAT_INFO => new InfoModulePlacer($positions),
+            InformationModule::VERTICAL_FORMAT_INFO,
+            InformationModule::DARK_MODULE => new InfoModulePlacer($positions),
         };
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Logger;
 
+use BackedEnum;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Stringable;
@@ -29,13 +30,25 @@ final class LevelFilteredLogger implements IOLoggerInterface
     }
 
     /**
-     * @param Stringable|string $input
+     * @param Stringable|string|array<string, string|Stringable|BackedEnum> $input
      * @param array<string, string> $context
      * @return void
      */
-    public function input(string|Stringable $input, array $context = []): void
+    public function input(string|Stringable|array $input, array $context = []): void
     {
-        $this->debug("IN  << $input", $context);
+        if (is_array($input)) {
+            $inputs = [];
+            foreach ($input as $key => $value) {
+                if ($value instanceof BackedEnum) {
+                    $inputs[] = "$key: {$value->value}";
+                } else {
+                    $inputs[] = "$key: $value";
+                }
+            }
+            $this->debug("IN  << " . implode(', ', $inputs), $context);
+        } else {
+            $this->debug("IN  << $input", $context);
+        }
     }
 
     /**

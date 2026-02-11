@@ -91,17 +91,17 @@ final class Encoder implements EncoderInterface
             throw MissingInfoException::missingInfo("data", self::class);
         }
 
-        $this->logger?->notice('****** Detecting mode ******', ['class' => self::class]);
+        $this->logger?->notice('------ Detecting mode ------', ['class' => self::class]);
 
         $this->mode = $this->modeDetector->withData($this->data)->detect();
 
-        $this->logger?->notice('****** Detecting version ******', ['class' => self::class]);
+        $this->logger?->notice('------ Detecting version ------', ['class' => self::class]);
 
         $this->version = $this->versionSelectorFactory
             ->getVersionSelector($this->mode, $this->errorCorrectionLevel)
             ->selectVersion(strlen($this->data));
 
-        $this->logger?->notice('****** Encode data ******', ['class' => self::class]);
+        $this->logger?->notice('------ Encoding data ------', ['class' => self::class]);
 
         $encodedBitString = $this->dataEncoder
             ->withData($this->data)
@@ -110,14 +110,14 @@ final class Encoder implements EncoderInterface
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)
             ->encode();
 
-        $this->logger?->notice('****** Calculate error codes ******', ['class' => self::class]);
+        $this->logger?->notice('------ Calculating error codes ------', ['class' => self::class]);
 
         $errorCorrectionBitString = $this->errorCorrectionCoder
             ->withVersion($this->version)
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)
             ->calculateErrorCorrection($encodedBitString);
 
-        $this->logger?->notice('****** Assemble data and error codes ******', ['class' => self::class]);
+        $this->logger?->notice('------ Assembling data and error codes ------', ['class' => self::class]);
 
         return $this->finalCodewordsAssembler
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)

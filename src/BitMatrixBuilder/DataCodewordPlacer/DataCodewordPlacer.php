@@ -7,7 +7,7 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer;
 use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacerInterface;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositionsInterface;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositionsInterface;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class DataCodewordPlacer implements DataCodewordPlacerInterface
@@ -38,7 +38,7 @@ final class DataCodewordPlacer implements DataCodewordPlacerInterface
     /**
      * @throws MissingInfoException
      */
-    public function place(BitMatrix $matrix, FunctionPatternPositionsInterface $functionPatternPositions): void
+    public function place(BitMatrix $matrix, NonDataPositionsInterface $functionPatternPositions): void
     {
         if (!$this->data instanceof BitStringInterface) {
             throw MissingInfoException::missingInfo('data', self::class);

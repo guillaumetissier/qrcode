@@ -16,10 +16,10 @@ final class BlockOfModulesOfSameColorCalculator implements PenaltyScoreCalculato
 
         for ($row = 0; $row < $size - 1; $row++) {
             for ($col = 0; $col < $size - 1; $col++) {
-                $c1 = $matrix->getValueFromTopLeft($col, $row);
-                $c2 = $matrix->getValueFromTopLeft($col + 1, $row);
-                $c3 = $matrix->getValueFromTopLeft($col, $row + 1);
-                $c4 = $matrix->getValueFromTopLeft($col + 1, $row + 1);
+                $c1 = $matrix->value($col, $row);
+                $c2 = $matrix->value($col + 1, $row);
+                $c3 = $matrix->value($col, $row + 1);
+                $c4 = $matrix->value($col + 1, $row + 1);
 
                 if ($c1 === $c2 && $c1 === $c3 && $c1 === $c4) {
                     $score += WeightedPenaltyScore::N2->toInt();

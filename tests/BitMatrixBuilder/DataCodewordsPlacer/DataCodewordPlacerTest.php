@@ -8,7 +8,7 @@ use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer\DataCodewordPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer\DataCodewordPlacer;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +31,7 @@ class DataCodewordPlacerTest extends TestCase
         $dataCodewords = DataCodewordPlacer::create();
         $dataCodewords
             ->withData($this->mockBitString($data))
-            ->place($matrix, FunctionPatternPositions::fromArray($alreadySetPositions));
+            ->place($matrix, NonDataPositions::fromArray($alreadySetPositions));
 
         $this->assertEquals($expectedMatrix, "$matrix");
     }
@@ -57,31 +57,31 @@ class DataCodewordPlacerTest extends TestCase
             '12345678901234567890123456789012345678901234567890' .
             '12345678901234567890123456789012345678901234567890',
 
-            '210921x092109210921092109' . PHP_EOL .
-            '438743x874387438743874387' . PHP_EOL .
-            '656565x656565656565656565' . PHP_EOL .
-            '874387x438743874387438743' . PHP_EOL .
-            '092109x210921092109210921' . PHP_EOL .
-            '210921x092109210921092109' . PHP_EOL .
-            '438743x874387438743874387' . PHP_EOL .
-            '656565x656565656565656565' . PHP_EOL .
-            '874387x438743874387438743' . PHP_EOL .
-            '092109x210921092109210921' . PHP_EOL .
-            '210921x092109210921092109' . PHP_EOL .
-            '438743x874387438743874387' . PHP_EOL .
-            '656565x656565656565656565' . PHP_EOL .
-            '874387x438743874387438743' . PHP_EOL .
-            '092109x210921092109210921' . PHP_EOL .
-            '210921x092109210921092109' . PHP_EOL .
-            '438743x874387438743874387' . PHP_EOL .
-            '656565x656565656565656565' . PHP_EOL .
-            '874387x438743874387438743' . PHP_EOL .
-            '092109x210921092109210921' . PHP_EOL .
-            '210921x092109210921092109' . PHP_EOL .
-            '438743x874387438743874387' . PHP_EOL .
-            '656565x656565656565656565' . PHP_EOL .
-            '874387x438743874387438743' . PHP_EOL .
-            '092109x210921092109210921' . PHP_EOL,
+            '210921.092109210921092109' . PHP_EOL .
+            '438743.874387438743874387' . PHP_EOL .
+            '656565.656565656565656565' . PHP_EOL .
+            '874387.438743874387438743' . PHP_EOL .
+            '092109.210921092109210921' . PHP_EOL .
+            '210921.092109210921092109' . PHP_EOL .
+            '438743.874387438743874387' . PHP_EOL .
+            '656565.656565656565656565' . PHP_EOL .
+            '874387.438743874387438743' . PHP_EOL .
+            '092109.210921092109210921' . PHP_EOL .
+            '210921.092109210921092109' . PHP_EOL .
+            '438743.874387438743874387' . PHP_EOL .
+            '656565.656565656565656565' . PHP_EOL .
+            '874387.438743874387438743' . PHP_EOL .
+            '092109.210921092109210921' . PHP_EOL .
+            '210921.092109210921092109' . PHP_EOL .
+            '438743.874387438743874387' . PHP_EOL .
+            '656565.656565656565656565' . PHP_EOL .
+            '874387.438743874387438743' . PHP_EOL .
+            '092109.210921092109210921' . PHP_EOL .
+            '210921.092109210921092109' . PHP_EOL .
+            '438743.874387438743874387' . PHP_EOL .
+            '656565.656565656565656565' . PHP_EOL .
+            '874387.438743874387438743' . PHP_EOL .
+            '092109.210921092109210921' . PHP_EOL,
 
 
         ];
@@ -148,31 +148,31 @@ class DataCodewordPlacerTest extends TestCase
             '12345678901234567890123456789012345678901234567890' .
             '12345678901234567890123456789012345678901234567890',
 
-            'xxxxx6x5476547654765xxxxx' . PHP_EOL .
-            'xxxxx7x3298329832984xxxxx' . PHP_EOL .
-            'xxxxx8x1010101010103xxxxx' . PHP_EOL .
-            'xxxxx9x9832983298322xxxxx' . PHP_EOL .
-            'xxxxx0x7654765476541xxxxx' . PHP_EOL .
-            '765421x547654765476092109' . PHP_EOL .
-            '983243x329832983298874387' . PHP_EOL .
-            '101065x101010101010656565' . PHP_EOL .
-            '329887x983298329832438743' . PHP_EOL .
-            '547609x765476547654210921' . PHP_EOL .
-            '765421x547654765476092109' . PHP_EOL .
-            '983243x329832983298874387' . PHP_EOL .
-            '101065x101010101010656565' . PHP_EOL .
-            '329887x983298329832438743' . PHP_EOL .
-            '547609x765476547654210921' . PHP_EOL .
-            '765421x547654765476092109' . PHP_EOL .
-            '983243x329832983298874387' . PHP_EOL .
-            '101065x101010101010656565' . PHP_EOL .
-            '329887x983298329832438743' . PHP_EOL .
-            '547609x765476547654210921' . PHP_EOL .
-            'xxxxx1x547654765476092109' . PHP_EOL .
-            'xxxxx2x329832983298874387' . PHP_EOL .
-            'xxxxx3x101010101010656565' . PHP_EOL .
-            'xxxxx4x983298329832438743' . PHP_EOL .
-            'xxxxx5x765476547654210921' . PHP_EOL,
+            '.....6.5476547654765.....' . PHP_EOL .
+            '.....7.3298329832984.....' . PHP_EOL .
+            '.....8.1010101010103.....' . PHP_EOL .
+            '.....9.9832983298322.....' . PHP_EOL .
+            '.....0.7654765476541.....' . PHP_EOL .
+            '765421.547654765476092109' . PHP_EOL .
+            '983243.329832983298874387' . PHP_EOL .
+            '101065.101010101010656565' . PHP_EOL .
+            '329887.983298329832438743' . PHP_EOL .
+            '547609.765476547654210921' . PHP_EOL .
+            '765421.547654765476092109' . PHP_EOL .
+            '983243.329832983298874387' . PHP_EOL .
+            '101065.101010101010656565' . PHP_EOL .
+            '329887.983298329832438743' . PHP_EOL .
+            '547609.765476547654210921' . PHP_EOL .
+            '765421.547654765476092109' . PHP_EOL .
+            '983243.329832983298874387' . PHP_EOL .
+            '101065.101010101010656565' . PHP_EOL .
+            '329887.983298329832438743' . PHP_EOL .
+            '547609.765476547654210921' . PHP_EOL .
+            '.....1.547654765476092109' . PHP_EOL .
+            '.....2.329832983298874387' . PHP_EOL .
+            '.....3.101010101010656565' . PHP_EOL .
+            '.....4.983298329832438743' . PHP_EOL .
+            '.....5.765476547654210921' . PHP_EOL,
         ];
     }
 

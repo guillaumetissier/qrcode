@@ -8,14 +8,14 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\Masker\MaskerFactory;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\PenaltyScoreCalculator\PenaltyScoreCalculatorGenerator;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMaskerInterface;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositionsInterface;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositionsInterface;
 use Guillaumetissier\QrCode\Enums\Mask;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class BitMatrixMasker implements BitMatrixMaskerInterface
 {
-    private ?FunctionPatternPositionsInterface $functionPatternPositions = null;
+    private ?NonDataPositionsInterface $functionPatternPositions = null;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -33,7 +33,7 @@ final class BitMatrixMasker implements BitMatrixMaskerInterface
     ) {
     }
 
-    public function withFunctionPatternPositions(FunctionPatternPositionsInterface $functionPositions): self
+    public function withFunctionPatternPositions(NonDataPositionsInterface $functionPositions): self
     {
         $this->functionPatternPositions = $functionPositions;
 
@@ -46,7 +46,7 @@ final class BitMatrixMasker implements BitMatrixMaskerInterface
      */
     public function mask(BitMatrix $matrix): array
     {
-        if (!$this->functionPatternPositions instanceof FunctionPatternPositionsInterface) {
+        if (!$this->functionPatternPositions instanceof NonDataPositionsInterface) {
             throw MissingInfoException::missingInfo('functionPatternPositions', self::class);
         }
 

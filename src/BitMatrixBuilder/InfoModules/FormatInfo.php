@@ -69,18 +69,20 @@ final class FormatInfo
             throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
         }
 
-        $this->logger?->input(join(', ', [
-            "Mask = {$this->mask->value}",
-            "ECL = {$this->errorCorrectionLevel->value}",
-        ]), ['class' => self::class]);
+        $this->logger?->input([
+            'Mask' => $this->mask,
+            'ECL' => $this->errorCorrectionLevel,
+        ], ['class' => self::class]);
 
         $bitString = BitString::empty();
-        $bitString->append($this->maskReference
-            ->withMask($this->mask)
-            ->bitString());
         $bitString->append($this->errorCorrectionLevelIndicator
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)
             ->bitString());
+        $bitString->append($this->maskReference
+            ->withMask($this->mask)
+            ->bitString());
+
+        $bitString->append('0101010101');
 
         $this->logger?->output($bitString, ['class' => self::class]);
 

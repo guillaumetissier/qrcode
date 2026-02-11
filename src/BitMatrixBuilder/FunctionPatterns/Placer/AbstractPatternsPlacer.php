@@ -6,7 +6,7 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer;
 
 use Generator;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositionsInterface;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositionsInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Common\PositionsInterface;
@@ -28,7 +28,7 @@ abstract class AbstractPatternsPlacer implements PatternPlacerInterface
 
     abstract public function place(
         BitMatrix $matrix,
-        FunctionPatternPositionsInterface $functionPatternPositions
+        NonDataPositionsInterface $functionPatternPositions
     ): void;
 
     /**

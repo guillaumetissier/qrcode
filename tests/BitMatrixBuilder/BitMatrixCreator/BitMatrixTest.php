@@ -44,7 +44,7 @@ class BitMatrixTest extends TestCase
      */
     public function testGetValueFromTopLeft(int $row, int $col, int $expected): void
     {
-        $this->assertEquals($expected, $this->matrix->getValueFromTopLeft($row, $col));
+        $this->assertEquals($expected, $this->matrix->value($row, $col));
     }
 
     public static function dataGetValueFromTopLeft(): \Generator

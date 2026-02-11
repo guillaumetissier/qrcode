@@ -18,7 +18,7 @@ final class Ratio11311PatternInRowColCalculator implements PenaltyScoreCalculato
         for ($row = 0; $row < $size; $row++) {
             $rows = [];
             for ($col = 0; $col < $size; $col++) {
-                $rows[] = (int)$matrix->getValueFromTopLeft($row, $col);
+                $rows[] = (int)$matrix->value($row, $col);
             }
             $score += $this->checkLineForPatterns($rows, $patterns);
         }
@@ -26,7 +26,7 @@ final class Ratio11311PatternInRowColCalculator implements PenaltyScoreCalculato
         for ($col = 0; $col < $size; $col++) {
             $cols = [];
             for ($row = 0; $row < $size; $row++) {
-                $cols[] = (int)$matrix->getValueFromTopLeft($row, $col);
+                $cols[] = (int)$matrix->value($row, $col);
             }
             $score += $this->checkLineForPatterns($cols, $patterns);
         }

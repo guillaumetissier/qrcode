@@ -3,7 +3,7 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\FunctionPatterns\Placer;
 
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\PositionDetectionPatternsPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
@@ -13,37 +13,37 @@ class PositionDetectionPatternsPlacerTest extends TestCase
 {
     public function testPlace(): void
     {
-        $matrix = BitMatrix::empty(25)->showValues();
-        $functionPatternPositions = FunctionPatternPositions::empty();
+        $matrix = BitMatrix::ones(25);
+        $functionPatternPositions = NonDataPositions::empty();
         $patternsPlacer = new PositionDetectionPatternsPlacer($this->createPatternPositionsMock());
         $patternsPlacer->place($matrix, $functionPatternPositions);
 
         $this->assertEquals(
-            '11111110xxxxxxxxx01111111' . PHP_EOL .
-            '10000010xxxxxxxxx01000001' . PHP_EOL .
-            '10111010xxxxxxxxx01011101' . PHP_EOL .
-            '10111010xxxxxxxxx01011101' . PHP_EOL .
-            '10111010xxxxxxxxx01011101' . PHP_EOL .
-            '10000010xxxxxxxxx01000001' . PHP_EOL .
-            '11111110xxxxxxxxx01111111' . PHP_EOL .
-            '00000000xxxxxxxxx00000000' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            'xxxxxxxxxxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '00000000xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '11111110xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '10000010xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '10111010xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '10111010xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '10111010xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '10000010xxxxxxxxxxxxxxxxx' . PHP_EOL .
-            '11111110xxxxxxxxxxxxxxxxx' . PHP_EOL,
+            '███████ █████████ ███████' . PHP_EOL .
+            '█     █ █████████ █     █' . PHP_EOL .
+            '█ ███ █ █████████ █ ███ █' . PHP_EOL .
+            '█ ███ █ █████████ █ ███ █' . PHP_EOL .
+            '█ ███ █ █████████ █ ███ █' . PHP_EOL .
+            '█     █ █████████ █     █' . PHP_EOL .
+            '███████ █████████ ███████' . PHP_EOL .
+            '        █████████        ' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '█████████████████████████' . PHP_EOL .
+            '        █████████████████' . PHP_EOL .
+            '███████ █████████████████' . PHP_EOL .
+            '█     █ █████████████████' . PHP_EOL .
+            '█ ███ █ █████████████████' . PHP_EOL .
+            '█ ███ █ █████████████████' . PHP_EOL .
+            '█ ███ █ █████████████████' . PHP_EOL .
+            '█     █ █████████████████' . PHP_EOL .
+            '███████ █████████████████' . PHP_EOL,
             "$matrix"
         );
 

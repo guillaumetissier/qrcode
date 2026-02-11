@@ -8,8 +8,8 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\Masker\MaskerInterf
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\MaskerFactoryInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\PenaltyScoreCalculator\PenaltyScoreCalculatorInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\PenaltyScoreCalculatorGeneratorInterface;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositions;
-use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\FunctionPatternPositionsInterface;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
+use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositionsInterface;
 use Guillaumetissier\QrCode\Enums\Mask;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
@@ -21,7 +21,7 @@ class BitMatrixMaskerTest extends TestCase
     private PenaltyScoreCalculatorGeneratorInterface $penaltyScoreCalculatorFactory;
     private IOLoggerInterface $logger;
     private BitMatrix $matrix;
-    private FunctionPatternPositionsInterface $functionPatternPositions;
+    private NonDataPositionsInterface $functionPatternPositions;
 
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ class BitMatrixMaskerTest extends TestCase
         $this->penaltyScoreCalculatorFactory = $this->createMock(PenaltyScoreCalculatorGeneratorInterface::class);
         $this->logger = $this->createMock(IOLoggerInterface::class);
         $this->matrix = $this->createMock(BitMatrix::class);
-        $this->functionPatternPositions = $this->createMock(FunctionPatternPositionsInterface::class);
+        $this->functionPatternPositions = $this->createMock(NonDataPositionsInterface::class);
     }
 
     public function testCreateReturnsInstance(): void

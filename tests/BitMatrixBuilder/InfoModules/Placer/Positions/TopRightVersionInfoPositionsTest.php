@@ -34,11 +34,15 @@ class TopRightVersionInfoPositionsTest extends TestCase
         }
     }
 
+
     public static function dataPositions(): \Generator
     {
         foreach (Version::all() as $version) {
+            if ($version->value < Version::V07->value) {
+                continue;
+            }
             $i = $version->size() - 11;
-            yield [
+            yield "Version info for V{$version->value}" => [
                 $version,
                 [
                     Position::fromTopLeft($i, 0), Position::fromTopLeft($i + 1, 0), Position::fromTopLeft($i + 2, 0),

@@ -13,6 +13,16 @@ class Position implements Stringable
         return new Position($col, $row);
     }
 
+    public static function fromTopRight(int $col, int $row, int $size): Position
+    {
+        return new Position($size - $col - 1, $row);
+    }
+
+    public static function fromBottomLeft(int $col, int $row, int $size): Position
+    {
+        return new Position($col, $size - $row - 1);
+    }
+
     public static function fromBottomRight(int $col, int $row, int $size): Position
     {
         return new Position($size - $col - 1, $size - $row - 1);

@@ -6,6 +6,7 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules;
 
 use Guillaumetissier\BitString\BitStringImmutable;
 use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
 use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
@@ -24,47 +25,51 @@ final class VersionInfo
     {
     }
 
-    public function toBitString(): ?BitStringInterface
+    /**
+     * @return BitStringInterface|null
+     * @throws MissingInfoException
+     */
+    public function bitString(): ?BitStringInterface
     {
         if (!$this->version instanceof Version) {
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
         $bitString = match ($this->version) {
-            Version::V07 => "000111110010010100",
-            Version::V08 => "001000010110111100",
-            Version::V09 => "001001101010011001",
-            Version::V10 => "001010010011010011",
-            Version::V11 => "001011101111110110",
-            Version::V12 => "001100011101100010",
-            Version::V13 => "001101100001000111",
-            Version::V14 => "001110011000001101",
-            Version::V15 => "001111100100101000",
-            Version::V16 => "010000101101111000",
-            Version::V17 => "010001010001011101",
-            Version::V18 => "010010101000010111",
-            Version::V19 => "010011010100110010",
-            Version::V20 => "010100100110100110",
-            Version::V21 => "010101011010000011",
-            Version::V22 => "010110100011001001",
-            Version::V23 => "010111011111101100",
-            Version::V24 => "011000111011000100",
-            Version::V25 => "011001000111100001",
-            Version::V26 => "011010111110101011",
-            Version::V27 => "011011000010001110",
-            Version::V28 => "011100110000011010",
-            Version::V29 => "011101001100111111",
-            Version::V30 => "011110110101110101",
-            Version::V31 => "011111001001010000",
-            Version::V32 => "100000100111010101",
-            Version::V33 => "100001011011110000",
-            Version::V34 => "100010100010111010",
-            Version::V35 => "100011011110011111",
-            Version::V36 => "100100101100001011",
-            Version::V37 => "100101010000101110",
-            Version::V38 => "100110101001100100",
-            Version::V39 => "100111010101000001",
-            Version::V40 => "101000110001101001",
+            Version::V07 => BitStringFormatter::normalize("00 0111 1100 1001 0100"),
+            Version::V08 => BitStringFormatter::normalize("00 1000 0101 1011 1100"),
+            Version::V09 => BitStringFormatter::normalize("00 1001 1010 1001 1001"),
+            Version::V10 => BitStringFormatter::normalize("00 1010 0100 1101 0011"),
+            Version::V11 => BitStringFormatter::normalize("00 1011 1011 1111 0110"),
+            Version::V12 => BitStringFormatter::normalize("00 1100 0111 0110 0010"),
+            Version::V13 => BitStringFormatter::normalize("00 1101 1000 0100 0111"),
+            Version::V14 => BitStringFormatter::normalize("00 1110 0110 0000 1101"),
+            Version::V15 => BitStringFormatter::normalize("00 1111 1001 0010 1000"),
+            Version::V16 => BitStringFormatter::normalize("01 0000 1011 0111 1000"),
+            Version::V17 => BitStringFormatter::normalize("01 0001 0100 0101 1101"),
+            Version::V18 => BitStringFormatter::normalize("01 0010 1010 0001 0111"),
+            Version::V19 => BitStringFormatter::normalize("01 0011 0101 0011 0010"),
+            Version::V20 => BitStringFormatter::normalize("01 0100 1001 1010 0110"),
+            Version::V21 => BitStringFormatter::normalize("01 0101 0110 1000 0011"),
+            Version::V22 => BitStringFormatter::normalize("01 0110 1000 1100 1001"),
+            Version::V23 => BitStringFormatter::normalize("01 0111 0111 1110 1100"),
+            Version::V24 => BitStringFormatter::normalize("01 1000 1110 1100 0100"),
+            Version::V25 => BitStringFormatter::normalize("01 1001 0001 1110 0001"),
+            Version::V26 => BitStringFormatter::normalize("01 1010 1111 1010 1011"),
+            Version::V27 => BitStringFormatter::normalize("01 1011 0000 1000 1110"),
+            Version::V28 => BitStringFormatter::normalize("01 1100 1100 0001 1010"),
+            Version::V29 => BitStringFormatter::normalize("01 1101 0011 0011 1111"),
+            Version::V30 => BitStringFormatter::normalize("01 1110 1101 0111 0101"),
+            Version::V31 => BitStringFormatter::normalize("01 1111 0010 0101 0000"),
+            Version::V32 => BitStringFormatter::normalize("10 0000 1001 1101 0101"),
+            Version::V33 => BitStringFormatter::normalize("10 0001 0110 1111 0000"),
+            Version::V34 => BitStringFormatter::normalize("10 0010 1000 1011 1010"),
+            Version::V35 => BitStringFormatter::normalize("10 0011 0111 1001 1111"),
+            Version::V36 => BitStringFormatter::normalize("10 0100 1011 0000 1011"),
+            Version::V37 => BitStringFormatter::normalize("10 0101 0100 0010 1110"),
+            Version::V38 => BitStringFormatter::normalize("10 0110 1010 0110 0100"),
+            Version::V39 => BitStringFormatter::normalize("10 0111 0101 0100 0001"),
+            Version::V40 => BitStringFormatter::normalize("10 1000 1100 0110 1001"),
             default => null
         };
 
