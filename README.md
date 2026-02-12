@@ -1,6 +1,7 @@
 # QR Code Generator
 
 A pure PHP library for generating QR codes, supporting multiple output formats (PNG, JPG, GIF, PDF) and console rendering. Built from scratch following the QR code specification.
+_**Note**: "QR Code" is registered trademark of **[DENSO WAVE INCORPORATED](https://www.qrcode.com/en/)**._
 
 ## Requirements
 
