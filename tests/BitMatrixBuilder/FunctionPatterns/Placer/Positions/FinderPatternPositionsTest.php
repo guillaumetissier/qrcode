@@ -8,7 +8,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class FinderPatternPositionsTest extends TestCase
+final class FinderPatternPositionsTest extends TestCase
 {
     private FinderPatternCenterPositions $positions;
 

@@ -8,7 +8,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class HorizontalFormatInfoPositionsTest extends TestCase
+final class HorizontalFormatInfoPositionsTest extends TestCase
 {
     private HorizontalTimingPatternPositions $moduleInfoPositions;
 

@@ -6,7 +6,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions a
 use Guillaumetissier\QrCode\Enums\FunctionPatternType;
 use PHPUnit\Framework\TestCase;
 
-class FactoryTest extends TestCase
+final class FactoryTest extends TestCase
 {
     private P\PatternPositionsFactory $factory;
 

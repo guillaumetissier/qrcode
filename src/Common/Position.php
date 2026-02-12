@@ -6,7 +6,7 @@ namespace Guillaumetissier\QrCode\Common;
 
 use Stringable;
 
-class Position implements Stringable
+final class Position implements Stringable
 {
     public static function fromTopLeft(int $col, int $row): Position
     {

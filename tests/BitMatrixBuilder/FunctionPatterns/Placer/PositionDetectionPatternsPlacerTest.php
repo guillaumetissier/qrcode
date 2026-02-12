@@ -9,7 +9,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\P
 use Guillaumetissier\QrCode\Common\Position;
 use PHPUnit\Framework\TestCase;
 
-class PositionDetectionPatternsPlacerTest extends TestCase
+final class PositionDetectionPatternsPlacerTest extends TestCase
 {
     public function testPlace(): void
     {

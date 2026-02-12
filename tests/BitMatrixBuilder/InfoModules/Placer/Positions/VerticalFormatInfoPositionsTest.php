@@ -9,7 +9,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class VerticalFormatInfoPositionsTest extends TestCase
+final class VerticalFormatInfoPositionsTest extends TestCase
 {
     private VerticalFormatInfoPositions $moduleInfoPositions;
 

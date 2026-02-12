@@ -11,7 +11,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\TimingPatte
 use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
-class TimingPatternsPlacerTest extends TestCase
+final class TimingPatternsPlacerTest extends TestCase
 {
     /**
      * @dataProvider provideDataToTestPlace

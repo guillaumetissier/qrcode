@@ -6,7 +6,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrixCreator;
 use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
-class BitMatrixCreatorTest extends TestCase
+final class BitMatrixCreatorTest extends TestCase
 {
     private BitMatrixCreator $bitMatrixCreator;
 

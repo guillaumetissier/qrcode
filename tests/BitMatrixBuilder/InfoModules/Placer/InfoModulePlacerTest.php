@@ -16,7 +16,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class InfoModulePlacerTest extends TestCase
+final class InfoModulePlacerTest extends TestCase
 {
     /**
      * @param InfoModulePositionsInterface $infoModulePositions

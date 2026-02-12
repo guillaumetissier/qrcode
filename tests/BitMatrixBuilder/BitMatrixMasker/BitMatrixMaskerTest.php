@@ -15,7 +15,7 @@ use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 use PHPUnit\Framework\TestCase;
 
-class BitMatrixMaskerTest extends TestCase
+final class BitMatrixMaskerTest extends TestCase
 {
     private MaskerFactoryInterface $maskerFactory;
     private PenaltyScoreCalculatorGeneratorInterface $penaltyScoreCalculatorFactory;

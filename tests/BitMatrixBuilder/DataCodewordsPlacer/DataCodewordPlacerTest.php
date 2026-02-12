@@ -3,17 +3,15 @@
 namespace Guillaumetissier\QrCode\Tests\BitMatrixBuilder\DataCodewordsPlacer;
 
 use Generator;
-use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
-use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer\DataCodewordPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer\DataCodewordPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class DataCodewordPlacerTest extends TestCase
+final class DataCodewordPlacerTest extends TestCase
 {
     /**
      * @param int $size
@@ -208,17 +206,17 @@ class DataCodewordPlacerTest extends TestCase
                 return strlen($this->value);
             }
 
-            public function and(BitStringInterface $other): BitStringInterface
+            public function and(BitStringInterface|string $other): BitStringInterface
             {
                 return $this;
             }
 
-            public function or(BitStringInterface $other): BitStringInterface
+            public function or(BitStringInterface|string $other): BitStringInterface
             {
                 return $this;
             }
 
-            public function xor(BitStringInterface $other): BitStringInterface
+            public function xor(BitStringInterface|string $other): BitStringInterface
             {
                 return $this;
             }
@@ -294,6 +292,11 @@ class DataCodewordPlacerTest extends TestCase
             }
 
             public function codeword(int $index, int $wordLength): BitStringInterface
+            {
+                return $this;
+            }
+
+            public function pad(int $length, bool $prepend = true): BitStringInterface
             {
                 return $this;
             }

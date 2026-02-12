@@ -7,7 +7,7 @@ use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class DataCodewordPositionsTest extends TestCase
+final class DataCodewordPositionsTest extends TestCase
 {
     private DataCodewordPositions $positions;
 

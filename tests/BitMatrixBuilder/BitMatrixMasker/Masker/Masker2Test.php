@@ -8,7 +8,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\Masker\MaskerInterf
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Enums\Version;
 
-class Masker2Test extends MaskerTestCase
+final class Masker2Test extends MaskerTestCase
 {
     protected function createMasker(): MaskerInterface
     {

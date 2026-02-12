@@ -12,7 +12,7 @@ use Guillaumetissier\QrCode\Enums\InformationModule;
 use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
-class InfoModulePositionFactoryTest extends TestCase
+final class InfoModulePositionFactoryTest extends TestCase
 {
     private InfoModulePositionFactory $factory;
 

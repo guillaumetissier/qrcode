@@ -11,7 +11,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\Masker\MaskerInterf
 use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Enums\Version;
 
-class Masker6Test extends MaskerTestCase
+final class Masker6Test extends MaskerTestCase
 {
     protected function createMasker(): MaskerInterface
     {

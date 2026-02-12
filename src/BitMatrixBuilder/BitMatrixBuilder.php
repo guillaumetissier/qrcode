@@ -11,13 +11,13 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\BitMatrixMasker;
 use Guillaumetissier\QrCode\BitMatrixBuilder\DataCodewordPlacer\DataCodewordPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\PatternPlacerFactory;
+use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Builder\FormatInfoBuilder;
+use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Builder\VersionInfoBuilder;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\DarkModule;
-use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\FormatInfo;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\InfoModulePlacerFactory;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\InfoModulePlacerInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactory;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactoryInterface;
-use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\VersionInfo;
 use Guillaumetissier\QrCode\BitMatrixBuilderInterface;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
 use Guillaumetissier\QrCode\Enums\FunctionPatternType;
@@ -41,6 +41,8 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             PatternPlacerFactory::create(),
             DataCodewordPlacer::create(),
             BitMatrixMasker::create($logger),
+            FormatInfoBuilder::create($logger),
+            VersionInfoBuilder::create($logger),
             InfoModulePlacerFactory::create(),
             InfoModulePositionFactory::create(),
             $logger
@@ -52,6 +54,8 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
         private readonly PatternPlacerFactoryInterface $patternsPlacerFactory,
         private readonly DataCodewordPlacerInterface $codewordsPlacer,
         private readonly BitMatrixMaskerInterface $masker,
+        private readonly FormatInfoBuilderInterface $formatInfoBuilder,
+        private readonly VersionInfoBuilderInterface $versionInfoBuilder,
         private readonly InfoModulePlacerFactoryInterface $infoModulePlacerFactory,
         private readonly InfoModulePositionFactoryInterface $infoModulePositionFactory,
         private readonly ?IOLoggerInterface $logger = null
@@ -132,14 +136,17 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             ->withFunctionPatternPositions($nonDataPositions)
             ->mask($matrix);
 
-        $this->logger?->notice("------ Placing information modules ------", ['class' => self::class]);
-        $versionInfo = VersionInfo::create($this->version)
-            ->bitString();
-        $formatInfo = FormatInfo::create($this->logger)
+        $this->logger?->notice("------ Building information modules ------", ['class' => self::class]);
+        $formatInfo = $this->formatInfoBuilder
             ->withMask($mask)
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)
-            ->bitString();
+            ->build();
 
+        $versionInfo = $this->versionInfoBuilder
+            ->withVersion($this->version)
+            ->build();
+
+        $this->logger?->notice("------ Placing information modules ------", ['class' => self::class]);
         foreach (InformationModule::all() as $infoModule) {
             $this->logger?->info("Place {$infoModule->value}", ['class' => self::class]);
             $info = match ($infoModule) {

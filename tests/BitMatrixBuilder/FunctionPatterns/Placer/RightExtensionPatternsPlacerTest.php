@@ -10,7 +10,7 @@ use Guillaumetissier\QrCode\Common\Position;
 use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
-class RightExtensionPatternsPlacerTest extends TestCase
+final class RightExtensionPatternsPlacerTest extends TestCase
 {
     public function testPlace(): void
     {

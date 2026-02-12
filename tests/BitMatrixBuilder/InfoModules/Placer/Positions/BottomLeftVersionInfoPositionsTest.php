@@ -8,7 +8,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
-class BottomLeftVersionInfoPositionsTest extends TestCase
+final class BottomLeftVersionInfoPositionsTest extends TestCase
 {
     private BottomLeftVersionInfoPositions $moduleInfoPositions;
 
