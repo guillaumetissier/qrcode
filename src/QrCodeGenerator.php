@@ -78,7 +78,6 @@ final class QrCodeGenerator
             ->withErrorCorrectionLevel($this->errorCorrectionLevel);
 
         $encodedData = $encoder->encode();
-        $mode = $encoder->mode();
         $version = $encoder->version();
 
         $this->logger?->notice('###### Building QR code matrix ######', ['class' => self::class]);
