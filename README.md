@@ -75,7 +75,7 @@ QrCodeGenerator::create()
 ### CLI
 
 ```bash
-php bin/console app:generate-qrcode \
+php console.php app:generate-qrcode \
     --text="Hello World" \
     --output="qrcode.png" \
     --ecl=M \
