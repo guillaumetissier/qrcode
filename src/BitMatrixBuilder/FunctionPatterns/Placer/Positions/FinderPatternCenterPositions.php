@@ -6,7 +6,6 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Posit
 
 use Generator;
 use Guillaumetissier\QrCode\Common\Position;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class FinderPatternCenterPositions extends AbstractPatternPositions
@@ -18,12 +17,9 @@ final class FinderPatternCenterPositions extends AbstractPatternPositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
+        $version = $this->version();
         yield Position::fromTopLeft(3, 3);
-        yield Position::fromTopLeft($this->version->size() - 4, 3);
-        yield Position::fromTopLeft(3, $this->version->size() - 4);
+        yield Position::fromTopLeft($version->size() - 4, 3);
+        yield Position::fromTopLeft(3, $version->size() - 4);
     }
 }

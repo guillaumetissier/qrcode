@@ -6,7 +6,6 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Posit
 
 use Generator;
 use Guillaumetissier\QrCode\Common\Position;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class HorizontalTimingPatternPositions extends AbstractPatternPositions
@@ -18,11 +17,7 @@ final class HorizontalTimingPatternPositions extends AbstractPatternPositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        for ($i = 0; $i < $this->version->size(); $i++) {
+        for ($i = 0; $i < $this->version()->size(); $i++) {
             yield Position::fromTopLeft($i, 6);
         }
     }

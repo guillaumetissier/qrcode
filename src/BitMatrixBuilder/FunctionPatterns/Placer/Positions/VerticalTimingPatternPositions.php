@@ -18,11 +18,7 @@ final class VerticalTimingPatternPositions extends AbstractPatternPositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        for ($i = 0; $i < $this->version->size(); $i++) {
+        for ($i = 0; $i < $this->version()->size(); $i++) {
             yield Position::fromTopLeft(6, $i);
         }
     }

@@ -2,7 +2,6 @@
 
 namespace Guillaumetissier\QrCode\Common;
 
-use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 trait DataDependentTrait

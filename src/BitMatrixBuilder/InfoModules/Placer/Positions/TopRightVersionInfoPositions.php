@@ -20,11 +20,7 @@ final class TopRightVersionInfoPositions extends AbstractInfoModulePositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        $colOffset = $this->version->size() - 11;
+        $colOffset = $this->version()->size() - 11;
         for ($row = 0; $row < 6; $row++) {
             for ($col = 0; $col < 3; $col++) {
                 yield Position::fromTopLeft($colOffset + $col, $row);

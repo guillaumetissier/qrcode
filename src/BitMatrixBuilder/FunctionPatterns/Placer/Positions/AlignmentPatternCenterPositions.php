@@ -42,11 +42,7 @@ final class AlignmentPatternCenterPositions extends AbstractPatternPositions
      */
     private function getRowColumnCoordinates(): array
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        return match ($this->version) {
+        return match ($this->version()) {
             Version::V01 => [],
             Version::V02 => [6, 18],
             Version::V03 => [6, 22],

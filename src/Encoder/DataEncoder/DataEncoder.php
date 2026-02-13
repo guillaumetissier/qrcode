@@ -13,6 +13,7 @@ use Guillaumetissier\QrCode\BitString\Padding;
 use Guillaumetissier\QrCode\BitString\PaddingInterface;
 use Guillaumetissier\QrCode\BitString\Terminator;
 use Guillaumetissier\QrCode\BitString\TerminatorInterface;
+use Guillaumetissier\QrCode\Common\DataDependentTrait;
 use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
 use Guillaumetissier\QrCode\Common\ModeDependentTrait;
 use Guillaumetissier\QrCode\Common\VersionDependentTrait;
@@ -20,7 +21,6 @@ use Guillaumetissier\QrCode\Encoder\DataEncoder\DataCodewordsCounter\DataCodewor
 use Guillaumetissier\QrCode\Encoder\DataEncoder\ModeEncoder\ModeEncoderFactory;
 use Guillaumetissier\QrCode\Encoder\DataEncoderInterface;
 use Guillaumetissier\QrCode\Enums\Mode;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
@@ -29,8 +29,7 @@ final class DataEncoder implements DataEncoderInterface
     use ErrorCorrectionLevelDependentTrait;
     use VersionDependentTrait;
     use ModeDependentTrait;
-
-    private ?string $data = null;
+    use DataDependentTrait;
 
     private ?Mode $mode = null;
 
@@ -62,25 +61,15 @@ final class DataEncoder implements DataEncoderInterface
     {
     }
 
-    public function withData(string $data): self
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
     /**
      * @throws MissingInfoException
      */
     public function encode(): BitString
     {
-        if (!is_string($this->data)) {
-            throw MissingInfoException::missingInfo('data', self::class);
-        }
-
         $errorCorrectionLevel = $this->errorCorrectionLevel();
         $version = $this->version();
         $mode = $this->mode();
+        $data = $this->data();
 
         $dataBitString = BitString::empty();
 
@@ -99,16 +88,16 @@ final class DataEncoder implements DataEncoderInterface
         $this->logger?->info('Append char counter indicator', ['class' => self::class]);
         $dataBitString
             ->append($this->charCountIndicator
-                ->withMode($mode)
                 ->withVersion($version)
-                ->withCharCount(strlen($this->data))
+                ->withMode($mode)
+                ->withData($data)
                 ->bitString());
 
         $this->logger?->info('Append data', ['class' => self::class]);
         $dataBitString
             ->append($this->modeEncoderFactory
                 ->getModeEncoder($mode)
-                ->withData($this->data)
+                ->withData($data)
                 ->encode());
 
         $this->logger?->info('Append terminator', ['class' => self::class]);

@@ -13,12 +13,17 @@ class ModeIndicatorTest extends TestCase
      * @param Mode $mode
      * @param string $expectedModeIndicator
      * @return void
+     *
      * @throws MissingInfoException
+     *
      * @dataProvider provideDataToToString
      */
     public function testToString(Mode $mode, string $expectedModeIndicator): void
     {
-        $this->assertEquals($expectedModeIndicator, ModeIndicator::create(null, $mode)->bitString()->toString());
+        $this->assertEquals(
+            $expectedModeIndicator,
+            ModeIndicator::create()->withMode($mode)->bitString()->toString()
+        );
     }
 
     /**

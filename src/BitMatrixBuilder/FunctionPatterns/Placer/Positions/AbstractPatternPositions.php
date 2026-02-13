@@ -6,18 +6,12 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Posit
 
 use Generator;
 use Guillaumetissier\QrCode\Common\Position;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Enums\Version;
 
 abstract class AbstractPatternPositions implements PatternPositionsInterface
 {
-    protected ?Version $version = null;
-
-    public function withVersion(Version $version): self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
+    use VersionDependentTrait;
 
     /**
      * @return Generator<Position>

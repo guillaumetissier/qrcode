@@ -13,5 +13,5 @@ interface CharCountIndicatorInterface extends BitStringAware
 
     public function withVersion(Version $version): self;
 
-    public function withCharCount(int $charCount): self;
+    public function withData(string $data): self;
 }

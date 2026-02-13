@@ -92,7 +92,7 @@ class DataEncoderTest extends TestCase
             $this->dataCodewordsCounterFactory($errorCorrectionLevel, $version, $totalCodewords),
             $this->modeEncoderFactory($data, $encodedData), // 29 bits
             $this->modeIndicator($mode, $modeIndicator), // 4 bits -> 33 bits
-            $this->charCountIndicator($mode, $version, strlen($data), $charCountIndicator), // 9 bits -> 42 bits
+            $this->charCountIndicator($mode, $version, $data, $charCountIndicator), // 9 bits -> 42 bits
             $this->terminator(), // 4 bits -> 46 bits
             $this->padding(
                 strlen($encodedData . $modeIndicator . $charCountIndicator) + 4 /* terminator */,
@@ -196,7 +196,7 @@ class DataEncoderTest extends TestCase
     private function charCountIndicator(
         Mode $mode,
         Version $version,
-        int $charCount,
+        string $data,
         string $cci
     ): CharCountIndicatorInterface {
         $bitStringMock = $this->createMock(BitStringInterface::class);
@@ -205,7 +205,7 @@ class DataEncoderTest extends TestCase
         $cciMock = $this->createMock(CharCountIndicatorInterface::class);
         $cciMock->method('withMode')->with($mode)->willReturnSelf();
         $cciMock->method('withVersion')->with($version)->willReturnSelf();
-        $cciMock->method('withCharCount')->with($charCount)->willReturnSelf();
+        $cciMock->method('withData')->with($data)->willReturnSelf();
         $cciMock->method('bitString')->willReturn($bitStringMock);
 
         return $cciMock;

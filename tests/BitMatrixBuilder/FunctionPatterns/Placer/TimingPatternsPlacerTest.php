@@ -9,21 +9,28 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\P
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\VerticalTimingPatternPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\TimingPatternsPlacer;
 use Guillaumetissier\QrCode\Enums\Version;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
 final class TimingPatternsPlacerTest extends TestCase
 {
     /**
+     * @param PatternPositionsInterface $positions
+     * @param string $expectedMatrix
+     * @return void
+     * @throws MissingInfoException
+     *
      * @dataProvider provideDataToTestPlace
      */
     public function testPlace(PatternPositionsInterface $positions, string $expectedMatrix): void
     {
         $version = Version::V02;
         $matrix = BitMatrix::empty($version->size());
-        $positions->withVersion($version);
         $functionPatternPositions = NonDataPositions::empty();
         $patternsPlacer = new TimingPatternsPlacer($positions);
-        $patternsPlacer->place($matrix, $functionPatternPositions);
+        $patternsPlacer
+            ->withVersion($version)
+            ->place($matrix, $functionPatternPositions);
 
         $this->assertEquals($expectedMatrix, "$matrix");
     }

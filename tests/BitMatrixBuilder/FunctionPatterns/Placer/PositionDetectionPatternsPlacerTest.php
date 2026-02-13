@@ -7,16 +7,18 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\PositionDetectionPatternsPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
+use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
 final class PositionDetectionPatternsPlacerTest extends TestCase
 {
     public function testPlace(): void
     {
-        $matrix = BitMatrix::ones(25);
+        $version = Version::V02;
+        $matrix = BitMatrix::ones($version->size());
         $functionPatternPositions = NonDataPositions::empty();
         $patternsPlacer = new PositionDetectionPatternsPlacer($this->createPatternPositionsMock());
-        $patternsPlacer->place($matrix, $functionPatternPositions);
+        $patternsPlacer->withVersion($version)->place($matrix, $functionPatternPositions);
 
         $this->assertEquals(
             '███████ █████████ ███████' . PHP_EOL .

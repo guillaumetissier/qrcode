@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewordsCalculator;
 
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewordsCalculatorInterface;
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class NumECCodewordsCalculator implements NumECCodewordsCalculatorInterface
 {
-    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
-
-    private ?Version $version = null;
+    use ErrorCorrectionLevelDependentTrait;
+    use VersionDependentTrait;
 
     public static function create(?IOLoggerInterface $logger = null): NumECCodewordsCalculator
     {
@@ -25,36 +24,22 @@ final class NumECCodewordsCalculator implements NumECCodewordsCalculatorInterfac
     {
     }
 
-    public function withErrorCorrectionLevel(?ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
-    public function withVersion(?Version $version): self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
     /**
      * @throws MissingInfoException
      */
     public function calculate(): int
     {
-        if (!$this->errorCorrectionLevel instanceof ErrorCorrectionLevel) {
-            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
-        }
-
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
+        $errorCorrectionLevel = $this->errorCorrectionLevel();
+        $version = $this->version();
 
         $this->logger?->input(
-            "Version = {$this->version->value}, ECL = {$this->errorCorrectionLevel->value}",
-            ['class' => self::class]
+            [
+                'Version' => $version,
+                'ECL' => $errorCorrectionLevel,
+            ],
+            [
+                'class' => self::class
+            ]
         );
 
         $numEcCodewordsCount = [
@@ -98,7 +83,7 @@ final class NumECCodewordsCalculator implements NumECCodewordsCalculatorInterfac
             38 => ['L' => 660, 'M' => 1260, 'Q' => 1860, 'H' => 2220],
             39 => ['L' => 720, 'M' => 1316, 'Q' => 1950, 'H' => 2310],
             40 => ['L' => 750, 'M' => 1372, 'Q' => 2040, 'H' => 2430],
-        ][$this->version->value][$this->errorCorrectionLevel->value];
+        ][$version->value][$errorCorrectionLevel->value];
 
         $this->logger?->output("Num EC Codewords = $numEcCodewordsCount", ['class' => self::class]);
 

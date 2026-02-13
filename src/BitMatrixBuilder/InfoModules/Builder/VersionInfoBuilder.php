@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Builder;
 
 use Guillaumetissier\BitString\BitString;
-use Guillaumetissier\BitString\BitStringImmutable;
 use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\BitString\Converter\BitsConverter;
 use Guillaumetissier\GaloisFields\GaloisField;
 use Guillaumetissier\GaloisFields\Polynomial\Polynomial;
 use Guillaumetissier\QrCode\BitMatrixBuilder\VersionInfoBuilderInterface;
-use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class VersionInfoBuilder implements VersionInfoBuilderInterface
 {
+    use VersionDependentTrait;
+
     /**
      * g(x) = x^12 + x^11 + x^10 + x^9 + x^8 + x^5 + x^2 + 1
      */
     private const GENERATOR_POLYNOMIAL = [1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1];
-
-    private ?Version $version = null;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -41,30 +40,21 @@ final class VersionInfoBuilder implements VersionInfoBuilderInterface
     {
     }
 
-    public function withVersion(Version $version): self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
     /**
      * @return BitStringInterface|null
      * @throws MissingInfoException
      */
     public function build(): ?BitStringInterface
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
+        $version = $this->version();
 
-        if ($this->version->value < Version::V07->value) {
+        if ($version->value < Version::V07->value) {
             return null;
         }
 
-        $this->logger?->input(['version' => $this->version], ['class' => self::class]);
+        $this->logger?->input(['version' => $version], ['class' => self::class]);
 
-        $versionInfo = BitString::fromString(decbin($this->version->value))->pad(6);
+        $versionInfo = BitString::fromString(decbin($version->value))->pad(6);
 
         $polynomial = new Polynomial($this->gf, $this->bitsConverter->fromBitString($versionInfo));
         $polynomial->mul(new Polynomial($this->gf, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));

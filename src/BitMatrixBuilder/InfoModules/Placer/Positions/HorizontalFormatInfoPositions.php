@@ -20,12 +20,8 @@ class HorizontalFormatInfoPositions extends AbstractInfoModulePositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        $size = $this->version->size();
         $row = 8;
+        $size = $this->version()->size();
 
         for ($col = 0; $col <= 7; $col++) {
             yield Position::fromTopRight($col, $row, $size);

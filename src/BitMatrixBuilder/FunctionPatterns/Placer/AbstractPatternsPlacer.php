@@ -9,21 +9,15 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositionsInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
-use Guillaumetissier\QrCode\Common\PositionsInterface;
-use Guillaumetissier\QrCode\Enums\Version;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 abstract class AbstractPatternsPlacer implements PatternPlacerInterface
 {
+    use VersionDependentTrait;
+
     public function __construct(private readonly PatternPositionsInterface $positions)
     {
-    }
-
-    public function withVersion(Version $version): self
-    {
-        $this->positions->withVersion($version);
-
-        return $this;
     }
 
     abstract public function place(
@@ -38,10 +32,8 @@ abstract class AbstractPatternsPlacer implements PatternPlacerInterface
      */
     protected function positions(): Generator
     {
-        if (!$this->positions instanceof PositionsInterface) {
-            throw MissingInfoException::missingInfo('positions', self::class);
-        }
+        $version = $this->version();
 
-        return $this->positions->positions();
+        return $this->positions->withVersion($version)->positions();
     }
 }

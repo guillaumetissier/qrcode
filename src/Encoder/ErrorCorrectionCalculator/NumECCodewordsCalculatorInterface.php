@@ -9,9 +9,9 @@ use Guillaumetissier\QrCode\Enums\Version;
 
 interface NumECCodewordsCalculatorInterface
 {
-    public function withErrorCorrectionLevel(?ErrorCorrectionLevel $errorCorrectionLevel): self;
+    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self;
 
-    public function withVersion(?Version $version): self;
+    public function withVersion(Version $version): self;
 
     public function calculate(): int;
 }

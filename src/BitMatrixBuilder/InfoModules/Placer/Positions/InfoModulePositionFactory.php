@@ -29,8 +29,10 @@ final class InfoModulePositionFactory implements InfoModulePositionFactoryInterf
         $hasVersionInfo = $version->value >= Version::V07->value;
 
         $informationModule = match ($informationModule) {
-            InformationModule::BOTTOM_LEFT_VERSION_INFO => $hasVersionInfo ? new BottomLeftVersionInfoPositions() : null,
-            InformationModule::TOP_RIGHT_VERSION_INFO => $hasVersionInfo ? new TopRightVersionInfoPositions() : null,
+            InformationModule::BOTTOM_LEFT_VERSION_INFO =>
+                $hasVersionInfo ? new BottomLeftVersionInfoPositions() : null,
+            InformationModule::TOP_RIGHT_VERSION_INFO =>
+                $hasVersionInfo ? new TopRightVersionInfoPositions() : null,
             InformationModule::HORIZONTAL_FORMAT_INFO => new HorizontalFormatInfoPositions(),
             InformationModule::VERTICAL_FORMAT_INFO => new VerticalFormatInfoPositions(),
             InformationModule::DARK_MODULE => new DarkModulePositions(),

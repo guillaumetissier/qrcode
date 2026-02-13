@@ -7,6 +7,7 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\NonDataPositions;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\BottomRightExtensionPatternsPlacer;
 use Guillaumetissier\QrCode\BitMatrixBuilder\FunctionPatterns\Placer\Positions\PatternPositionsInterface;
 use Guillaumetissier\QrCode\Common\Position;
+use Guillaumetissier\QrCode\Enums\Version;
 use PHPUnit\Framework\TestCase;
 
 final class BottomRightExtensionPatternsPlacerTest extends TestCase
@@ -17,7 +18,7 @@ final class BottomRightExtensionPatternsPlacerTest extends TestCase
         $matrix = BitMatrix::empty($size);
         $functionPatternPositions = NonDataPositions::empty();
         $patternsPlacer = new BottomRightExtensionPatternsPlacer($this->createPatternPositionsMock($size));
-        $patternsPlacer->place($matrix->showValues(), $functionPatternPositions);
+        $patternsPlacer->withVersion(Version::V07)->place($matrix->showValues(), $functionPatternPositions);
 
         $this->assertEquals(
             '.............................................' . PHP_EOL .

@@ -20,17 +20,14 @@ class BottomLeftVersionInfoPositions extends AbstractInfoModulePositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        if ($this->version < Version::V07) {
+        $version = $this->version();
+        if ($version < Version::V07) {
             return null;
         }
 
         for ($col = 0; $col <= 5; $col++) {
             for ($row = 10; $row >= 8; $row--) {
-                yield Position::fromBottomLeft($col, $row, $this->version->size());
+                yield Position::fromBottomLeft($col, $row, $version->size());
             }
         }
     }

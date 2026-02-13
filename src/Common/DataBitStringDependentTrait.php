@@ -9,7 +9,7 @@ trait DataBitStringDependentTrait
 {
     private ?BitStringInterface $data = null;
 
-    public function withData(BitStringInterface $data): self
+    public function withData(BitStringInterface $data): static
     {
         $this->data = $data;
 

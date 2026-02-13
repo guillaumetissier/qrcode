@@ -6,7 +6,6 @@ namespace Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions;
 
 use Generator;
 use Guillaumetissier\QrCode\Common\Position;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class VerticalFormatInfoPositions extends AbstractInfoModulePositions
@@ -20,11 +19,8 @@ final class VerticalFormatInfoPositions extends AbstractInfoModulePositions
      */
     public function positions(): Generator
     {
-        if (!$this->version instanceof Version) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
         $col = 8;
+        $size = $this->version()->size();
 
         for ($row = 0; $row <= 8; $row++) {
             if ($row === 6) {
@@ -33,7 +29,6 @@ final class VerticalFormatInfoPositions extends AbstractInfoModulePositions
             yield Position::fromTopLeft($col, $row);
         }
 
-        $size = $this->version->size();
         for ($row = 6; $row >= 0; $row--) {
             yield Position::fromBottomLeft($col, $row, $size);
         }
