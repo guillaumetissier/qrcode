@@ -88,6 +88,8 @@ final class QrCodeGenerator
             ->withErrorCorrectionLevel($this->errorCorrectionLevel)
             ->build();
 
+        echo "MATRIX:\n".$matrix."\n";
+
         $this->logger?->notice('###### Painting QR code matrix ######', ['class' => self::class]);
 
         $this->matrixRenderer

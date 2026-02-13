@@ -41,7 +41,7 @@ final class BitMatrixPainter implements BitMatrixPainterInterface
     }
 
     /**
-     * @throws UnhandledFileTypeException
+     * @throws UnhandledFileTypeException|MissingInfoException
      */
     public function paint(BitMatrix $matrix): void
     {
@@ -52,9 +52,8 @@ final class BitMatrixPainter implements BitMatrixPainterInterface
         }
 
         $fileType = $this->outputOptions->fileType();
-
         $canvas = $this->canvasFactory
-            ->createCanvas($fileType, $matrix->size() * $this->outputOptions->scale());
+            ->createCanvas($fileType, $matrix->size(true) * $this->outputOptions->scale());
 
         $this->painterFactory
             ->createPainter($fileType)

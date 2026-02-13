@@ -14,45 +14,50 @@ class BitMatrix
      */
     private array $matrix;
 
+    private int $margin;
+
     private int $size;
 
     private bool $showValues = false;
 
-    public static function empty(int $size): self
+    public static function empty(int $size, int $margin = 0): self
     {
-        return new self(array_fill(0, $size, array_fill(0, $size, null)));
+        return new self(self::buildArrayWithMargin(null, $size, $margin), $margin);
     }
 
-    public static function zeros(int $size): self
+    public static function zeros(int $size, int $margin = 0): self
     {
-        return new self(array_fill(0, $size, array_fill(0, $size, 0)));
+        $totalSize = $size + 2 * $margin;
+
+        return new self(array_fill(0, $totalSize, array_fill(0, $totalSize, 0)), $margin);
     }
 
-    public static function ones(int $size): self
+    public static function ones(int $size, int $margin = 0): self
     {
-        return new self(array_fill(0, $size, array_fill(0, $size, 1)));
+        return new self(self::buildArrayWithMargin(1, $size, $margin), $margin);
     }
 
     public static function fromMatrix(BitMatrix $matrix): self
     {
-        return new self($matrix->toArray());
+        return new self($matrix->toArray(true), $matrix->margin());
     }
 
     /**
      * @param list<list<int|null>> $array
      */
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array, int $margin = 0): self
     {
-        return new self($array);
+        return new self($array, $margin);
     }
 
     /**
      * @param list<list<int|null>> $array
      */
-    private function __construct(array $array)
+    private function __construct(array $array, int $margin = 0)
     {
         $this->matrix = $array;
-        $this->size = count($array);
+        $this->size = count($array) - 2 * $margin;
+        $this->margin = $margin;
     }
 
     private function __clone()
@@ -66,31 +71,40 @@ class BitMatrix
         return $this;
     }
 
-    public function size(): int
+    public function size(bool $marginIncluded = false): int
     {
-        return $this->size;
+        return $marginIncluded ? $this->size + 2 * $this->margin() : $this->size;
     }
 
     public function setValue(Position $position, int|bool|null $value): self
     {
-        $this->matrix[$position->row()][$position->col()] = $value === null ? null : (int)$value;
+        $this->matrix[$this->margin + $position->row()][$this->margin + $position->col()] =
+            $value === null ? null : (int)$value;
 
         return $this;
     }
 
     public function value(int $row, int $col): ?int
     {
-        return $this->matrix[$row][$col];
+        return $this->matrix[$this->margin + $row][$this->margin + $col];
+    }
+
+    public function margin(): int
+    {
+        return $this->margin;
     }
 
     /**
      * @return Generator<array{Position, int|null}>
      */
-    public function values(): Generator
+    public function values(bool $marginIncluded = false): Generator
     {
-        for ($row = 0; $row < $this->size; $row++) {
-            for ($col = 0; $col < $this->size; $col++) {
-                yield [Position::fromTopLeft($col, $row), $this->matrix[$row][$col]];
+        $size = $this->size($marginIncluded);
+        $offset = $marginIncluded ? 0 : $this->margin;
+
+        for ($row = 0; $row < $size; $row++) {
+            for ($col = 0; $col < $size; $col++) {
+                yield [Position::fromTopLeft($col, $row), $this->matrix[$offset + $row][$offset + $col]];
             }
         }
     }
@@ -102,7 +116,7 @@ class BitMatrix
     public function rowValues(int $row): Generator
     {
         for ($col = 0; $col < $this->size; $col++) {
-            yield $this->matrix[$row][$col];
+            yield $this->matrix[$this->margin + $row][$this->margin + $col];
         }
     }
 
@@ -113,24 +127,34 @@ class BitMatrix
     public function colValues(int $col): Generator
     {
         for ($row = 0; $row < $this->size; $row++) {
-            yield $this->matrix[$row][$col];
+            yield $this->matrix[$this->margin + $row][$this->margin + $col];
         }
     }
 
     /**
      * @return list<list<int|null>>
      */
-    public function toArray(): array
+    public function toArray(bool $marginIncluded = false): array
     {
-        return $this->matrix;
+        if ($marginIncluded) {
+            return $this->matrix;
+        }
+
+        return
+            array_map(
+                fn(array $row): array => array_slice($row, $this->margin, $this->size),
+                array_slice($this->matrix, $this->margin, $this->size)
+            );
     }
 
-    public function __toString(): string
+    public function toString(bool $marginIncluded = false): string
     {
         $string = '';
-        for ($row = 0; $row < $this->size; $row++) {
-            for ($col = 0; $col < $this->size; $col++) {
-                $val = $this->matrix[$row][$col];
+        $size = $this->size($marginIncluded);
+        $offset = $marginIncluded ? 0 : $this->margin;
+        for ($row = 0; $row < $size; $row++) {
+            for ($col = 0; $col < $size; $col++) {
+                $val = $this->matrix[$offset + $row][$offset + $col];
                 if ($this->showValues) {
                     $string .= ($val === null ? "." : $val);
                 } elseif ($val === 1) {
@@ -143,5 +167,36 @@ class BitMatrix
         }
 
         return $string;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
+    /**
+     * @param int|null $value
+     * @param int $size
+     * @param int $margin
+     * @return array<array<int|null>>
+     */
+    private static function buildArrayWithMargin(?int $value, int $size, int $margin): array
+    {
+        $totalSize = $size + 2 * $margin;
+
+        $internalRow = array_fill(0, $totalSize, $value);
+        for ($i = 0; $i < $margin; $i++) {
+            $internalRow[$i] = 0;
+            $internalRow[$totalSize - $i - 1] = 0;
+        }
+
+        $externalRow = array_fill(0, $totalSize, 0);
+        $array = array_fill(0, $totalSize, $internalRow);
+        for ($i = 0; $i < $margin; $i++) {
+            $array[$i] = $externalRow;
+            $array[$totalSize - $i - 1] = $externalRow;
+        }
+
+        return $array;
     }
 }

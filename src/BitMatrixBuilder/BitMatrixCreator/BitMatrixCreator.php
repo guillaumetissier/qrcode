@@ -41,6 +41,6 @@ final class BitMatrixCreator implements BitMatrixCreatorInterface
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
-        return BitMatrix::empty($this->version->size());
+        return BitMatrix::empty($this->version->size(), 4);
     }
 }

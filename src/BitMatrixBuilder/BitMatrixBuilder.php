@@ -136,6 +136,7 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             ->withFunctionPatternPositions($nonDataPositions)
             ->mask($matrix);
 
+
         $this->logger?->notice("------ Building information modules ------", ['class' => self::class]);
         $formatInfo = $this->formatInfoBuilder
             ->withMask($mask)

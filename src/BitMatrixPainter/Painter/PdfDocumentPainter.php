@@ -32,7 +32,7 @@ final class PdfDocumentPainter implements PainterInterface
         $startCol = 10;
         $startRow = 10;
 
-        foreach ($matrix->values() as $positionValue) {
+        foreach ($matrix->values(true) as $positionValue) {
             [$position, $value] = $positionValue;
             $col = $position->col();
             $row = $position->row();

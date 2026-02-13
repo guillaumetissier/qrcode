@@ -47,15 +47,15 @@ final class ImagePainter implements PainterInterface
             throw MissingInfoException::missingInfo('canvas', self::class);
         }
 
-        if (0 === ($size = $matrix->size())) {
+        if (0 === $matrix->size()) {
             throw new NoDataException();
         }
 
-        $imageSize = $size * $this->scale;
+        $imageSize = $matrix->size(true) * $this->scale;
         $this->canvas->paintRectangle(self::COLOR_BACKGROUND, 0, 0, $imageSize, $imageSize);
 
         // Paint foreground modules
-        foreach ($matrix->values() as $positionValue) {
+        foreach ($matrix->values(true) as $positionValue) {
             [$position, $value] = $positionValue;
             $col = $position->col();
             $row = $position->row();
@@ -65,7 +65,6 @@ final class ImagePainter implements PainterInterface
                 $y1 = $row * $this->scale;
                 $x2 = ($col + 1) * $this->scale;
                 $y2 = ($row + 1) * $this->scale;
-
                 $this->canvas->paintRectangle(self::COLOR_FOREGROUND, $x1, $y1, $x2, $y2);
             }
         }
