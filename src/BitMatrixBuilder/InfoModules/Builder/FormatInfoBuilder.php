@@ -12,7 +12,7 @@ use Guillaumetissier\QrCode\BitString\ErrorCorrectionLevelIndicator;
 use Guillaumetissier\QrCode\BitString\ErrorCorrectionLevelIndicatorInterface;
 use Guillaumetissier\QrCode\BitString\MaskReference;
 use Guillaumetissier\QrCode\BitString\MaskReferenceInterface;
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
 use Guillaumetissier\QrCode\Enums\Mask;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
@@ -24,6 +24,8 @@ use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
  */
 final class FormatInfoBuilder implements FormatInfoBuilderInterface
 {
+    use ErrorCorrectionLevelDependentTrait;
+
     /**
      * g(x) = x^10 + x^8 + x^5 + x^4 + x^2 + x + 1
      */
@@ -35,8 +37,6 @@ final class FormatInfoBuilder implements FormatInfoBuilderInterface
     private const XOR_MASK = '101010000010010';
 
     private ?Mask $mask = null;
-
-    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -65,13 +65,6 @@ final class FormatInfoBuilder implements FormatInfoBuilderInterface
         return $this;
     }
 
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $ecl): self
-    {
-        $this->errorCorrectionLevel = $ecl;
-
-        return $this;
-    }
-
     /**
      * @throws MissingInfoException
      */
@@ -81,19 +74,17 @@ final class FormatInfoBuilder implements FormatInfoBuilderInterface
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
-        if (!$this->errorCorrectionLevel instanceof ErrorCorrectionLevel) {
-            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
-        }
+        $errorCorrectionLevel = $this->errorCorrectionLevel();
 
         $this->logger?->input([
             'Mask' => $this->mask,
-            'ECL' => $this->errorCorrectionLevel,
+            'ECL' => $errorCorrectionLevel,
         ], ['class' => self::class]);
 
         $formatInformation = BitString::empty();
 
         $formatInformation->append($this->errorCorrectionLevelIndicator
-            ->withErrorCorrectionLevel($this->errorCorrectionLevel)
+            ->withErrorCorrectionLevel($errorCorrectionLevel)
             ->bitString());
 
         $formatInformation->append($this->maskReference

@@ -4,18 +4,28 @@ namespace Guillaumetissier\QrCode\Tests\BitString;
 
 use Guillaumetissier\QrCode\BitString\ErrorCorrectionLevelIndicator;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use PHPUnit\Framework\TestCase;
 
 class ErrorCorrectionLevelIndicatorTest extends TestCase
 {
     /**
+     * @param ErrorCorrectionLevel $ecl
+     * @param string $expected
+     * @return void
+     *
+     * @throws MissingInfoException
+     *
      * @dataProvider dataToString
      */
     public function testToString(ErrorCorrectionLevel $ecl, string $expected): void
     {
         $this->assertEquals(
             $expected,
-            ErrorCorrectionLevelIndicator::create(null, $ecl)->bitString()->toString()
+            ErrorCorrectionLevelIndicator::create()
+                ->withErrorCorrectionLevel($ecl)
+                ->bitString()
+                ->toString()
         );
     }
 

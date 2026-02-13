@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler\CodewordBlocks;
 
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 class BaseCodewordBlocks implements CodewordBlocksInterface
 {
-    protected ?ErrorCorrectionLevel $errorCorrectionLevel = null;
+    use ErrorCorrectionLevelDependentTrait;
 
     /**
      * @param array<string, list<array{int, ErrorCorrectionCodePerBlock}>> $blocks
@@ -18,23 +18,12 @@ class BaseCodewordBlocks implements CodewordBlocksInterface
     {
     }
 
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
     /**
      * @return list<array{int, ErrorCorrectionCodePerBlock}>
      * @throws MissingInfoException
      */
     public function getBlocks(): array
     {
-        if ($this->errorCorrectionLevel === null) {
-            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
-        }
-
-        return $this->blocks[$this->errorCorrectionLevel->value];
+        return $this->blocks[$this->errorCorrectionLevel()->value];
     }
 }

@@ -6,6 +6,7 @@ namespace Guillaumetissier\QrCode;
 
 use Guillaumetissier\QrCode\BitMatrixPainter\BitMatrixPainter;
 use Guillaumetissier\QrCode\Commands\Output\OutputOptions;
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
 use Guillaumetissier\QrCode\Encoder\Encoder;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
@@ -15,11 +16,11 @@ use Psr\Log\LoggerInterface;
 
 final class QrCodeGenerator
 {
+    use ErrorCorrectionLevelDependentTrait;
+
     private OutputOptions $outputOptions;
 
     private string $data;
-
-    private ErrorCorrectionLevel $errorCorrectionLevel = ErrorCorrectionLevel::LOW;
 
     public static function create(?LoggerInterface $logger = null, ?string $logLevel = null): self
     {
@@ -42,6 +43,7 @@ final class QrCodeGenerator
         private readonly BitMatrixPainterInterface $matrixRenderer,
         private readonly ?IOLoggerInterface $logger = null,
     ) {
+        $this->withErrorCorrectionLevel(ErrorCorrectionLevel::LOW);
     }
 
     private function __clone()
@@ -62,20 +64,15 @@ final class QrCodeGenerator
         return $this;
     }
 
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
     public function generate(): void
     {
+        $errorCorrectionLevel = $this->errorCorrectionLevel();
+
         $this->logger?->notice('###### Encode data ######', ['class' => self::class]);
 
         $encoder = $this->encoder
-            ->withData($this->data)
-            ->withErrorCorrectionLevel($this->errorCorrectionLevel);
+            ->withErrorCorrectionLevel($errorCorrectionLevel)
+            ->withData($this->data);
 
         $encodedData = $encoder->encode();
         $version = $encoder->version();
@@ -83,12 +80,10 @@ final class QrCodeGenerator
         $this->logger?->notice('###### Building QR code matrix ######', ['class' => self::class]);
 
         $matrix = $this->matrixBuilder
+            ->withErrorCorrectionLevel($errorCorrectionLevel)
             ->withVersion($version)
             ->withData($encodedData)
-            ->withErrorCorrectionLevel($this->errorCorrectionLevel)
             ->build();
-
-        echo "MATRIX:\n".$matrix."\n";
 
         $this->logger?->notice('###### Painting QR code matrix ######', ['class' => self::class]);
 

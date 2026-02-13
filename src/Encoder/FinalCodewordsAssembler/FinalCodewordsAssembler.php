@@ -7,17 +7,17 @@ namespace Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler;
 use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringImmutable;
 use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler\CodewordBlocks\CodewordBlocksFactory;
 use Guillaumetissier\QrCode\Encoder\FinalCodewordsAssemblerInterface;
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class FinalCodewordsAssembler implements FinalCodewordsAssemblerInterface
 {
-    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
-    private ?Version $version              = null;
+    use ErrorCorrectionLevelDependentTrait;
+    use VersionDependentTrait;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -30,41 +30,22 @@ final class FinalCodewordsAssembler implements FinalCodewordsAssemblerInterface
     ) {
     }
 
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
-    public function withVersion(Version $version): self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
     /**
      * @throws MissingInfoException
      */
     public function assemble(BitStringInterface $dataCodewords, BitStringInterface $errorCodewords): BitStringImmutable
     {
-        if ($this->errorCorrectionLevel === null) {
-            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
-        }
+        $errorCorrectionLevel = $this->errorCorrectionLevel();
+        $version = $this->version();
 
-        if ($this->version === null) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        $this->logger?->input("ECL = {$this->errorCorrectionLevel->value}", ['class' => self::class]);
+        $this->logger?->input("ECL = {$errorCorrectionLevel->value}", ['class' => self::class]);
 
         $assembled = BitString::empty();
         $dataOffset = 0;
         $errorOffset = 0;
-        $codewordBlocks = $this->factory->getCodewordBlocks($this->version);
+        $codewordBlocks = $this->factory->getCodewordBlocks($version);
 
-        foreach ($codewordBlocks->withErrorCorrectionLevel($this->errorCorrectionLevel)->getBlocks() as $numAndBlocks) {
+        foreach ($codewordBlocks->withErrorCorrectionLevel($errorCorrectionLevel)->getBlocks() as $numAndBlocks) {
             [$numBlocks, $block] = $numAndBlocks;
             $dataCodewordBlockSize = $block->numDataCodewords() * 8;
             $ecCodewordBlockSize = $block->numErrorCorrectionCodewords() * 8;

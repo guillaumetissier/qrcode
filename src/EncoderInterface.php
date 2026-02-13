@@ -15,8 +15,6 @@ interface EncoderInterface
 
     public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self;
 
-    public function mode(): Mode;
-
     public function version(): Version;
 
     public function encode(): BitStringInterface;

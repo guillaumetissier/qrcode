@@ -35,12 +35,12 @@ final class BitMatrixCreator implements BitMatrixCreatorInterface
     /**
      * @throws MissingInfoException
      */
-    public function createEmptyMatrix(): BitMatrix
+    public function createEmptyMatrix(int $margin = 4): BitMatrix
     {
         if (!$this->version instanceof Version) {
             throw MissingInfoException::missingInfo('version', self::class);
         }
 
-        return BitMatrix::empty($this->version->size(), 4);
+        return BitMatrix::empty($this->version->size(), $margin);
     }
 }

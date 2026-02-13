@@ -19,20 +19,19 @@ use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\InfoModulePlacer
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactory;
 use Guillaumetissier\QrCode\BitMatrixBuilder\InfoModules\Placer\Positions\InfoModulePositionFactoryInterface;
 use Guillaumetissier\QrCode\BitMatrixBuilderInterface;
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
+use Guillaumetissier\QrCode\Common\DataBitStringDependentTrait;
+use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Enums\FunctionPatternType;
 use Guillaumetissier\QrCode\Enums\InformationModule;
-use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class BitMatrixBuilder implements BitMatrixBuilderInterface
 {
-    private ?Version $version = null;
-
-    private ?ErrorCorrectionLevel $errorCorrectionLevel = null;
-
-    private ?BitStringInterface $data = null;
+    use ErrorCorrectionLevelDependentTrait;
+    use VersionDependentTrait;
+    use DataBitStringDependentTrait;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -66,48 +65,19 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
     {
     }
 
-    public function withVersion(Version $version): self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
-    public function withData(BitStringInterface $data): self
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
     /**
      * @throws MissingInfoException
      */
     public function build(): BitMatrix
     {
-        if ($this->version === null) {
-            throw MissingInfoException::missingInfo('version', self::class);
-        }
-
-        if ($this->errorCorrectionLevel === null) {
-            throw MissingInfoException::missingInfo('errorCorrectionLevel', self::class);
-        }
-
-        if ($this->data === null) {
-            throw MissingInfoException::missingInfo('data', self::class);
-        }
+        $data = $this->data();
+        $version = $this->version();
+        $errorCorrectionLevel = $this->errorCorrectionLevel();
 
         $this->logger?->notice('------ Creating empty matrix ------', ['class' => self::class]);
         $nonDataPositions = NonDataPositions::empty();
         $matrix = $this->bitMatrixCreator
-            ->withVersion($this->version)
+            ->withVersion($version)
             ->createEmptyMatrix();
 
         $this->logger?->notice("------ Placing function patterns ------", ['class' => self::class]);
@@ -115,12 +85,13 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             $this->logger?->info("Placing {$functionPatternType->value}", ['class' => self::class]);
             $this->patternsPlacerFactory
                 ->createPatternPlacer($functionPatternType)
-                ->withVersion($this->version)
+                ->withVersion($version)
                 ->place($matrix, $nonDataPositions);
         }
 
         foreach (InformationModule::all() as $infoModule) {
-            $infoPositions = $this->infoModulePositionFactory->createInfoModulePositions($infoModule, $this->version);
+            $infoPositions = $this->infoModulePositionFactory
+                ->createInfoModulePositions($infoModule, $version);
             if ($infoPositions !== null) {
                 $nonDataPositions->addPositions($infoPositions->positions());
             }
@@ -128,7 +99,7 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
 
         $this->logger?->notice("------ Placing data codewords ------", ['class' => self::class]);
         $this->codewordsPlacer
-            ->withData($this->data)
+            ->withData($data)
             ->place($matrix, $nonDataPositions);
 
         $this->logger?->notice("------ Masking matrix ------", ['class' => self::class]);
@@ -136,15 +107,14 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             ->withFunctionPatternPositions($nonDataPositions)
             ->mask($matrix);
 
-
         $this->logger?->notice("------ Building information modules ------", ['class' => self::class]);
         $formatInfo = $this->formatInfoBuilder
             ->withMask($mask)
-            ->withErrorCorrectionLevel($this->errorCorrectionLevel)
+            ->withErrorCorrectionLevel($errorCorrectionLevel)
             ->build();
 
         $versionInfo = $this->versionInfoBuilder
-            ->withVersion($this->version)
+            ->withVersion($version)
             ->build();
 
         $this->logger?->notice("------ Placing information modules ------", ['class' => self::class]);
@@ -159,9 +129,13 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
             };
 
             if ($info instanceof BitStringInterface) {
-                $infoPlacer = $this->infoModulePlacerFactory->createInfoModulePlacer($infoModule, $this->version);
+                $infoPlacer = $this->infoModulePlacerFactory
+                    ->createInfoModulePlacer($infoModule, $version);
+
                 if ($infoPlacer instanceof InfoModulePlacerInterface) {
-                    $infoPlacer->withData($info)->place($matrix);
+                    $infoPlacer
+                        ->withData($info)
+                        ->place($matrix);
                 }
             }
         }
