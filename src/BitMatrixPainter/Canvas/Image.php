@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Guillaumetissier\QrCode\BitMatrixPainter\Canvas;
 
 use GdImage;
-use Guillaumetissier\QrCode\Commands\Output\OutputOptionsInterface;
-use Guillaumetissier\QrCode\Exception\ImageNotCreatedException;
-use Guillaumetissier\QrCode\Exception\InvalidOutputOptionsException;
+use Guillaumetissier\QrCode\Common\OutputOptionsDependentTrait;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Exception\UnhandledFileTypeException;
 use Guillaumetissier\QrCode\Exception\ColorException;
 use Guillaumetissier\QrCode\BitMatrixPainter\File\FileType;
+use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class Image implements CanvasInterface
 {
+    use OutputOptionsDependentTrait;
+
     public const BLACK = 'black';
     public const WHITE = 'white';
 
@@ -24,7 +26,15 @@ final class Image implements CanvasInterface
      */
     private array $palette = [];
 
-    public function __construct(int $width, int $height)
+    public static function create(int $width, int $height, ?IOLoggerInterface $logger = null): self
+    {
+        return new self($width, $height, $logger);
+    }
+
+    /**
+     * @throws ColorException
+     */
+    private function __construct(int $width, int $height, private readonly ?IOLoggerInterface $logger = null)
     {
         $this->image = imagecreatetruecolor($width, $height);
         $this->addColorToPalette(self::BLACK, 0, 0, 0);
@@ -66,21 +76,35 @@ final class Image implements CanvasInterface
     }
 
     /**
+     * @return bool
      * @throws UnhandledFileTypeException
+     * @throws MissingInfoException
      */
-    public function output(OutputOptionsInterface $options): bool
+    public function output(): bool
     {
-        if (null !== ($contentType = $options->contentType())) {
-            header("Content-Type: ${contentType}");
+        $outputOptions = $this->outputOptions();
+
+        if (null !== ($filename = $outputOptions->filename())) {
+            $this->logger?->debug('Save QR Code in file ' . $filename);
+        } else {
+            header("Content-Type: {$outputOptions->contentType()}");
+            $this->logger?->debug('Send QR Code to browser ');
         }
 
-        return match ($options->fileType()) {
-            FileType::GIF => imagegif($this->image, $options->filename()),
-            FileType::JPG => imagejpeg($this->image, $options->filename(), $options->quality()),
+        return match ($outputOptions->fileType()) {
+            FileType::GIF => imagegif(
+                $this->image,
+                $filename
+            ),
+            FileType::JPG => imagejpeg(
+                $this->image,
+                $filename,
+                $outputOptions->quality()
+            ),
             FileType::PNG => imagepng(
                 $this->image,
-                $options->filename(),
-                $this->convertQualityToCompression($options->quality())
+                $filename,
+                $this->convertQualityToCompression($outputOptions->quality())
             ),
             default => throw new UnhandledFileTypeException(),
         };

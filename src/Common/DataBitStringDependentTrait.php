@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Guillaumetissier\QrCode\Common;
 
 use Guillaumetissier\BitString\BitStringInterface;
@@ -9,7 +11,7 @@ trait DataBitStringDependentTrait
 {
     private ?BitStringInterface $data = null;
 
-    public function withData(BitStringInterface $data): static
+    public function withData(BitStringInterface $data): self
     {
         $this->data = $data;
 

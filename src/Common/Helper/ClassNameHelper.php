@@ -4,6 +4,14 @@ namespace Guillaumetissier\QrCode\Common\Helper;
 
 final class ClassNameHelper
 {
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
+
     /**
      * Get class name without namespace from FQCN
      */

@@ -7,7 +7,7 @@ namespace Guillaumetissier\QrCode\BitMatrixPainter;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixPainter\Canvas\CanvasFactory;
 use Guillaumetissier\QrCode\BitMatrixPainter\Painter\PainterFactory;
-use Guillaumetissier\QrCode\Commands\Output\OutputOptions;
+use Guillaumetissier\QrCode\Common\OutputOptionsDependentTrait;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Exception\UnhandledFileTypeException;
 use Guillaumetissier\QrCode\BitMatrixPainterInterface;
@@ -15,7 +15,7 @@ use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class BitMatrixPainter implements BitMatrixPainterInterface
 {
-    private ?OutputOptions $outputOptions = null;
+    use OutputOptionsDependentTrait;
 
     public static function create(?IOLoggerInterface $logger = null): self
     {
@@ -26,41 +26,42 @@ final class BitMatrixPainter implements BitMatrixPainterInterface
         );
     }
 
-    public function __construct(
+    private function __construct(
         private readonly CanvasFactoryInterface $canvasFactory,
         private readonly PainterFactoryInterface $painterFactory,
         private readonly ?IOLoggerInterface $logger = null
     ) {
     }
 
-    public function setOutputOptions(OutputOptions $outputOptions): self
+    private function __clone()
     {
-        $this->outputOptions = $outputOptions;
-
-        return $this;
     }
 
     /**
-     * @throws UnhandledFileTypeException|MissingInfoException
+     * @param BitMatrix $matrix
+     * @return void
+     * @throws MissingInfoException
      */
     public function paint(BitMatrix $matrix): void
     {
-        $this->logger?->info('Paint matrix', ['class' => self::class]);
+        $outputOptions = $this->outputOptions();
 
-        if ($this->outputOptions === null) {
-            throw MissingInfoException::missingInfo('outputOptions', self::class);
-        }
+        $this->logger?->notice('------ Creating canvas ------', ['class' => self::class]);
 
-        $fileType = $this->outputOptions->fileType();
+        $fileType = $outputOptions->fileType();
         $canvas = $this->canvasFactory
-            ->createCanvas($fileType, $matrix->size(true) * $this->outputOptions->scale());
+            ->createCanvas($fileType, $matrix->size(true) * $outputOptions->scale());
+
+        $this->logger?->notice('------ Painting matrix ------', ['class' => self::class]);
 
         $this->painterFactory
             ->createPainter($fileType)
             ->withCanvas($canvas)
-            ->withScale($this->outputOptions->scale())
+            ->withScale($outputOptions->scale())
             ->paint($matrix);
 
-        $canvas->output($this->outputOptions);
+        $canvas
+            ->withOutputOptions($outputOptions)
+            ->output();
     }
 }

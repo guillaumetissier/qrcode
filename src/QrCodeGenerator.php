@@ -6,9 +6,12 @@ namespace Guillaumetissier\QrCode;
 
 use Guillaumetissier\QrCode\BitMatrixPainter\BitMatrixPainter;
 use Guillaumetissier\QrCode\Commands\Output\OutputOptions;
+use Guillaumetissier\QrCode\Common\DataDependentTrait;
 use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\OutputOptionsDependentTrait;
 use Guillaumetissier\QrCode\Encoder\Encoder;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 use Guillaumetissier\QrCode\Logger\LevelFilteredLogger;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixBuilder;
@@ -17,10 +20,8 @@ use Psr\Log\LoggerInterface;
 final class QrCodeGenerator
 {
     use ErrorCorrectionLevelDependentTrait;
-
-    private OutputOptions $outputOptions;
-
-    private string $data;
+    use DataDependentTrait;
+    use OutputOptionsDependentTrait;
 
     public static function create(?LoggerInterface $logger = null, ?string $logLevel = null): self
     {
@@ -40,7 +41,7 @@ final class QrCodeGenerator
     private function __construct(
         private readonly EncoderInterface $encoder,
         private readonly BitMatrixBuilderInterface $matrixBuilder,
-        private readonly BitMatrixPainterInterface $matrixRenderer,
+        private readonly BitMatrixPainterInterface $matrixPainter,
         private readonly ?IOLoggerInterface $logger = null,
     ) {
         $this->withErrorCorrectionLevel(ErrorCorrectionLevel::LOW);
@@ -50,29 +51,20 @@ final class QrCodeGenerator
     {
     }
 
-    public function withOutputOptions(OutputOptions $outputOptions): self
-    {
-        $this->outputOptions = $outputOptions;
-
-        return $this;
-    }
-
-    public function withData(string $data): self
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
+    /**
+     * @throws MissingInfoException
+     */
     public function generate(): void
     {
         $errorCorrectionLevel = $this->errorCorrectionLevel();
+        $outputOptions = $this->outputOptions();
+        $data = $this->data();
 
         $this->logger?->notice('###### Encode data ######', ['class' => self::class]);
 
         $encoder = $this->encoder
             ->withErrorCorrectionLevel($errorCorrectionLevel)
-            ->withData($this->data);
+            ->withData($data);
 
         $encodedData = $encoder->encode();
         $version = $encoder->version();
@@ -87,8 +79,8 @@ final class QrCodeGenerator
 
         $this->logger?->notice('###### Painting QR code matrix ######', ['class' => self::class]);
 
-        $this->matrixRenderer
-            ->setOutputOptions($this->outputOptions)
+        $this->matrixPainter
+            ->withOutputOptions($outputOptions)
             ->paint($matrix);
 
         $this->logger?->notice('###### QR code was generated ######', ['class' => self::class]);

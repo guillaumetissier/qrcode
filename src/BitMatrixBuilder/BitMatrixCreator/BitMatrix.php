@@ -14,10 +14,19 @@ class BitMatrix
      */
     private array $matrix;
 
-    private int $margin;
-
+    /**
+     * @var int size of the matrix without the margin
+     */
     private int $size;
 
+    /**
+     * @var int size of the margin around the data
+     */
+    private int $margin;
+
+    /**
+     * @var bool if true show the value 1, 0 or . (for null)
+     */
     private bool $showValues = false;
 
     public static function empty(int $size, int $margin = 0): self

@@ -8,7 +8,7 @@ use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\DataTooVoluminous;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
-class BaseVersionSelector implements VersionSelectorInterface
+abstract class BaseVersionSelector implements VersionSelectorInterface
 {
     /**
      * @var array<int, int> $capacityTable

@@ -143,7 +143,7 @@ class PdfDocumentTest extends TestCase
         $options->method('contentType')->willReturn(null);
         $options->method('filename')->willReturn($filename);
 
-        $result = $pdf->output($options);
+        $result = $pdf->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);
@@ -164,7 +164,7 @@ class PdfDocumentTest extends TestCase
         $options->method('filename')->willReturn(null);
 
         ob_start();
-        $result = $pdf->output($options);
+        $result = $pdf->withOutputOptions($options)->output();
         $output = ob_get_clean();
 
         $this->assertTrue($result);
@@ -179,15 +179,16 @@ class PdfDocumentTest extends TestCase
         }
 
         $pdf = PdfDocument::createA4();
-        $filename = $this->tempDir . '/test.pdf';
-
         $options = $this->createMock(OutputOptionsInterface::class);
         $options->method('contentType')->willReturn('application/pdf');
-        $options->method('filename')->willReturn($filename);
+        $options->method('filename')->willReturn(null);
 
-        $pdf->output($options);
+        ob_start();
+        $pdf->withOutputOptions($options)->output();
+        ob_get_clean();
 
         $headers = xdebug_get_headers();
+
         $this->assertContains('Content-Type: application/pdf', $headers);
     }
 
@@ -211,7 +212,7 @@ class PdfDocumentTest extends TestCase
         $options->method('contentType')->willReturn(null);
         $options->method('filename')->willReturn($filename);
 
-        $result = $pdf->output($options);
+        $result = $pdf->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);
@@ -258,7 +259,7 @@ class PdfDocumentTest extends TestCase
         $options->method('contentType')->willReturn(null);
         $options->method('filename')->willReturn($filename);
 
-        $result = $pdf->output($options);
+        $result = $pdf->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);

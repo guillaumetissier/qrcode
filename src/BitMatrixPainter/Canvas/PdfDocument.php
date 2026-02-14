@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\BitMatrixPainter\Canvas;
 
-use Guillaumetissier\QrCode\Commands\Output\OutputOptionsInterface;
+use Guillaumetissier\QrCode\Common\OutputOptionsDependentTrait;
 use Guillaumetissier\QrCode\Exception\ColorException;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
+use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 use TCPDF;
 
 final class PdfDocument implements CanvasInterface
 {
+    use OutputOptionsDependentTrait;
+
     private TCPDF $pdf;
 
     /**
@@ -17,30 +21,31 @@ final class PdfDocument implements CanvasInterface
      */
     private array $palette = [];
 
-    public static function createA4(): self
+    public static function createA4(?IOLoggerInterface $logger = null): self
     {
-        return new PdfDocument(210, 297, 'mm');
+        return new PdfDocument(210, 297, 'mm', $logger);
     }
 
-    public static function createLetter(): self
+    public static function createLetter(?IOLoggerInterface $logger = null): self
     {
-        return new PdfDocument(216, 279, 'mm');
+        return new PdfDocument(216, 279, 'mm', $logger);
     }
 
-    public static function createLegal(): self
+    public static function createLegal(?IOLoggerInterface $logger = null): self
     {
-        return new PdfDocument(216, 356, 'mm');
+        return new PdfDocument(216, 356, 'mm', $logger);
     }
 
-    public static function createLedger(): self
+    public static function createLedger(?IOLoggerInterface $logger = null): self
     {
-        return new PdfDocument(279, 432, 'mm');
+        return new PdfDocument(279, 432, 'mm', $logger);
     }
 
     private function __construct(
         private readonly int $width,
         private readonly int $height,
         private readonly string $unit,
+        private readonly ?IOLoggerInterface $logger = null
     ) {
         $this->pdf = new TCPDF('P', $this->unit, [$this->width, $this->height], true, 'UTF-8', false);
 
@@ -96,23 +101,34 @@ final class PdfDocument implements CanvasInterface
         return true;
     }
 
-    public function output(OutputOptionsInterface $options): bool
+    /**
+     * @return bool
+     * @throws MissingInfoException
+     */
+    public function output(): bool
     {
-        if (null !== ($contentType = $options->contentType())) {
-            header("Content-Type: ${contentType}");
-        }
-
+        $outputOptions = $this->outputOptions();
         // Determine output mode:
         // 'F' = save to file
         // 'I' = send to browser inline
         // 'D' = force download
-        $mode = $options->filename() ? 'F' : 'I';
-        $filename = $options->filename() ?? 'qrcode.pdf';
+        if (null !== ($filename = $outputOptions->filename())) {
+            $this->logger?->debug('Save QR Code in file ' . $filename);
+            $mode = 'F';
+        } else {
+            header("Content-Type: {$outputOptions->contentType()}");
+            $this->logger?->debug('Send QR Code to browser');
+            $mode = 'I';
+            $filename = 'qrcode.pdf';
+        }
 
-        $result = $this->pdf->Output($filename, $mode);
-
-        // Output() returns the PDF content as string or true/false depending on mode
-        return $result !== false;
+        try {
+            $this->pdf->Output($filename, $mode);
+            return true;
+        } catch (\Throwable $throwable) {
+            $this->logger?->error($throwable->getMessage(), ['class' => self::class]);
+            return false;
+        }
     }
 
     public function getPdf(): TCPDF

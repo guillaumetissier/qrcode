@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Logger;
 
+use Guillaumetissier\QrCode\Exception\WrongValue;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Stringable;
 
 final class ConsoleLogger implements LoggerInterface
@@ -51,7 +53,21 @@ final class ConsoleLogger implements LoggerInterface
 
     public function log($level, Stringable|string $message, array $context = []): void
     {
-        // TODO: Implement log() method.
+        match ($level) {
+            LogLevel::EMERGENCY => $this->emergency($message, $context),
+            LogLevel::ALERT => $this->alert($message, $context),
+            LogLevel::CRITICAL => $this->critical($message, $context),
+            LogLevel::ERROR => $this->error($message, $context),
+            LogLevel::WARNING => $this->warning($message, $context),
+            LogLevel::NOTICE => $this->notice($message, $context),
+            LogLevel::INFO => $this->info($message, $context),
+            LogLevel::DEBUG => $this->debug($message, $context),
+            default => throw new \InvalidArgumentException(
+                is_scalar($level)
+                    ? "Unknown log level: $level"
+                    : "Log level should be a string. Got a " . gettype($level)
+            ),
+        };
     }
 
     private function coloredText(string $text, string $textColor, string $bgColor = null): string

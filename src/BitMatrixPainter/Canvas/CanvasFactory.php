@@ -6,16 +6,16 @@ namespace Guillaumetissier\QrCode\BitMatrixPainter\Canvas;
 
 use Guillaumetissier\QrCode\BitMatrixPainter\CanvasFactoryInterface;
 use Guillaumetissier\QrCode\BitMatrixPainter\File\FileType;
-use Guillaumetissier\QrCode\Exception\ImageNotCreatedException;
+use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class CanvasFactory implements CanvasFactoryInterface
 {
-    public static function create(): self
+    public static function create(?IOLoggerInterface $logger = null): self
     {
-        return new self();
+        return new self($logger);
     }
 
-    private function __construct()
+    private function __construct(private readonly ?IOLoggerInterface $logger = null)
     {
     }
 
@@ -24,15 +24,17 @@ final class CanvasFactory implements CanvasFactoryInterface
     }
 
     /**
-     * @throws ImageNotCreatedException
+     * @param FileType $fileType
+     * @param int $imageSize
+     * @return CanvasInterface
      */
     public function createCanvas(FileType $fileType, int $imageSize): CanvasInterface
     {
         return match ($fileType) {
-            FileType::PDF => PdfDocument::createA4(),
+            FileType::PDF => PdfDocument::createA4($this->logger),
             FileType::GIF,
             FileType::JPG,
-            FileType::PNG => new Image($imageSize, $imageSize)
+            FileType::PNG => Image::create($imageSize, $imageSize, $this->logger)
         };
     }
 }

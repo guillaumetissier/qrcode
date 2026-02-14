@@ -6,12 +6,15 @@ namespace Guillaumetissier\QrCode\BitMatrixPainter\Painter;
 
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\BitMatrixPainter\Canvas\CanvasInterface;
+use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class PdfDocumentPainter implements PainterInterface
 {
-    private CanvasInterface $canvas;
+    private const DEFAULT_SCALE = 10;
 
-    private int $scale;
+    private ?CanvasInterface $canvas = null;
+
+    private int $scale = self::DEFAULT_SCALE;
 
     public function withCanvas(CanvasInterface $canvas): self
     {
@@ -27,8 +30,18 @@ final class PdfDocumentPainter implements PainterInterface
         return $this;
     }
 
+    /**
+     * @param BitMatrix $matrix
+     * @return void
+     *
+     * @throws MissingInfoException
+     */
     public function paint(BitMatrix $matrix): void
     {
+        if ($this->canvas === null) {
+            throw MissingInfoException::missingInfo('canvas', self::class);
+        }
+
         $startCol = 10;
         $startRow = 10;
 

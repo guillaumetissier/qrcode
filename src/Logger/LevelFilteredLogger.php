@@ -13,6 +13,17 @@ final class LevelFilteredLogger implements IOLoggerInterface
 {
     private ?string $logLevel = null;
 
+    public const LOG_LEVELS = [
+        LogLevel::EMERGENCY,
+        LogLevel::ALERT,
+        LogLevel::CRITICAL,
+        LogLevel::ERROR,
+        LogLevel::WARNING,
+        LogLevel::NOTICE,
+        LogLevel::INFO,
+        LogLevel::DEBUG,
+    ];
+
     public function __construct(private ?LoggerInterface $logger = null)
     {
     }
@@ -30,7 +41,7 @@ final class LevelFilteredLogger implements IOLoggerInterface
     }
 
     /**
-     * @param Stringable|string|array<string, string|Stringable|BackedEnum> $input
+     * @param Stringable|string|array<string, string|Stringable|BackedEnum|int> $input
      * @param array<string, string> $context
      * @return void
      */
@@ -190,16 +201,7 @@ final class LevelFilteredLogger implements IOLoggerInterface
 
     private function showLog(string $level): bool
     {
-        $levels = [
-            LogLevel::EMERGENCY => 1,
-            LogLevel::ALERT     => 2,
-            LogLevel::CRITICAL  => 3,
-            LogLevel::ERROR     => 4,
-            LogLevel::WARNING   => 5,
-            LogLevel::NOTICE    => 6,
-            LogLevel::INFO      => 7,
-            LogLevel::DEBUG     => 8,
-        ];
+        $levels = array_flip(self::LOG_LEVELS);
 
         if (!$this->logLevel || !isset($levels[$this->logLevel]) || !isset($levels[$level])) {
             return false;

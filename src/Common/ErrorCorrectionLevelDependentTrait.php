@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Guillaumetissier\QrCode\Common;
 
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
@@ -16,6 +18,10 @@ trait ErrorCorrectionLevelDependentTrait
         return $this;
     }
 
+    /**
+     * @return ErrorCorrectionLevel
+     * @throws MissingInfoException
+     */
     protected function errorCorrectionLevel(): ErrorCorrectionLevel
     {
         if ($this->errorCorrectionLevel === null) {

@@ -119,7 +119,7 @@ final class BitMatrixBuilder implements BitMatrixBuilderInterface
 
         $this->logger?->notice("------ Placing information modules ------", ['class' => self::class]);
         foreach (InformationModule::all() as $infoModule) {
-            $this->logger?->info("Place {$infoModule->value}", ['class' => self::class]);
+            $this->logger?->info("Placing {$infoModule->value}", ['class' => self::class]);
             $info = match ($infoModule) {
                 InformationModule::TOP_RIGHT_VERSION_INFO,
                 InformationModule::BOTTOM_LEFT_VERSION_INFO => $versionInfo,

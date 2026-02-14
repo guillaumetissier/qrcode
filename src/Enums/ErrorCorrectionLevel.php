@@ -10,4 +10,17 @@ enum ErrorCorrectionLevel: string
     case MEDIUM = 'M';
     case QUARTILE = 'Q';
     case HIGH = 'H';
+
+    /**
+     * @return string[]
+     */
+    public static function all(): array
+    {
+        return [
+            self::LOW->value,
+            self::MEDIUM->value,
+            self::QUARTILE->value,
+            self::HIGH->value,
+        ];
+    }
 }

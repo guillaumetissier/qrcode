@@ -11,7 +11,7 @@ use Stringable;
 interface IOLoggerInterface extends LoggerInterface
 {
     /**
-     * @param string|Stringable|array<string, string|Stringable|BackedEnum> $input
+     * @param string|Stringable|array<string, string|Stringable|BackedEnum|int> $input
      * @param array<string, string> $context
      * @return void
      */

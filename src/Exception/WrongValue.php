@@ -6,8 +6,36 @@ namespace Guillaumetissier\QrCode\Exception;
 
 final class WrongValue extends \Exception
 {
-    public function __construct(string $variable, string $value)
+    public static function outOfRange(string $varName, int $varValue, int $min, int $max): self
     {
-        parent::__construct("Wrong value ($value) for $variable", ExceptionCode::WRONG_VALUE->value);
+        return new self("Value of $varName ($varValue) must be between $min and $max");
+    }
+
+    /**
+     * @param string $varName
+     * @param string $varValue
+     * @param string[] $validValues
+     * @return self
+     */
+    public static function notInSet(string $varName, string $varValue, array $validValues): self
+    {
+        return new self(sprintf(
+            "Value of $varName ($varValue) must be in set [%s]",
+            implode(', ', $validValues)
+        ));
+    }
+
+    /**
+     * @param string $varName
+     * @return self
+     */
+    public static function notNumeric(string $varName): self
+    {
+        return new self("Value of $varName should be a numeric.");
+    }
+
+    private function __construct(string $message)
+    {
+        parent::__construct($message, ExceptionCode::WRONG_VALUE->value);
     }
 }

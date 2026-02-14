@@ -36,14 +36,14 @@ class ImageTest extends TestCase
 
     public function testConstructorCreatesImageSuccessfully(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
 
         $this->assertInstanceOf(Image::class, $image);
     }
 
     public function testConstructorInitializesDefaultColors(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
 
         // Should not throw exception since black and white are initialized
         $result = $image->paintRectangle(Image::BLACK, 0, 0, 10, 10);
@@ -55,7 +55,7 @@ class ImageTest extends TestCase
 
     public function testAddColorToPaletteReturnsFluentInterface(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
         $result = $image->addColorToPalette('red', 255, 0, 0);
 
         $this->assertSame($image, $result);
@@ -63,7 +63,7 @@ class ImageTest extends TestCase
 
     public function testAddColorToPaletteAllowsUsingNewColor(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
         $image->addColorToPalette('blue', 0, 0, 255);
         $result = $image->paintRectangle('blue', 0, 0, 50, 50);
 
@@ -72,7 +72,7 @@ class ImageTest extends TestCase
 
     public function testPaintRectangleThrowsExceptionForUnknownColor(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
         $this->expectException(ColorException::class);
         $this->expectExceptionMessage("Color 'nonexistent' not found in palette");
 
@@ -81,7 +81,7 @@ class ImageTest extends TestCase
 
     public function testPaintRectangleReturnsTrueOnSuccess(): void
     {
-        $image = new Image(100, 100);
+        $image = Image::create(100, 100);
         $result = $image->paintRectangle(Image::BLACK, 10, 10, 20, 20);
 
         $this->assertTrue($result);
@@ -89,7 +89,7 @@ class ImageTest extends TestCase
 
     public function testOutputCreatesGifFile(): void
     {
-        $image = new Image(50, 50);
+        $image = Image::create(50, 50);
         $filename = $this->tempDir . '/test.gif';
 
         $options = $this->createMock(OutputOptionsInterface::class);
@@ -97,7 +97,7 @@ class ImageTest extends TestCase
         $options->method('fileType')->willReturn(FileType::GIF);
         $options->method('filename')->willReturn($filename);
 
-        $result = $image->output($options);
+        $result = $image->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);
@@ -110,7 +110,7 @@ class ImageTest extends TestCase
 
     public function testOutputCreatesPngFile(): void
     {
-        $image = new Image(50, 50);
+        $image = Image::create(50, 50);
         $filename = $this->tempDir . '/test.png';
         $options = $this->createMock(OutputOptionsInterface::class);
         $options->method('contentType')->willReturn(null);
@@ -118,7 +118,7 @@ class ImageTest extends TestCase
         $options->method('filename')->willReturn($filename);
         $options->method('quality')->willReturn(80);
 
-        $result = $image->output($options);
+        $result = $image->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);
@@ -131,7 +131,7 @@ class ImageTest extends TestCase
 
     public function testOutputCreatesJpgFile(): void
     {
-        $image = new Image(50, 50);
+        $image = Image::create(50, 50);
         $filename = $this->tempDir . '/test.jpg';
         $options = $this->createMock(OutputOptionsInterface::class);
         $options->method('contentType')->willReturn(null);
@@ -139,7 +139,7 @@ class ImageTest extends TestCase
         $options->method('filename')->willReturn($filename);
         $options->method('quality')->willReturn(90);
 
-        $result = $image->output($options);
+        $result = $image->withOutputOptions($options)->output();
 
         $this->assertTrue($result);
         $this->assertFileExists($filename);
@@ -152,7 +152,7 @@ class ImageTest extends TestCase
 
     public function testOutputWithNullFilenameOutputsToStdout(): void
     {
-        $image = new Image(50, 50);
+        $image = Image::create(50, 50);
         $options = $this->createMock(OutputOptionsInterface::class);
         $options->method('contentType')->willReturn(null);
         $options->method('fileType')->willReturn(FileType::PNG);
@@ -160,7 +160,7 @@ class ImageTest extends TestCase
         $options->method('quality')->willReturn(80);
 
         ob_start();
-        $result = $image->output($options);
+        $result = $image->withOutputOptions($options)->output();
         $output = ob_get_clean();
 
         $this->assertTrue($result);
@@ -173,16 +173,16 @@ class ImageTest extends TestCase
             $this->markTestSkipped('xdebug_get_headers not available');
         }
 
-        $image = new Image(50, 50);
-        $filename = $this->tempDir . '/test.png';
-
+        $image = Image::create(50, 50);
         $options = $this->createMock(OutputOptionsInterface::class);
         $options->method('contentType')->willReturn('image/png');
         $options->method('fileType')->willReturn(FileType::PNG);
-        $options->method('filename')->willReturn($filename);
+        $options->method('filename')->willReturn(null);
         $options->method('quality')->willReturn(80);
 
-        $image->output($options);
+        ob_start();
+        $image->withOutputOptions($options)->output();
+        ob_end_clean();
 
         $headers = xdebug_get_headers();
         $this->assertContains('Content-Type: image/png', $headers);
@@ -190,9 +190,9 @@ class ImageTest extends TestCase
 
     public function testMultipleColorsPaintedCorrectly(): void
     {
-        $image = new Image(100, 100);
-
-        $image->addColorToPalette('red', 255, 0, 0)
+        $image = Image::create(100, 100);
+        $image
+            ->addColorToPalette('red', 255, 0, 0)
             ->addColorToPalette('green', 0, 255, 0)
             ->addColorToPalette('blue', 0, 0, 255);
 
@@ -203,7 +203,7 @@ class ImageTest extends TestCase
 
     public function testPngQualityConversion(): void
     {
-        $image = new Image(50, 50);
+        $image = Image::create(50, 50);
         $filename1 = $this->tempDir . '/test_high_quality.png';
         $filename2 = $this->tempDir . '/test_low_quality.png';
 
@@ -214,17 +214,17 @@ class ImageTest extends TestCase
         $options1->method('filename')->willReturn($filename1);
         $options1->method('quality')->willReturn(100);
 
-        $image->output($options1);
+        $image->withOutputOptions($options1)->output();
 
         // Low quality (high compression)
-        $image2 = new Image(50, 50);
+        $image2 = Image::create(50, 50);
         $options2 = $this->createMock(OutputOptionsInterface::class);
         $options2->method('contentType')->willReturn(null);
         $options2->method('fileType')->willReturn(FileType::PNG);
         $options2->method('filename')->willReturn($filename2);
         $options2->method('quality')->willReturn(0);
 
-        $image2->output($options2);
+        $image2->withOutputOptions($options2)->output();
 
         // High quality should generally produce larger files
         // (though this isn't guaranteed for simple images)
