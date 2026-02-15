@@ -28,7 +28,8 @@
         "monolog/monolog": "^3.8",
         "guillaumetissier/galois-fields": "^1.0",
         "guillaumetissier/bit-string": "^1.0",
-        "guillaumetissier/maths": "^0.3.0"
+        "guillaumetissier/maths": "^0.3.0",
+        "guillaumetissier/path-utilities": "^1.0"
     },
     "require-dev": {
         "ext-xdebug": "*",

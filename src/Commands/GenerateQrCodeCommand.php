@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Commands;
 
+use Guillaumetissier\PathUtilities\Path;
 use Guillaumetissier\QrCode\Commands\Output\OutputOptions;
 use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
 use Guillaumetissier\QrCode\Exception\MissingOption;
-use Guillaumetissier\QrCode\Exception\WrongValue;
+use Guillaumetissier\QrCode\Exception\InvalidInput;
 use Guillaumetissier\QrCode\Logger\ConsoleLogger;
 use Guillaumetissier\QrCode\Logger\LevelFilteredLogger;
 use Guillaumetissier\QrCode\QrCodeGenerator;
@@ -44,15 +45,13 @@ final class GenerateQrCodeCommand extends Command
         $consoleLogger = new ConsoleLogger();
 
         try {
-            $options = $this->extractOptions($input);
-
-            QrCodeGenerator::create($consoleLogger, $options['log'])
-                ->withData($options['txt'])
-                ->withErrorCorrectionLevel(ErrorCorrectionLevel::from($options['ecl']))
+            QrCodeGenerator::create($consoleLogger, $this->extractLogLevel($input))
+                ->withData($this->extractText($input))
+                ->withErrorCorrectionLevel(ErrorCorrectionLevel::from($this->extractEcl($input)))
                 ->withOutputOptions(new OutputOptions([
-                    OutputOptions::FILENAME => $options['out'],
-                    OutputOptions::SCALE => $options['scale'],
-                    OutputOptions::QUALITY => $options['quality'],
+                    OutputOptions::FILENAME => $this->extractOutput($input),
+                    OutputOptions::SCALE => $this->extractScale($input),
+                    OutputOptions::QUALITY => $this->extractQuality($input),
                 ]))
                 ->generate()
             ;
@@ -67,74 +66,118 @@ final class GenerateQrCodeCommand extends Command
 
     /**
      * @param InputInterface $input
-     * @return array{
-     *     txt: string,
-     *     out: string,
-     *     log: string,
-     *     scale: int,
-     *     quality: int,
-     *     ecl: string
-     * }
+     * @return string
      * @throws MissingOption
-     * @throws WrongValue
      */
-    private function extractOptions(InputInterface $input): array
+    private function extractText(InputInterface $input): string
     {
         if (!is_string($text = $input->getOption('txt'))) {
             throw new MissingOption('txt');
         }
 
+        return $text;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return string
+     * @throws MissingOption|InvalidInput
+     */
+    private function extractOutput(InputInterface $input): string
+    {
         if (!is_string($output = $input->getOption('out'))) {
             throw new MissingOption('out');
         }
 
+        $path = new Path($output);
+        $dir = $path->parent();
+
+        if (!$dir->exists() || !$dir->permissions()->isWritable()) {
+             throw InvalidInput::invalidPath($dir);
+        }
+
+        return (string) $path->absolutePath();
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return string
+     * @throws MissingOption
+     * @throws InvalidInput
+     */
+    private function extractLogLevel(InputInterface $input): string
+    {
         if (!is_string($logLevel = $input->getOption('log'))) {
             throw new MissingOption('log');
         }
 
         if (!in_array($logLevel, LevelFilteredLogger::LOG_LEVELS)) {
-            throw WrongValue::notInSet('log', $logLevel, LevelFilteredLogger::LOG_LEVELS);
+            throw InvalidInput::notInSet('log', $logLevel, LevelFilteredLogger::LOG_LEVELS);
         }
 
+        return $logLevel;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return int
+     * @throws InvalidInput
+     */
+    private function extractScale(InputInterface $input): int
+    {
         $scale = $input->getOption('scale');
 
         if (!is_numeric($scale)) {
-            throw WrongValue::notNumeric('scale');
+            throw InvalidInput::notNumeric('scale');
         }
 
         $scale = (int) $scale;
 
         if ($scale < 1 || $scale > 20) {
-            throw WrongValue::outOfRange('scale', $scale, 1, 20);
+            throw InvalidInput::outOfRange('scale', $scale, 1, 20);
         }
 
+        return $scale;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return int
+     * @throws InvalidInput
+     */
+    private function extractQuality(InputInterface $input): int
+    {
         $quality = $input->getOption('quality');
 
         if (!is_numeric($quality)) {
-            throw WrongValue::notNumeric('quality');
+            throw InvalidInput::notNumeric('quality');
         }
 
         $quality = (int) $quality;
 
         if ($quality < 1 || $quality > 100) {
-            throw WrongValue::outOfRange('quality', $quality, 1, 100);
+            throw InvalidInput::outOfRange('quality', $quality, 1, 100);
         }
 
+        return $quality;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return string
+     * @throws MissingOption
+     * @throws InvalidInput
+     */
+    private function extractEcl(InputInterface $input): string
+    {
         if (!is_string($ecl = $input->getOption('ecl'))) {
             throw new MissingOption('ecl');
         }
 
         if (!in_array($ecl, ErrorCorrectionLevel::all())) {
-            throw WrongValue::notInSet('ecl', $ecl, ErrorCorrectionLevel::all());
+            throw InvalidInput::notInSet('ecl', $ecl, ErrorCorrectionLevel::all());
         }
 
-        return [
-            'txt' => $text,
-            'out' => $output,
-            'log' => $logLevel,
-            'scale' => $scale,
-            'quality' => $quality,
-            'ecl' => $ecl
-        ];
+        return $ecl;
     }
 }

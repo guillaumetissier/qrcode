@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Exception;
 
-final class WrongValue extends \Exception
+use Guillaumetissier\PathUtilities\Path;
+
+final class InvalidInput extends \Exception
 {
+    public static function invalidPath(Path $path): self
+    {
+        return new self("Path ($path) does not exist or is not writable.");
+    }
+
     public static function outOfRange(string $varName, int $varValue, int $min, int $max): self
     {
-        return new self("Value of $varName ($varValue) must be between $min and $max");
+        return new self("Value of input '$varName' ($varValue) must be between $min and $max");
     }
 
     /**
@@ -20,7 +27,7 @@ final class WrongValue extends \Exception
     public static function notInSet(string $varName, string $varValue, array $validValues): self
     {
         return new self(sprintf(
-            "Value of $varName ($varValue) must be in set [%s]",
+            "Value of input '$varName' ($varValue) must be in set [%s]",
             implode(', ', $validValues)
         ));
     }
@@ -31,11 +38,11 @@ final class WrongValue extends \Exception
      */
     public static function notNumeric(string $varName): self
     {
-        return new self("Value of $varName should be a numeric.");
+        return new self("Value of input '$varName' should be a numeric.");
     }
 
     private function __construct(string $message)
     {
-        parent::__construct($message, ExceptionCode::WRONG_VALUE->value);
+        parent::__construct($message, ExceptionCode::INVALID_INPUT->value);
     }
 }

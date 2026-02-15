@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Logger;
 
-use Guillaumetissier\QrCode\Exception\WrongValue;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Stringable;
