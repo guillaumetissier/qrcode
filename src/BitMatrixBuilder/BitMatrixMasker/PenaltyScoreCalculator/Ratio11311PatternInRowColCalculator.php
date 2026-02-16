@@ -9,42 +9,34 @@ use Guillaumetissier\QrCode\Enums\WeightedPenaltyScore;
 
 final class Ratio11311PatternInRowColCalculator implements PenaltyScoreCalculatorInterface
 {
+    private const PATTERNS = [[1,0,1,1,1,0,1], [0,1,0,0,0,1,0]];
+
     public function calculateScore(BitMatrix $matrix): int
     {
         $size = $matrix->size();
         $score = 0;
-        $patterns = [[1,0,1,1,1,0,1], [0,1,0,0,0,1,0]];
 
         for ($row = 0; $row < $size; $row++) {
-            $rows = [];
-            for ($col = 0; $col < $size; $col++) {
-                $rows[] = (int)$matrix->value($row, $col);
-            }
-            $score += $this->checkLineForPatterns($rows, $patterns);
+            $score += $this->checkForPatterns($matrix->rowValues($row));
         }
 
         for ($col = 0; $col < $size; $col++) {
-            $cols = [];
-            for ($row = 0; $row < $size; $row++) {
-                $cols[] = (int)$matrix->value($row, $col);
-            }
-            $score += $this->checkLineForPatterns($cols, $patterns);
+            $score += $this->checkForPatterns($matrix->colValues($col));
         }
 
         return $score;
     }
 
     /**
-     * @param int[] $line
-     * @param int[][] $patterns
+     * @param array<int|null> $line
      * @return int
      */
-    private function checkLineForPatterns(array $line, array $patterns): int
+    private function checkForPatterns(array $line): int
     {
         $length = count($line);
         $score = 0;
 
-        foreach ($patterns as $pattern) {
+        foreach (self::PATTERNS as $pattern) {
             $pLen = count($pattern);
 
             for ($i = 0; $i <= $length - $pLen; $i++) {

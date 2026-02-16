@@ -7,11 +7,13 @@ namespace Guillaumetissier\QrCode\Encoder;
 use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\QrCode\Common\DataDependentTrait;
 use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
 use Guillaumetissier\QrCode\Encoder\DataAnalyser\Mode\ModeDetector;
 use Guillaumetissier\QrCode\Encoder\DataAnalyser\Version\Selector\VersionSelectorFactory;
+use Guillaumetissier\QrCode\Encoder\DataSplitter\DataSplitter;
 use Guillaumetissier\QrCode\Encoder\DataEncoder\DataEncoder;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\ErrorCorrectionCalculator;
-use Guillaumetissier\QrCode\Encoder\FinalCodewordsAssembler\FinalCodewordsAssembler;
+use Guillaumetissier\QrCode\Encoder\DataAssembler\DataAssembler;
 use Guillaumetissier\QrCode\EncoderInterface;
 use Guillaumetissier\QrCode\Enums\Version;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
@@ -30,8 +32,9 @@ final class Encoder implements EncoderInterface
             ModeDetector::create($logger),
             VersionSelectorFactory::create($logger),
             DataEncoder::create($logger),
+            DataSplitter::create($logger),
             ErrorCorrectionCalculator::create($logger),
-            FinalCodewordsAssembler::create($logger),
+            DataAssembler::create($logger),
             $logger
         );
     }
@@ -40,8 +43,9 @@ final class Encoder implements EncoderInterface
         private readonly ModeDetectorInterface $modeDetector,
         private readonly VersionSelectorFactoryInterface $versionSelectorFactory,
         private readonly DataEncoderInterface $dataEncoder,
+        private readonly DataSplitterInterface $dataSplitter,
         private readonly ErrorCorrectionCalculatorInterface $errorCorrectionCoder,
-        private readonly FinalCodewordsAssemblerInterface $finalCodewordsAssembler,
+        private readonly DataAssemblerInterface $finalCodewordsAssembler,
         private readonly ?IOLoggerInterface $logger = null,
     ) {
     }
@@ -82,18 +86,22 @@ final class Encoder implements EncoderInterface
             ->withErrorCorrectionLevel($errorCorrectionLevel)
             ->encode();
 
-        $this->logger?->notice('------ Calculating error codes ------', ['class' => self::class]);
+        $this->logger?->notice('------ Splitting encoded data ------', ['class' => self::class]);
 
-        $errorCorrectionBitString = $this->errorCorrectionCoder
+        $dataBlocks = $this->dataSplitter
             ->withVersion($this->version)
             ->withErrorCorrectionLevel($errorCorrectionLevel)
-            ->calculateErrorCorrection($encodedBitString);
+            ->split($encodedBitString);
+
+        $this->logger?->notice('------ Calculating error codes ------', ['class' => self::class]);
+
+        $ecBlocks = [];
+        foreach ($dataBlocks as $dataBlock) {
+            $ecBlocks[] = $this->errorCorrectionCoder->calculateErrorCorrection($dataBlock);
+        }
 
         $this->logger?->notice('------ Assembling data and error codes ------', ['class' => self::class]);
 
-        return $this->finalCodewordsAssembler
-            ->withErrorCorrectionLevel($errorCorrectionLevel)
-            ->withVersion($this->version)
-            ->assemble($encodedBitString, $errorCorrectionBitString);
+        return $this->finalCodewordsAssembler->assemble($dataBlocks, $ecBlocks);
     }
 }

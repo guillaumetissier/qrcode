@@ -5,25 +5,20 @@ declare(strict_types=1);
 namespace Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator;
 
 use Guillaumetissier\BitString\BitString;
-use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
-use Guillaumetissier\QrCode\Common\VersionDependentTrait;
+use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
+use Guillaumetissier\QrCode\Encoder\DataSplitter\DataBlockInterface;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\GeneratorPolynomial\GeneratorPolynomialFactory;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\GeneratorPolynomial\GeneratorPolynomialFactoryInterface;
-use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\NumECCodewordsCalculator\NumECCodewordsCalculator;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\RemainderCalculator\RemainderCalculator;
 use Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculatorInterface;
-use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
 final class ErrorCorrectionCalculator implements ErrorCorrectionCalculatorInterface
 {
-    use ErrorCorrectionLevelDependentTrait;
-    use VersionDependentTrait;
-
     public static function create(?IOLoggerInterface $logger = null): self
     {
         return new ErrorCorrectionCalculator(
-            NumECCodewordsCalculator::create($logger),
             GeneratorPolynomialFactory::create($logger),
             RemainderCalculator::create($logger),
             $logger
@@ -31,7 +26,6 @@ final class ErrorCorrectionCalculator implements ErrorCorrectionCalculatorInterf
     }
 
     private function __construct(
-        private readonly NumECCodewordsCalculatorInterface $numECCodewordsCalculator,
         private readonly GeneratorPolynomialFactoryInterface $generatorPolynomialFactory,
         private readonly RemainderCalculatorInterface $remainderCalculator,
         private readonly ?IOLoggerInterface $logger = null,
@@ -39,30 +33,35 @@ final class ErrorCorrectionCalculator implements ErrorCorrectionCalculatorInterf
     }
 
     /**
-     * @throws MissingInfoException
+     * @param DataBlockInterface $dataBlock
+     * @return BitStringInterface
      */
-    public function calculateErrorCorrection(BitString $dataBitString): BitString
+    public function calculateErrorCorrection(DataBlockInterface $dataBlock): BitStringInterface
     {
-        $errorCorrectionLevel = $this->errorCorrectionLevel();
-        $version = $this->version();
-
-        $this->logger?->info('Calculate Num EC Codewords', ['class' => self::class]);
-
-        $numECCodewords = $this->numECCodewordsCalculator
-            ->withErrorCorrectionLevel($errorCorrectionLevel)
-            ->withVersion($version)
-            ->calculate();
+        $this->logger?->input(
+            [
+                'num' => $dataBlock->numErrorCorrectionCodewords(),
+                'dataBlock' => PHP_EOL . BitStringFormatter::format($dataBlock->data()),
+            ],
+            ['class' => self::class]
+        );
 
         $this->logger?->info('Create Generator Polynomial', ['class' => self::class]);
 
-        $generatorPolynomial = $this->generatorPolynomialFactory->createGeneratorPolynomial($numECCodewords);
+        $generatorPolynomial = $this->generatorPolynomialFactory
+            ->createGeneratorPolynomial($dataBlock->numErrorCorrectionCodewords());
 
         $this->logger?->info('Calculate Remainder', ['class' => self::class]);
 
         $remainder = $this->remainderCalculator
             ->withGeneratorPolynomial($generatorPolynomial)
-            ->calculate($dataBitString);
+            ->calculate($dataBlock->data());
 
-        return $dataBitString->append($remainder);
+        $this->logger?->output(
+            "Remainder =" . PHP_EOL . BitStringFormatter::format($remainder),
+            ['class' => self::class]
+        );
+
+        return $remainder;
     }
 }

@@ -51,14 +51,14 @@ final class LevelFilteredLogger implements IOLoggerInterface
             $inputs = [];
             foreach ($input as $key => $value) {
                 if ($value instanceof BackedEnum) {
-                    $inputs[] = "$key: {$value->value}";
+                    $inputs[] = "$key = {$value->value}";
                 } else {
-                    $inputs[] = "$key: $value";
+                    $inputs[] = "$key = $value";
                 }
             }
-            $this->debug("IN  << " . implode(', ', $inputs), $context);
+            $this->debug("INPUT >> " . implode(PHP_EOL, $inputs), $context);
         } else {
-            $this->debug("IN  << $input", $context);
+            $this->debug("INPUT >> $input", $context);
         }
     }
 
@@ -69,7 +69,7 @@ final class LevelFilteredLogger implements IOLoggerInterface
      */
     public function output(string|Stringable $output, array $context = []): void
     {
-        $this->debug("OUT >> $output", $context);
+        $this->debug("OUTPUT >> $output", $context);
     }
 
     /**

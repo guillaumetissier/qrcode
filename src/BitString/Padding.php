@@ -4,6 +4,7 @@ namespace Guillaumetissier\QrCode\BitString;
 
 use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 use Guillaumetissier\QrCode\Logger\IOLoggerInterface;
 
@@ -69,7 +70,10 @@ final class Padding implements PaddingInterface
             }
         }
 
-        $this->logger?->output("Padding = {$padding}", ['class' => self::class]);
+        $this->logger?->output(
+            "Padding = " . PHP_EOL . BitStringFormatter::format($padding) . PHP_EOL,
+            ['class' => self::class]
+        );
 
         return $padding;
     }

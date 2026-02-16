@@ -15,6 +15,7 @@ use Guillaumetissier\QrCode\BitString\Terminator;
 use Guillaumetissier\QrCode\BitString\TerminatorInterface;
 use Guillaumetissier\QrCode\Common\DataDependentTrait;
 use Guillaumetissier\QrCode\Common\ErrorCorrectionLevelDependentTrait;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
 use Guillaumetissier\QrCode\Common\ModeDependentTrait;
 use Guillaumetissier\QrCode\Common\VersionDependentTrait;
 use Guillaumetissier\QrCode\Encoder\DataEncoder\DataCodewordsCounter\DataCodewordsCounterFactory;
@@ -110,6 +111,11 @@ final class DataEncoder implements DataEncoderInterface
                 ->withDataBitCount($dataBitString->bitCount())
                 ->withTotalCodewords($totalCodewords)
                 ->bitString());
+
+        $this->logger?->output(
+            'Encoded data' . PHP_EOL . BitStringFormatter::format($dataBitString) . PHP_EOL,
+            ['class' => self::class]
+        );
 
         return $dataBitString;
     }

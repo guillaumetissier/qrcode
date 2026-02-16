@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixMasker\PenaltyScoreCalculator;
 
-use Generator;
 use Guillaumetissier\QrCode\BitMatrixBuilder\BitMatrixCreator\BitMatrix;
 use Guillaumetissier\QrCode\Enums\WeightedPenaltyScore;
 
@@ -26,7 +25,11 @@ final class AdjacentModulesInRowColInSameColorCalculator implements PenaltyScore
         return $score;
     }
 
-    private function calculatePartialScore(Generator $colors): int
+    /**
+     * @param array<int|null> $colors
+     * @return int
+     */
+    private function calculatePartialScore(array $colors): int
     {
         $score = 0;
         $runLength = 0;

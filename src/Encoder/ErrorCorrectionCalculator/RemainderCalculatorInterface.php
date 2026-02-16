@@ -6,11 +6,12 @@ namespace Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator;
 
 use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringImmutable;
+use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\GaloisFields\Polynomial\PolynomialInterface;
 
 interface RemainderCalculatorInterface
 {
     public function withGeneratorPolynomial(PolynomialInterface $generatorPolynomial): self;
 
-    public function calculate(BitString $dataBitString): BitStringImmutable;
+    public function calculate(BitStringInterface $dataBitString): BitStringImmutable;
 }

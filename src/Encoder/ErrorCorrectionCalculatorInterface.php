@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Encoder;
 
-use Guillaumetissier\BitString\BitString;
-use Guillaumetissier\QrCode\Enums\ErrorCorrectionLevel;
-use Guillaumetissier\QrCode\Enums\Version;
+use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Encoder\DataSplitter\DataBlockInterface;
 
 interface ErrorCorrectionCalculatorInterface
 {
-    public function withErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): self;
-
-    public function withVersion(Version $version): self;
-
-    public function calculateErrorCorrection(BitString $dataBitString): BitString;
+    public function calculateErrorCorrection(DataBlockInterface $dataBlock): BitStringInterface;
 }

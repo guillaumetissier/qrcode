@@ -74,7 +74,7 @@ final class CharCountIndicator implements CharCountIndicatorInterface
 
         $cci = BitStringImmutable::fromString(str_pad(decbin(strlen($data)), $biCount, '0', STR_PAD_LEFT));
 
-        $this->logger?->output("Cci = {$cci}", ['class' => self::class]);
+        $this->logger?->output("Cci = $cci", ['class' => self::class]);
 
         return $cci;
     }

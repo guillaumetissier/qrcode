@@ -96,7 +96,7 @@ final class GenerateQrCodeCommand extends Command
              throw InvalidInput::invalidPath($dir);
         }
 
-        return (string) $path->absolutePath();
+        return "$path";
     }
 
     /**

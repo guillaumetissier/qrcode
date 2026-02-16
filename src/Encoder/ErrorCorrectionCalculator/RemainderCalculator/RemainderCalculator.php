@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Guillaumetissier\QrCode\Encoder\ErrorCorrectionCalculator\RemainderCalculator;
 
-use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringImmutable;
+use Guillaumetissier\BitString\BitStringInterface;
 use Guillaumetissier\GaloisFields\GaloisField;
 use Guillaumetissier\GaloisFields\Polynomial\PolynomialConverter;
 use Guillaumetissier\GaloisFields\Polynomial\PolynomialFormatter;
@@ -36,7 +36,7 @@ final class RemainderCalculator implements RemainderCalculatorInterface
         return $this;
     }
 
-    public function calculate(BitString $dataBitString): BitStringImmutable
+    public function calculate(BitStringInterface $dataBitString): BitStringImmutable
     {
         if ($this->generatorPolynomial === null) {
             throw MissingInfoException::missingInfo('generatorPolynomial', self::class);
@@ -45,7 +45,10 @@ final class RemainderCalculator implements RemainderCalculatorInterface
         $dataPolynomial = $this->polynomialConverter->fromBitString($dataBitString);
         $remainder = $dataPolynomial->mod($this->generatorPolynomial);
 
-        $this->logger?->output('Remainder=' . PolynomialFormatter::toAlphaString($remainder), ['class' => self::class]);
+        $this->logger?->output(
+            'Remainder = ' . PolynomialFormatter::toAlphaString($remainder),
+            ['class' => self::class]
+        );
 
         return $this->polynomialConverter->toBitString($remainder);
     }

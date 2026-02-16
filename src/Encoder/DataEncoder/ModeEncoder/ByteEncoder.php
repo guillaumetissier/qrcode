@@ -6,6 +6,7 @@ namespace Guillaumetissier\QrCode\Encoder\DataEncoder\ModeEncoder;
 
 use Guillaumetissier\BitString\BitString;
 use Guillaumetissier\BitString\BitStringInterface;
+use Guillaumetissier\QrCode\Common\Helper\BitStringFormatter;
 use Guillaumetissier\QrCode\Exception\MissingInfoException;
 
 final class ByteEncoder extends AbstractModeEncoder
@@ -28,7 +29,10 @@ final class ByteEncoder extends AbstractModeEncoder
             $dataBitString->append(str_pad(decbin(ord($this->data[$i])), 8, '0', STR_PAD_LEFT));
         }
 
-        $this->logger?->output($dataBitString->toString(), ['class' => self::class]);
+        $this->logger?->output(
+            "Encoded data = " . PHP_EOL . BitStringFormatter::format($dataBitString),
+            ['class' => self::class]
+        );
 
         return $dataBitString;
     }

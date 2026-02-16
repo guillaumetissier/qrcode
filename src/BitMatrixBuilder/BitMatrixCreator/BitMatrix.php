@@ -120,24 +120,25 @@ class BitMatrix
 
     /**
      * @param int $row
-     * @return Generator<int|null>
+     * @return array<int|null>
      */
-    public function rowValues(int $row): Generator
+    public function rowValues(int $row): array
     {
-        for ($col = 0; $col < $this->size; $col++) {
-            yield $this->matrix[$this->margin + $row][$this->margin + $col];
-        }
+        return array_slice($this->matrix[$this->margin + $row], $this->margin, $this->size);
     }
 
     /**
      * @param int $col
-     * @return Generator<int|null>
+     * @return array<int|null>
      */
-    public function colValues(int $col): Generator
+    public function colValues(int $col): array
     {
+        $values = [];
         for ($row = 0; $row < $this->size; $row++) {
-            yield $this->matrix[$this->margin + $row][$this->margin + $col];
+            $values[] = $this->matrix[$this->margin + $row][$this->margin + $col];
         }
+
+        return $values;
     }
 
     /**
